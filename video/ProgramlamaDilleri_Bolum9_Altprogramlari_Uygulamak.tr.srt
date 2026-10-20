@@ -1,0 +1,1426 @@
+1
+00:00:00,300 --> 00:00:01,300
+Merhaba!
+
+2
+00:00:01,433 --> 00:00:05,241
+Programlama Dilleri dersinin
+dokuzuncu bölümüne hoş geldiniz.
+
+3
+00:00:05,561 --> 00:00:08,981
+Önceki bölümde altprogramları
+programcının gözünden gördük;
+
+4
+00:00:09,021 --> 00:00:11,308
+bu bölümde perdenin arkasına geçiyoruz.
+
+5
+00:00:12,167 --> 00:00:16,584
+Bir altprogram çağrıldığında derleyici ve
+çalışma zamanı sistemi neler yapar?
+
+6
+00:00:16,904 --> 00:00:18,937
+Değişkenler bellekte nereye konur,
+
+7
+00:00:18,977 --> 00:00:22,268
+iç içe altprogramlar
+dıştaki değişkenleri nasıl bulur?
+
+8
+00:00:22,588 --> 00:00:26,292
+Bunları yığıt üzerindeki kutularla,
+adım adım izleyeceğiz.
+
+9
+00:00:27,500 --> 00:00:29,091
+Yol haritamıza bakalım.
+
+10
+00:00:29,933 --> 00:00:34,111
+Önce bir çağrının ve dönüşün
+genel anlamını, sonra en basit durumu,
+
+11
+00:00:34,151 --> 00:00:38,368
+yani bütün yerel değişkenleri
+statik olan altprogramları göreceğiz.
+
+12
+00:00:38,688 --> 00:00:41,230
+Ardından yığıt-dinamik yerel değişkenlere,
+
+13
+00:00:41,270 --> 00:00:44,159
+etkinlik kayıtlarına
+ve özyinelemeye geçeceğiz.
+
+14
+00:00:45,000 --> 00:00:49,587
+İkinci yarıda iç içe altprogramların
+yerel olmayan değişkenleri nasıl bulduğunu,
+
+15
+00:00:49,627 --> 00:00:51,496
+yani statik zinciri ve ekranları;
+
+16
+00:00:51,536 --> 00:00:55,180
+blokları ve dinamik kapsamın nasıl
+uygulandığını inceleyeceğiz.
+
+17
+00:00:55,500 --> 00:00:58,275
+Son olarak bu bilgilerin güvenlikle ilgisini,
+
+18
+00:00:58,315 --> 00:01:01,192
+arabellek aşımı saldırısı üzerinden göreceğiz.
+
+19
+00:01:02,400 --> 00:01:06,150
+Bölüm 9.1: Çağrıların
+ve dönüşlerin genel anlamı.
+
+20
+00:01:06,470 --> 00:01:12,750
+Bir dilde altprogramların çağrılması ve dönmesi
+işlemlerinin ikisine birden altprogram bağlanması denir.
+
+21
+00:01:13,600 --> 00:01:16,344
+Bir gerçekleştirim
+beş şeyi sağlamak zorundadır:
+
+22
+00:01:16,384 --> 00:01:19,533
+parametrelerin altprograma nasıl
+geçeceği belirlenmeli;
+
+23
+00:01:19,573 --> 00:01:21,911
+çağıran birimin çalışma durumu korunmalı;
+
+24
+00:01:21,951 --> 00:01:25,275
+yerel değişkenler statik
+değilse onlar için yer ayrılmalı;
+
+25
+00:01:25,315 --> 00:01:28,870
+dönüşte çağıranın doğru
+noktasına, doğru değerlerle dönülmeli;
+
+26
+00:01:28,910 --> 00:01:33,492
+ve iç içe altprogramlar varsa, yerel olmayan
+değişkenlere erişim sağlanmalıdır.
+
+27
+00:01:34,333 --> 00:01:37,844
+Genel akış şöyledir:
+program çalışırken bir çağrı gelir;
+
+28
+00:01:37,884 --> 00:01:39,976
+önce programın durumu kaydedilir.
+
+29
+00:01:40,296 --> 00:01:42,069
+Altprogram için parametreleri,
+
+30
+00:01:42,109 --> 00:01:47,671
+yerel verileri ve dönüş adresini içeren
+bir etkinlik kaydı hazırlanır ve altprogram çalışır.
+
+31
+00:01:47,991 --> 00:01:50,696
+Bitince, fonksiyonsa dönüş değeri ayarlanır,
+
+32
+00:01:50,736 --> 00:01:54,853
+program durumu geri yüklenir ve program
+kaldığı yerden devam eder.
+
+33
+00:01:56,067 --> 00:02:00,299
+Bölüm 9.2: Basit altprogramların
+gerçekleştirilmesi.
+
+34
+00:02:00,619 --> 00:02:02,413
+Basit altprogramdan kastımız,
+
+35
+00:02:02,453 --> 00:02:07,449
+bütün yerel değişkenleri statik
+olan ve iç içe tanımlanamayan altprogramlardır.
+
+36
+00:02:07,769 --> 00:02:10,265
+İlk Fortran sürümleri buna örnektir.
+
+37
+00:02:11,100 --> 00:02:14,901
+Bir çağrıda dört şey yapılır: çağıranın
+çalışma durumu saklanır,
+
+38
+00:02:14,941 --> 00:02:16,522
+parametre aktarımı yapılır,
+
+39
+00:02:16,562 --> 00:02:20,703
+dönüş adresi çağrılan altprograma verilir
+ve denetim çağrılana geçer.
+
+40
+00:02:21,567 --> 00:02:23,104
+Dönüşte de dört şey yapılır:
+
+41
+00:02:23,144 --> 00:02:28,004
+değer-sonuç ile geçirilen parametreler
+varsa değerleri gerçek parametrelere kopyalanır;
+
+42
+00:02:28,044 --> 00:02:31,946
+altprogram bir fonksiyonsa dönüş değeri
+çağıranın bulacağı yere konur;
+
+43
+00:02:31,986 --> 00:02:35,647
+çağıranın çalışma ortamı
+geri yüklenir ve denetim çağırana döner.
+
+44
+00:02:36,500 --> 00:02:40,884
+Bunun için saklanması gerekenler: çağıranın
+durum bilgisi, parametreler,
+
+45
+00:02:40,924 --> 00:02:43,443
+dönüş adresi ve fonksiyonsa dönüş değeri.
+
+46
+00:02:43,763 --> 00:02:48,442
+Altprogramın kod olmayan, veri kısmının
+yerleşim planına etkinlik kaydı denir.
+
+47
+00:02:48,762 --> 00:02:53,382
+Basit altprogramlarda bu kayıtlar, kodla
+birlikte statik bellekte yer alır.
+
+48
+00:02:54,233 --> 00:02:56,079
+Kaydın biçimine etkinlik kaydı,
+
+49
+00:02:56,119 --> 00:03:01,106
+çağrı anında gerçek değerlerle doldurulmuş
+haline ise etkinlik kaydı örneği denir.
+
+50
+00:03:01,426 --> 00:03:05,978
+Basit altprogramlarda her altprogramın
+yalnızca tek bir örneği olabilir.
+
+51
+00:03:06,833 --> 00:03:10,189
+Bu yaklaşımın avantajı basitlik
+ve hızlı erişimdir.
+
+52
+00:03:10,509 --> 00:03:14,161
+Ama büyük bir dezavantajı
+var: özyineleme desteklenemez.
+
+53
+00:03:14,481 --> 00:03:16,456
+Bir altprogram kendini çağırırsa,
+
+54
+00:03:16,496 --> 00:03:21,749
+tek kaydının üzerine yazar ve önceki
+çağrının parametreleri ile dönüş adresi kaybolur.
+
+55
+00:03:22,967 --> 00:03:27,536
+Bölüm 9.3: Yığıt-dinamik
+yerel değişkenlerle gerçekleştirim.
+
+56
+00:03:27,856 --> 00:03:32,770
+Bugünkü dillerin çoğunda yerel değişkenler
+yığıttadır ve bu iş daha karmaşıktır.
+
+57
+00:03:33,090 --> 00:03:38,192
+Derleyici, yerel değişkenler için
+örtük yer ayırma ve geri verme kodu üretmelidir.
+
+58
+00:03:38,512 --> 00:03:44,654
+Özyineleme mümkün olduğu için aynı altprogramın aynı anda
+birden çok etkinlik kaydı örneği bulunabilir.
+
+59
+00:03:44,974 --> 00:03:49,161
+Bazı dillerde yerel dizilerin boyu çağrı
+sırasında belirlendiği için,
+
+60
+00:03:49,201 --> 00:03:51,162
+kaydın boyu da dinamik olabilir.
+
+61
+00:03:52,000 --> 00:03:57,135
+Bu C fonksiyonuna bakalım: iki parametresi,
+total ve part; ve iki yerel değişkeni,
+
+62
+00:03:57,175 --> 00:03:59,447
+beş elemanlı list dizisi ve sum var.
+
+63
+00:04:00,300 --> 00:04:04,856
+Etkinlik kaydı yığıtta alttan
+üste şöyle dizilir: en altta dönüş adresi,
+
+64
+00:04:04,896 --> 00:04:09,261
+sonra statik bağ ve dinamik bağ, ardından
+parametreler total ve part,
+
+65
+00:04:09,301 --> 00:04:13,003
+en üstte de yerel değişkenler:
+list'in beş elemanı ve sum.
+
+66
+00:04:13,867 --> 00:04:17,982
+Dinamik bağ, çağıran altprogramın
+etkinlik kaydının başını gösterir;
+
+67
+00:04:18,022 --> 00:04:21,506
+dinamik bağların oluşturduğu
+zincire çağrı zinciri denir.
+
+68
+00:04:21,826 --> 00:04:26,744
+Statik bağ ise yerel olmayan değişkenlere
+erişmek için kullanılır ve altprogramın
+
+69
+00:04:26,784 --> 00:04:28,948
+statik ebeveyninin kaydını gösterir;
+
+70
+00:04:28,988 --> 00:04:30,763
+birazdan ayrıntılı göreceğiz.
+
+71
+00:04:31,083 --> 00:04:34,682
+Kaydın biçimi statiktir,
+yani derleme zamanında bilinir;
+
+72
+00:04:34,722 --> 00:04:38,490
+ama kaydın kendisi her
+çağrıda dinamik olarak oluşturulur.
+
+73
+00:04:39,700 --> 00:04:44,507
+Özyinelemesiz bir örnek izleyelim:
+main, B'yi; B, A'yı; A da C'yi çağırıyor.
+
+74
+00:04:44,827 --> 00:04:48,797
+Yığıtın en altında main'in
+kaydı ve onun yerel değişkeni p var.
+
+75
+00:04:49,633 --> 00:04:53,904
+main, B'yi çağırdığında yığıta B'nin kaydı
+eklenir: dönüş adresi main'e,
+
+76
+00:04:53,944 --> 00:04:56,299
+dinamik bağ main'in kaydına işaret eder;
+
+77
+00:04:56,339 --> 00:04:59,214
+ayrıca parametre
+r ve yereller s ile t yer alır.
+
+78
+00:05:00,067 --> 00:05:05,277
+B, A'yı çağırınca A'nın kaydı eklenir:
+dönüş adresi B'ye, dinamik bağ B'nin kaydına;
+
+79
+00:05:05,317 --> 00:05:06,755
+parametre x ve yerel y.
+
+80
+00:05:07,600 --> 00:05:12,697
+A, C'yi çağırınca C'nin kaydı en
+üste eklenir: parametre q, dinamik bağ A'ya.
+
+81
+00:05:13,017 --> 00:05:18,659
+C bittiğinde kaydı silinir ve A kaldığı yerden
+devam eder; sonra A, sonra B biter.
+
+82
+00:05:18,979 --> 00:05:23,565
+Yığıt, tıpkı çağrılar gibi
+en son giren ilk çıkar mantığıyla çalışır.
+
+83
+00:05:24,400 --> 00:05:29,361
+Herhangi bir anda yığıttaki dinamik
+bağların oluşturduğu zincire çağrı zinciri denir.
+
+84
+00:05:29,681 --> 00:05:33,911
+Yerel değişkenlere ise kaydın
+başlangıcına göre sabit bir uzaklıkla,
+
+85
+00:05:33,951 --> 00:05:36,086
+yani yerel bağıl konumla erişilir.
+
+86
+00:05:36,406 --> 00:05:39,307
+Bu konumları derleyici derleme
+zamanında belirler;
+
+87
+00:05:39,347 --> 00:05:42,640
+böylece çalışma zamanında
+bir değişkeni aramak gerekmez.
+
+88
+00:05:43,867 --> 00:05:46,927
+Özyinelemede aynı
+etkinlik kaydı biçimi kullanılır;
+
+89
+00:05:46,967 --> 00:05:51,100
+tek farkı fonksiyonlar için bir fonksiyon
+değeri alanı eklenmesidir.
+
+90
+00:05:51,420 --> 00:05:53,602
+main, factorial üçü çağırıyor.
+
+91
+00:05:54,467 --> 00:05:59,280
+factorial üç için bir kayıt açılır: fonksiyon
+değeri henüz bilinmiyor, n üç,
+
+92
+00:05:59,320 --> 00:06:01,236
+dinamik bağ main'i gösteriyor.
+
+93
+00:06:02,100 --> 00:06:06,207
+n birden büyük olduğu için factorial iki
+çağrılır ve yığıta ikinci,
+
+94
+00:06:06,247 --> 00:06:08,846
+ayrı bir kayıt eklenir; bu kaydın n'i iki.
+
+95
+00:06:09,700 --> 00:06:12,539
+factorial bir çağrılır ve
+üçüncü kayıt eklenir.
+
+96
+00:06:12,859 --> 00:06:15,715
+n bir olduğu için özyineleme burada durur.
+
+97
+00:06:16,567 --> 00:06:21,176
+factorial bir, fonksiyon değeri alanına biri
+yazar ve döner; kaydı silinir.
+
+98
+00:06:22,033 --> 00:06:23,841
+factorial iki, iki çarpı bir,
+
+99
+00:06:23,881 --> 00:06:27,958
+yani iki sonucunu kendi fonksiyon
+değeri alanına yazar ve döner.
+
+100
+00:06:28,800 --> 00:06:32,780
+factorial üç, üç çarpı iki, yani altı
+sonucunu yazar ve döner;
+
+101
+00:06:32,820 --> 00:06:34,506
+main'deki value altı olur.
+
+102
+00:06:35,367 --> 00:06:39,219
+Her çağrının kendi n'i ve kendi dönüş
+değeri yeri olduğu için,
+
+103
+00:06:39,259 --> 00:06:43,402
+aynı fonksiyonun üç etkin
+örneği birbirine karışmadan çalışabildi.
+
+104
+00:06:43,722 --> 00:06:46,853
+İşte statik kayıtlarla mümkün
+olmayan özyinelemeyi,
+
+105
+00:06:46,893 --> 00:06:49,815
+yığıt-dinamik kayıtlar bu
+şekilde mümkün kılar.
+
+106
+00:06:51,033 --> 00:06:53,971
+Bölüm 9.4: İç içe altprogramlar.
+
+107
+00:06:54,291 --> 00:06:55,286
+Fortran 95, Ada,
+
+108
+00:06:55,326 --> 00:07:00,525
+JavaScript ve Pascal gibi diller
+hem yığıt-dinamik yerel değişkenler kullanır hem
+
+109
+00:07:00,565 --> 00:07:03,928
+de altprogramların
+iç içe tanımlanmasına izin verir.
+
+110
+00:07:04,248 --> 00:07:09,283
+Önemli bir kural var: statik kapsam
+gereği erişilebilen her yerel olmayan değişken,
+
+111
+00:07:09,323 --> 00:07:12,259
+yığıtta etkin bir kaydın içinde
+mutlaka bulunur.
+
+112
+00:07:13,100 --> 00:07:15,915
+Yerel olmayan bir
+değişkene erişmek iki adımdır:
+
+113
+00:07:15,955 --> 00:07:19,245
+önce değişkenin bulunduğu doğru
+etkinlik kaydını bulmak,
+
+114
+00:07:19,285 --> 00:07:21,962
+sonra o kayıt içindeki bağıl konumunu bulmak.
+
+115
+00:07:22,282 --> 00:07:25,558
+İkinci adım kolaydır,
+çünkü derleyici konumu bilir.
+
+116
+00:07:25,878 --> 00:07:27,759
+Zor olan birinci adımdır.
+
+117
+00:07:28,600 --> 00:07:30,690
+Birinci teknik statik zincirdir.
+
+118
+00:07:31,010 --> 00:07:33,393
+Her kayda bir statik bağ eklenir; bu bağ,
+
+119
+00:07:33,433 --> 00:07:37,117
+altprogramın program metninde içinde
+tanımlandığı altprogramın,
+
+120
+00:07:37,157 --> 00:07:39,580
+yani statik ebeveyninin kaydını gösterir.
+
+121
+00:07:39,900 --> 00:07:43,303
+Statik bağların oluşturduğu zincire
+statik zincir denir.
+
+122
+00:07:43,623 --> 00:07:48,378
+Bir altprogramın ne kadar iç içe
+olduğuna da statik derinlik denir: main sıfır,
+
+123
+00:07:48,418 --> 00:07:52,910
+onun içindeki A bir, A'nın içindeki B iki,
+main'in içindeki C yine birdir.
+
+124
+00:07:53,767 --> 00:07:57,897
+Böylece her yerel olmayan referans bir
+sayı çiftiyle gösterilebilir:
+
+125
+00:07:57,937 --> 00:08:00,451
+zincir bağıl konumu ve yerel bağıl konum.
+
+126
+00:08:00,771 --> 00:08:01,925
+Zincir bağıl konumu,
+
+127
+00:08:01,965 --> 00:08:07,714
+değişkeni kullanan altprogramın statik derinliği ile
+değişkeni tanımlayanınki arasındaki farktır;
+
+128
+00:08:07,754 --> 00:08:11,036
+yani statik zincirde kaç adım geri
+gidileceğini söyler.
+
+129
+00:08:11,356 --> 00:08:14,160
+B, main'deki bir
+değişkeni kullanıyorsa iki adım,
+
+130
+00:08:14,200 --> 00:08:16,639
+A'dakini kullanıyorsa bir adım geri gider.
+
+131
+00:08:17,867 --> 00:08:19,840
+Bir örnekle somutlaştıralım.
+
+132
+00:08:20,160 --> 00:08:24,294
+main'in içinde sub1,
+sub1'in içinde de sub11 tanımlı.
+
+133
+00:08:24,614 --> 00:08:28,329
+sub11'deki deyim z eşittir x artı y çarpı w.
+
+134
+00:08:28,649 --> 00:08:30,901
+Bu dört değişkenin her biri nerede?
+
+135
+00:08:31,767 --> 00:08:36,149
+Her etkinlik kaydında konumlar
+şöyle numaralanır: sıfır dönüş adresi,
+
+136
+00:08:36,189 --> 00:08:40,290
+bir statik bağ, iki dinamik bağ; yerel
+değişkenler üçten başlar.
+
+137
+00:08:40,610 --> 00:08:45,672
+Yani birinci yerel değişken üç,
+ikinci yerel değişken dört numaralı konumdadır.
+
+138
+00:08:46,533 --> 00:08:51,789
+z, sub11'in kendi birinci yerel değişkenidir:
+zincirde sıfır adım, konum üç.
+
+139
+00:08:52,109 --> 00:08:53,548
+Yani sıfır, üç.
+
+140
+00:08:54,400 --> 00:08:56,808
+x, main'in birinci yerel değişkenidir.
+
+141
+00:08:57,128 --> 00:09:02,509
+sub11'in derinliği iki, main'inki
+sıfır: statik zincirde iki adım geri gideriz.
+
+142
+00:09:02,829 --> 00:09:04,350
+Çift: iki, üç.
+
+143
+00:09:05,200 --> 00:09:07,476
+y hem main'de hem sub1'de tanımlı.
+
+144
+00:09:07,796 --> 00:09:12,451
+Statik kapsam gereği en yakın kapsamdaki,
+yani sub1'deki y kullanılır.
+
+145
+00:09:12,771 --> 00:09:15,639
+sub1'de z üç, y dört numaralı konumda.
+
+146
+00:09:15,959 --> 00:09:17,956
+Zincirde bir adım: bir, dört.
+
+147
+00:09:18,800 --> 00:09:25,015
+w de hem main'de hem sub11'de var;
+sub11'in kendi w'si kullanılır: sıfır, dört.
+
+148
+00:09:25,867 --> 00:09:29,775
+Gördüğünüz gibi derleyici
+bu çiftleri derleme zamanında hesaplar.
+
+149
+00:09:30,095 --> 00:09:32,195
+Çalışma zamanında yapılacak tek iş,
+
+150
+00:09:32,235 --> 00:09:37,676
+statik zincirde belirtilen sayıda adım gitmek ve o
+kayıttaki belirtilen konuma bakmaktır.
+
+151
+00:09:38,900 --> 00:09:40,274
+Daha büyük bir örnek.
+
+152
+00:09:40,594 --> 00:09:44,572
+MAIN_2 programında
+BIGSUB, onun içinde SUB1 ve SUB2,
+
+153
+00:09:44,612 --> 00:09:47,084
+SUB2'nin içinde de SUB3 tanımlı.
+
+154
+00:09:47,404 --> 00:09:52,063
+Değişkenlere dikkat edin: A,
+B, C, E ve X birden çok yerde tanımlanmış.
+
+155
+00:09:52,900 --> 00:09:58,361
+Çağrı sırası şöyle: MAIN_2,
+BIGSUB'ı; BIGSUB, SUB2'yi; SUB2, SUB3'ü;
+
+156
+00:09:58,401 --> 00:10:00,424
+SUB3 de SUB1'i çağırıyor.
+
+157
+00:10:00,744 --> 00:10:05,063
+Bir numaralı konumdayken,
+yani SUB1 çalışırken yığıt böyle görünür.
+
+158
+00:10:05,900 --> 00:10:08,724
+Dinamik bağlar çağrı sırasını
+izler: her kayıt,
+
+159
+00:10:08,764 --> 00:10:11,018
+kendisini çağıranın kaydını gösterir.
+
+160
+00:10:11,338 --> 00:10:16,319
+SUB1, SUB3'ü; SUB3,
+SUB2'yi; SUB2, BIGSUB'ı gösterir.
+
+161
+00:10:17,167 --> 00:10:20,766
+Statik bağlar ise program
+metnindeki iç içe yapıyı izler.
+
+162
+00:10:21,086 --> 00:10:24,899
+SUB1, BIGSUB'ın içinde
+tanımlı olduğu için onun statik bağı,
+
+163
+00:10:24,939 --> 00:10:28,342
+onu çağıran SUB3'ü
+değil, doğrudan BIGSUB'ı gösterir.
+
+164
+00:10:28,662 --> 00:10:30,664
+SUB3 SUB2'nin, SUB2 BIGSUB'ın,
+
+165
+00:10:30,704 --> 00:10:36,081
+BIGSUB da MAIN_2'nin içinde tanımlı
+olduğu için statik bağları onları gösterir.
+
+166
+00:10:36,933 --> 00:10:40,625
+Şimdi SUB1'deki A eşittir B artı
+C deyimine bakalım.
+
+167
+00:10:40,945 --> 00:10:44,092
+A, SUB1'in kendi değişkeni: sıfır, üç.
+
+168
+00:10:44,412 --> 00:10:49,794
+B ve C ise SUB1'de yok; statik zincirde bir
+adım gidip BIGSUB'ta buluruz: B bir,
+
+169
+00:10:49,834 --> 00:10:50,986
+dört; C bir, beş.
+
+170
+00:10:51,306 --> 00:10:53,324
+Dikkat: SUB3'te de bir C var,
+
+171
+00:10:53,364 --> 00:10:57,552
+ama SUB1 SUB3'ün içinde
+tanımlı olmadığı için o C görünmez.
+
+172
+00:10:57,872 --> 00:11:03,737
+Benzer şekilde SUB3'teki E eşittir
+B artı A deyiminde E sıfır, dört; B bir, dört;
+
+173
+00:11:03,777 --> 00:11:05,163
+A ise iki, üç olur.
+
+174
+00:11:05,483 --> 00:11:10,545
+SUB2'de D'ye erişmek ise hatadır, çünkü D
+yalnızca SUB1'de tanımlıdır.
+
+175
+00:11:11,767 --> 00:11:14,835
+Statik zincir nasıl
+kurulur ve ne kadar verimlidir?
+
+176
+00:11:15,700 --> 00:11:20,562
+Bir altprogram çağrıldığında yeni
+kaydın dinamik bağı eski yığıt tepesini gösterir.
+
+177
+00:11:20,882 --> 00:11:25,562
+Statik bağ ise statik ebeveynin
+en son oluşturulmuş kaydını göstermelidir.
+
+178
+00:11:25,882 --> 00:11:27,575
+Bunu bulmanın iki yolu var:
+
+179
+00:11:27,615 --> 00:11:31,401
+dinamik zincirde geriye doğru aramak
+kolaydır ama yavaştır.
+
+180
+00:11:31,721 --> 00:11:32,324
+Daha iyisi,
+
+181
+00:11:32,364 --> 00:11:37,968
+derleyicinin çağıran ile çağrılanın tanımlandığı yer
+arasındaki derinlik farkını hesaplamasıdır.
+
+182
+00:11:38,288 --> 00:11:39,086
+Örneğin SUB3,
+
+183
+00:11:39,126 --> 00:11:45,962
+SUB1'i çağırırken derleyici iki adım gidileceğini bilir ve
+çalışma zamanında statik bağ buna göre kurulur.
+
+184
+00:11:46,800 --> 00:11:48,959
+Statik zincirin iki sorunu var.
+
+185
+00:11:49,279 --> 00:11:54,225
+Yerel olmayan referanslar, özellikle iç içe
+derinlik büyükse, yavaş çalışır.
+
+186
+00:11:54,545 --> 00:11:58,249
+Ayrıca farklı değişkenlere
+erişim süreleri eşit olmadığı için,
+
+187
+00:11:58,289 --> 00:12:03,783
+zamana duyarlı programlar yazmak zorlaşır ve kodu
+değiştirmek bu zamanlamayı da değiştirir.
+
+188
+00:12:04,633 --> 00:12:06,688
+İkinci teknik ekranlardır.
+
+189
+00:12:07,008 --> 00:12:10,026
+Fikir şu: statik
+bağları kayıtların içinde değil,
+
+190
+00:12:10,066 --> 00:12:12,375
+ekran denilen ayrı bir dizide tutmak.
+
+191
+00:12:12,695 --> 00:12:17,759
+Ekranın k'ıncı elemanı, statik derinliği k olan
+etkin altprogramın kaydını gösterir.
+
+192
+00:12:18,079 --> 00:12:24,777
+Bir referans artık ekran bağıl konumu ve yerel bağıl konum
+çiftiyle gösterilir ve erişim her zaman tek adımdır:
+
+193
+00:12:24,817 --> 00:12:27,124
+ekrandan kaydı al, kayıtta konuma git.
+
+194
+00:12:27,967 --> 00:12:34,094
+Örneğin MAIN_3'te SUB2, SUB3'ü çağırdıktan sonra
+ekranın sıfırıncı elemanı MAIN_3'ü,
+
+195
+00:12:34,134 --> 00:12:38,760
+birincisi BIGSUB'ı, ikincisi SUB2'yi,
+üçüncüsü SUB3'ü gösterir.
+
+196
+00:12:39,080 --> 00:12:43,573
+Çalışan altprogramın derinliği
+k ise ekranda k artı bir işaretçi vardır.
+
+197
+00:12:44,433 --> 00:12:49,056
+Ekranın güncellenmesi basittir:
+derinliği k olan bir altprogram çağrıldığında,
+
+198
+00:12:49,096 --> 00:12:54,774
+ekranın k'ıncı elemanının eski değeri yeni
+kayda saklanır ve yerine yeni kaydın adresi yazılır.
+
+199
+00:12:55,094 --> 00:12:57,927
+Altprogram döndüğünde eski
+değer geri yüklenir.
+
+200
+00:12:59,133 --> 00:13:01,328
+Bölüm 9.5: Bloklar.
+
+201
+00:13:01,648 --> 00:13:05,955
+Bloklar, değişkenler için programcının
+belirlediği yerel kapsamlardır.
+
+202
+00:13:06,275 --> 00:13:10,605
+Bu C bloğunda temp, iki dizi
+elemanını takas etmek için kullanılıyor.
+
+203
+00:13:11,467 --> 00:13:15,333
+temp'in ömrü denetim bloğa girdiğinde
+başlar ve çıkınca biter.
+
+204
+00:13:15,653 --> 00:13:17,258
+Blok kullanmanın avantajı,
+
+205
+00:13:17,298 --> 00:13:21,601
+temp'in programdaki aynı isimli başka bir
+değişkenle çakışmamasıdır.
+
+206
+00:13:22,467 --> 00:13:25,191
+Bloklar iki şekilde gerçekleştirilebilir.
+
+207
+00:13:25,511 --> 00:13:28,394
+Birincisi, bloğu
+her zaman aynı yerden çağrılan,
+
+208
+00:13:28,434 --> 00:13:31,196
+parametresiz bir altprogram gibi ele almaktır;
+
+209
+00:13:31,236 --> 00:13:34,403
+her girişte bloğun
+kendi etkinlik kaydı oluşturulur.
+
+210
+00:13:34,723 --> 00:13:36,745
+Daha yaygın olan ikinci yolda ise,
+
+211
+00:13:36,785 --> 00:13:41,535
+bir bloğun ihtiyaç duyacağı en büyük
+alan derleme zamanında bilinebildiği için,
+
+212
+00:13:41,575 --> 00:13:45,881
+bu alan altprogramın kaydında
+yerel değişkenlerden hemen sonra ayrılır.
+
+213
+00:13:46,733 --> 00:13:50,104
+Bu örnekte MAIN_5'in
+kendi değişkenleri x, y ve z.
+
+214
+00:13:50,424 --> 00:13:54,095
+İlk while bloğunda a,
+b, c; onun içindeki blokta d ve e;
+
+215
+00:13:54,135 --> 00:13:56,322
+ikinci while bloğunda f ve g var.
+
+216
+00:13:57,167 --> 00:14:01,962
+İkinci yolla kayıt şöyle olur: x, y, z'den
+sonra blok değişkenleri gelir.
+
+217
+00:14:02,282 --> 00:14:06,006
+İki while bloğu hiçbir
+zaman aynı anda etkin olmadığı için,
+
+218
+00:14:06,046 --> 00:14:09,491
+a ile f ve b ile g aynı
+bellek yerlerini paylaşabilir.
+
+219
+00:14:09,811 --> 00:14:12,130
+Böylece kayıt gereğinden büyük olmaz.
+
+220
+00:14:13,333 --> 00:14:16,827
+Bölüm 9.6: Dinamik kapsamın uygulanması.
+
+221
+00:14:17,147 --> 00:14:23,196
+Beşinci bölümde dinamik kapsamda yerel olmayan bir ismin
+çağrı sırasına göre çözüldüğünü görmüştük.
+
+222
+00:14:23,516 --> 00:14:26,012
+Bunu gerçekleştirmenin iki yolu var.
+
+223
+00:14:26,332 --> 00:14:30,901
+Örneğimizde MAIN_6, A'yı; A
+kendini; sonra B'yi; B de C'yi çağırıyor.
+
+224
+00:14:31,221 --> 00:14:34,298
+C'de x eşittir u artı v deyimi çalışıyor.
+
+225
+00:14:35,133 --> 00:14:37,026
+Birinci yol derin erişimdir.
+
+226
+00:14:37,346 --> 00:14:42,455
+Yerel olmayan bir referans, dinamik zincirdeki
+kayıtlar sırayla aranarak bulunur.
+
+227
+00:14:42,775 --> 00:14:46,258
+v için önce C'ye, sonra
+B'ye bakılır; ikisinde de yok.
+
+228
+00:14:46,578 --> 00:14:49,121
+Sonra en son çağrılan A'da v bulunur.
+
+229
+00:14:49,441 --> 00:14:52,598
+u ise ancak zincirin sonunda,
+MAIN_6'da bulunur.
+
+230
+00:14:53,433 --> 00:14:55,198
+İkinci yol sığ erişimdir.
+
+231
+00:14:55,518 --> 00:14:59,834
+Burada yerel değişkenler kayıtlarda
+değil, merkezi bir yerde tutulur:
+
+232
+00:14:59,874 --> 00:15:02,716
+her değişken ismi için ayrı bir yığıt vardır.
+
+233
+00:15:03,036 --> 00:15:07,255
+Bir altprogram çağrıldığında
+yerel değişkenleri ilgili yığıtlara itilir,
+
+234
+00:15:07,295 --> 00:15:08,295
+dönüşte çekilir.
+
+235
+00:15:08,562 --> 00:15:13,705
+Böylece her yığıtın tepesindeki, o isim için
+o anda geçerli olan değişkendir.
+
+236
+00:15:14,025 --> 00:15:18,379
+C çalışırken v yığıtının tepesinde A'nın
+v'si var; erişim tek adımdır.
+
+237
+00:15:19,233 --> 00:15:20,350
+Bir başka seçenek,
+
+238
+00:15:20,390 --> 00:15:24,762
+her değişken ismi için bir
+girdi içeren merkezi bir tablo tutmaktır.
+
+239
+00:15:25,600 --> 00:15:30,597
+Karşılaştıralım: derin erişimde zincirin
+uzunluğu önceden bilinemez ve her kayıt,
+
+240
+00:15:30,637 --> 00:15:34,679
+aranabilmesi için değişkenlerin
+isimlerini de taşımak zorundadır.
+
+241
+00:15:34,999 --> 00:15:37,604
+Sığ erişimde değişkene erişim çok hızlıdır,
+
+242
+00:15:37,644 --> 00:15:41,518
+ama her çağrı ve dönüşte
+yığıtların güncellenmesi maliyetlidir.
+
+243
+00:15:42,733 --> 00:15:46,029
+Bölüm 9.7: Arabellek aşımı saldırısı.
+
+244
+00:15:46,349 --> 00:15:51,318
+Bu bölümde öğrendiklerimiz yalnızca teori değil;
+güvenlik açısından da çok önemli.
+
+245
+00:15:51,638 --> 00:15:56,410
+Arabellek, verilerin geçici olarak
+tutulduğu belirli boyutta bir bellek alanıdır.
+
+246
+00:15:56,730 --> 00:16:01,538
+Bu örnekte main, iki yüz elli altı baytlık bir
+diziyi myFunction'a gönderiyor;
+
+247
+00:16:01,578 --> 00:16:06,364
+myFunction ise onu yalnızca on
+altı baytlık bir diziye strcpy ile kopyalıyor.
+
+248
+00:16:07,200 --> 00:16:11,621
+myFunction çalışırken yığıtı
+düşünelim: en üstte on altı baytlık bufferB;
+
+249
+00:16:11,661 --> 00:16:14,433
+altında işletim sistemi verileri, dinamik bağ,
+
+250
+00:16:14,473 --> 00:16:19,362
+main'e dönüş adresi ve str parametresi; daha
+aşağıda main'in kaydındaki bufferA.
+
+251
+00:16:20,200 --> 00:16:23,344
+strcpy, hedefin büyüklüğünü kontrol etmez.
+
+252
+00:16:23,664 --> 00:16:26,113
+İlk on altı bayt bufferB'yi doldurur.
+
+253
+00:16:26,967 --> 00:16:29,061
+Ama kopyalama durmaz: fazla veri,
+
+254
+00:16:29,101 --> 00:16:33,524
+bufferB'nin hemen arkasındaki alanların
+üzerine yazılır: dinamik bağ,
+
+255
+00:16:33,564 --> 00:16:35,634
+str ve en önemlisi dönüş adresi.
+
+256
+00:16:35,954 --> 00:16:38,213
+Kaynak dizgi dikkatlice hazırlanırsa,
+
+257
+00:16:38,253 --> 00:16:42,293
+dönüş adresinin yerine saldırganın
+seçtiği bir adres yazılabilir.
+
+258
+00:16:43,133 --> 00:16:44,806
+Fonksiyon bittiğinde sistem,
+
+259
+00:16:44,846 --> 00:16:50,659
+dönüş adresine güvenerek oraya atlar ve
+saldırganın yerleştirdiği zararlı kod çalışmaya başlar.
+
+260
+00:16:50,979 --> 00:16:54,903
+Bu, uzun yıllar boyunca en
+yaygın saldırı türlerinden biri oldu.
+
+261
+00:16:55,223 --> 00:16:59,363
+Kökü, C gibi dillerde kopyalama
+işlemlerinin sınır testi yapmamasıdır.
+
+262
+00:17:00,200 --> 00:17:04,682
+Çözüm, uzunluğu da göndermek ve kopyalamadan
+önce sınırı kontrol etmektir.
+
+263
+00:17:05,002 --> 00:17:09,699
+Java ve C# gibi diller dizi sınırlarını
+otomatik olarak denetlediği için bu tür
+
+264
+00:17:09,739 --> 00:17:11,918
+hatalara karşı çok daha dayanıklıdır;
+
+265
+00:17:11,958 --> 00:17:16,277
+bu da dil tasarımının güvenliği
+nasıl etkilediğinin güzel bir örneğidir.
+
+266
+00:17:17,500 --> 00:17:18,619
+Toparlayalım.
+
+267
+00:17:19,467 --> 00:17:23,095
+Basit altprogramlarda etkinlik
+kayıtları statik bellektedir;
+
+268
+00:17:23,135 --> 00:17:28,576
+erişim hızlıdır ama her altprogramın
+tek bir örneği olduğu için özyineleme desteklenemez.
+
+269
+00:17:29,433 --> 00:17:34,882
+Yığıt-dinamik yerel değişkenlerde her
+çağrı için yığıtta bir etkinlik kaydı oluşturulur:
+
+270
+00:17:34,922 --> 00:17:39,475
+yerel değişkenler, parametreler, dinamik
+bağ, statik bağ ve dönüş adresi.
+
+271
+00:17:39,795 --> 00:17:41,977
+Özyineleme bu sayede mümkündür.
+
+272
+00:17:42,833 --> 00:17:47,456
+İç içe altprogramlarda yerel olmayan
+değişkenler statik zincirle bulunur ve her
+
+273
+00:17:47,496 --> 00:17:51,922
+referans bir zincir bağıl konumu ile yerel
+bağıl konum çiftiyle gösterilir.
+
+274
+00:17:52,242 --> 00:17:54,747
+Ekranlar bu erişimi tek adıma indirir.
+
+275
+00:17:55,067 --> 00:17:58,527
+Bloklar ise kayıtta yer paylaşarak
+gerçekleştirilebilir.
+
+276
+00:17:59,367 --> 00:18:03,128
+Dinamik kapsam, derin
+erişim ya da sığ erişimle uygulanır.
+
+277
+00:18:03,448 --> 00:18:07,593
+Son olarak gördük ki yığıtın
+düzenini bilmek güvenlik için de önemlidir:
+
+278
+00:18:07,633 --> 00:18:09,918
+sınır kontrolü yapılmayan bir kopyalama,
+
+279
+00:18:09,958 --> 00:18:12,632
+dönüş adresini bozarak saldırıya yol açabilir.
+
+280
+00:18:13,833 --> 00:18:16,167
+Şimdi kısa bir mini test yapalım.
+
+281
+00:18:16,487 --> 00:18:19,993
+Her sorudan sonra birkaç saniye
+düşünme süreniz var.
+
+282
+00:18:20,833 --> 00:18:21,833
+Soru 1.
+
+283
+00:18:22,036 --> 00:18:26,433
+Basit, yani statik etkinlik
+kayıtları neden özyinelemeyi desteklemez?
+
+284
+00:18:30,800 --> 00:18:33,480
+Cevap: Her altprogramın tek bir kaydı vardır;
+
+285
+00:18:33,520 --> 00:18:39,564
+altprogram kendini çağırırsa yeni çağrı eskisinin
+parametrelerinin ve dönüş adresinin üzerine yazar.
+
+286
+00:18:40,400 --> 00:18:41,400
+Soru 2.
+
+287
+00:18:41,464 --> 00:18:44,520
+Dinamik bağ ile statik bağ
+arasındaki fark nedir?
+
+288
+00:18:48,867 --> 00:18:52,602
+Cevap: Dinamik bağ, altprogramı
+çağıranın kaydını gösterir.
+
+289
+00:18:52,922 --> 00:18:59,250
+Statik bağ ise altprogramın program metninde
+içinde tanımlandığı statik ebeveyninin kaydını gösterir.
+
+290
+00:19:00,100 --> 00:19:01,100
+Soru 3.
+
+291
+00:19:01,360 --> 00:19:03,665
+Statik derinliği iki olan bir altprogram,
+
+292
+00:19:03,705 --> 00:19:07,479
+derinliği sıfır olan main'in
+birinci yerel değişkenini kullanıyor.
+
+293
+00:19:07,799 --> 00:19:09,137
+Referans çifti nedir?
+
+294
+00:19:13,500 --> 00:19:14,893
+Cevap: İki, üç.
+
+295
+00:19:15,213 --> 00:19:20,194
+Statik zincirde iki adım geri gidilir ve
+kaydın üç numaralı konumuna bakılır.
+
+296
+00:19:21,033 --> 00:19:22,033
+Soru 4.
+
+297
+00:19:22,271 --> 00:19:25,240
+Ekranların statik zincire göre avantajı nedir?
+
+298
+00:19:29,600 --> 00:19:34,610
+Cevap: Yerel olmayan her erişim, iç
+içe derinlik ne olursa olsun tek adımda yapılır.
+
+299
+00:19:35,467 --> 00:19:36,467
+Soru 5.
+
+300
+00:19:36,532 --> 00:19:40,025
+Arabellek aşımı saldırısında
+saldırgan neyi hedefler?
+
+301
+00:19:44,367 --> 00:19:46,689
+Cevap: Yığıttaki dönüş adresini bozarak,
+
+302
+00:19:46,729 --> 00:19:51,218
+fonksiyon döndüğünde kendi yerleştirdiği
+zararlı koda atlanmasını sağlamayı.
+
+303
+00:19:56,067 --> 00:19:57,655
+Bölüm 9'u tamamladık!
+
+304
+00:19:57,975 --> 00:20:02,272
+Bir sonraki bölümde büyük programların
+modüllere nasıl ayrıştırıldığını,
+
+305
+00:20:02,312 --> 00:20:05,986
+soyutlamayı, bilgi saklamayı ve ayrı
+derlemeyi inceleyeceğiz.
+
+306
+00:20:06,833 --> 00:20:11,874
+Pratik için, main'den başlayan küçük bir çağrı
+zinciri çizin ve her adımda yığıtın,
+
+307
+00:20:11,914 --> 00:20:16,138
+dinamik ve statik bağların
+nasıl göründüğünü kâğıt üzerinde gösterin.
+
+308
+00:20:16,458 --> 00:20:19,301
+İzlediğiniz için teşekkürler, görüşmek üzere!
