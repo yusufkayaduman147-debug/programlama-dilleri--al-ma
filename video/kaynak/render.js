@@ -4,16 +4,17 @@ const fs = require("fs");
 const path = require("path");
 const { execFileSync } = require("child_process");
 const { chromium } = require("playwright");
-const scenes = require("./scenes");
+const scenes = require(path.join(process.env.CHDIR || __dirname, "scenes.js"));
 
 const FPS = 30, LEAD = 0.3, TAIL = 0.55;
-const ROOT = __dirname;
+const ROOT = process.env.CHDIR || __dirname;
+const BRAND = process.env.BRAND || "Programlama Dilleri · Bölüm 1";
 const [mode, ...only] = process.argv.slice(2);
 const todo = scenes.filter((s) => !only.length || only.includes(s.id));
 
 function pageHtml(s) {
-  const hdr = s.chip === "" ? "" : `<div class="chip">${s.chip}</div><div class="brand">Programlama Dilleri · Bölüm 1</div>`;
-  return `<!doctype html><html lang="tr"><head><meta charset="utf-8"><link rel="stylesheet" href="../style.css"></head>
+  const hdr = s.chip === "" ? "" : `<div class="chip">${s.chip}</div><div class="brand">${BRAND}</div>`;
+  return `<!doctype html><html lang="tr"><head><meta charset="utf-8"><link rel="stylesheet" href="file://${path.join(__dirname, "style.css")}"></head>
 <body><div id="stage">${hdr}${s.html}</div>
 <script>
 window.applyStep = (k) => {
@@ -68,7 +69,10 @@ async function video(browser, s, durs) {
   let idx = 0;
   const shot = async (frames) => {
     const f = `f${String(idx++).padStart(5, "0")}.jpg`;
-    await page.screenshot({ path: path.join(fdir, f), type: "jpeg", quality: 92 });
+    for (let t = 0; ; t++) {
+      try { await page.screenshot({ path: path.join(fdir, f), type: "jpeg", quality: 92, timeout: 120000 }); break; }
+      catch (e) { if (t >= 3) throw e; console.error("retry screenshot", s.id, f); }
+    }
     list.push([f, frames]);
   };
   const steps = [];
@@ -101,7 +105,7 @@ async function video(browser, s, durs) {
   fs.mkdirSync(path.join(ROOT, "clips"), { recursive: true });
   const totalFrames = list.reduce((a, [, fr]) => a + fr, 0);
   execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", path.join(fdir, "list.txt"),
-    "-vf", `fps=${FPS},format=yuv420p`, "-frames:v", String(totalFrames), "-c:v", "libx264", "-preset", "medium", "-crf", "19",
+    "-vf", `fps=${FPS},format=yuv420p`, "-frames:v", String(totalFrames), "-c:v", "libx264", "-preset", "medium", "-crf", "23",
     "-tune", "animation", "-g", "120", path.join(ROOT, "clips", `${s.id}.mp4`)]);
   fs.mkdirSync(path.join(ROOT, "timeline"), { recursive: true });
   fs.writeFileSync(path.join(ROOT, "timeline", `${s.id}.json`), JSON.stringify({ id: s.id, totalFrames, steps }));
@@ -112,7 +116,7 @@ async function video(browser, s, durs) {
 (async () => {
   const browser = await chromium.launch({ executablePath: process.env.CHROME || undefined });
   const durs = mode === "video" ? JSON.parse(fs.readFileSync(path.join(ROOT, "audio", "durations.json"))) : null;
-  const conc = mode === "video" ? 3 : 4;
+  const conc = 4;
   const queue = [...todo];
   await Promise.all(Array.from({ length: conc }, async () => {
     while (queue.length) {

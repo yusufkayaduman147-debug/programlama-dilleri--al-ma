@@ -88,7 +88,7 @@ def main():
         b = min(max(b, a + 1.0), nxt - 0.04, b + 0.8) if nxt - 0.04 > a else b
         srt.append(f"{i + 1}\n{ts(a)} --> {ts(b)}\n{wrap2(txt)}\n")
     open(os.path.join(tmp, "subs.srt"), "w").write("\n".join(srt))
-    md = [";FFMETADATA1", "title=Programlama Dilleri — Bölüm 1: Giriş", "artist=Konu anlatımı", "language=tur"]
+    md = [";FFMETADATA1", "title=" + (sys.argv[3] if len(sys.argv) > 3 else "Programlama Dilleri — Bölüm 1: Giriş"), "artist=Konu anlatımı", "language=tur"]
     for i, (fs, name) in enumerate(chapters):
         fe = chapters[i + 1][0] if i + 1 < len(chapters) else total_frames
         md += ["[CHAPTER]", "TIMEBASE=1/30", f"START={fs}", f"END={fe}", f"title={name}"]
