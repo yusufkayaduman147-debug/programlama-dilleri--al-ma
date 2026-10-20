@@ -7,6 +7,12 @@ import sys, os, re, json, glob
 GAP = 0.32  # silence between sentences of one step
 
 SUBS = [
+    (r"\bbreak", "breyk"), (r"\bcontinue", "kontinyu"), (r"\bswitch", "suiç"), (r"\b[Cc]ase", "keys"), (r"\bdefault\b", "difolt"), (r"\belsif\b", "els if"), (r"\bexit\b", "egzit"),
+    (r"\bfor-each\b", "for iç"), (r"\bforeach\b", "for iç"), (r"\beach\b", "iç"), (r"\bupto\b", "ap tu"), (r"\bnext\b", "nekst"), (r"\breset\b", "riset"), (r"\bcurrent\b", "karınt"),
+    (r"\bflag\b", "fleg"), (r"\bsubtotal", "sab toutıl"), (r"\btotal", "toutıl"), (r"\brange\b", "reync"), (r"\breverse\b", "rivörs"), (r"\bbody\b", "badi"), (r"\botherwise\b", "adırvayz"),
+    (r"\buntil\b", "antil"), (r"\brepeat\b", "ripiit"), (r"\bresult", "rizalt"), (r"\bvalue\b", "velyu"), (r"\bdo\b", "du"), (r"\bwhen\b", "ven"), (r"\bCYCLE\b", "saykıl"), (r"\bCSP\b", "Si Es Pi"),
+    (r"QuickBASIC", "Kuik Beyzik"), (r"\bIterator\b", "İtereytır"), (r"hasNext", "hes nekst"), (r"myList", "may list"), (r"Dijkstra", "Daykstra"), (r"\bch'ye", "si eyç'e"), (r"\bsecond", "sekınd"),
+    (r"\bfirst\b", "först"), (r"\bsay1", "say bir"), (r"\bsay2", "say iki"), (r"\bsay3", "say üç"), (r"ALGOL W\b", "Algol Dabılyu"), (r"\bto\b", "tu"), (r"\breps\b", "reps"), (r"\blast'tir", "last'tır"),
     (r"\bALLOCATE\b", "alokeyt"), (r"\bASCII", "aski"), (r"ArrayList", "Erey List"), (r"\bC99\b", "Si doksan dokuz"), (r"\bCONS\b", "kons"), (r"MOVE CORRESPONDING", "muuv korespanding"),
     (r"\bCPU\b", "Si Pi Yu"), (r"\bCUBE\b", "kyub"), (r"\bDay1", "Dey bir"), (r"\bDay2", "Dey iki"), (r"\bDays\b", "Deyz"), (r"\bDays'", "Deyz'"), (r"\bDecimal\b", "Desimal"), (r"\bdecimal\b", "desimal"),
     (r"Dictionary", "Dikşıneri"), (r"\bFloat\b", "flout"), (r"HashMap", "haş mep"), (r"\b[Hh]ash\b", "haş"), (r"\bIEEE\b", "Ay tripıl i"), (r"\bIndex\b", "İndeks"), (r"IsciAdi", "İşçi Adı"), (r"IsciKaydi", "İşçi Kaydı"),
