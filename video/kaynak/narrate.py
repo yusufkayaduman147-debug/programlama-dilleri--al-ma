@@ -12,7 +12,7 @@ SUBS = [
     (r"ASSIGN_OP", "esayn op"), (r"SEMICOLON", "semikolın"), (r"\bfactor\b", "faktör"), (r"\bexp\b", "eksp"), (r"\baddop\b", "ed op"), (r"\bmulop\b", "mal op"),
     (r"\bnum\b", "nam"), (r"\bFIRST\b", "först"), (r"\bFOLLOW\b", "falov"), (r"LALR\(1\)", "La Lar bir"), (r"SLR\(1\)", "Es El Ar bir"), (r"LR\(0\)", "El Ar sıfır"),
     (r"LR\(1\)", "El Ar bir"), (r"LL\(1\)", "El El bir"), (r"\bLL\b", "El El"), (r"\bLR\b", "El Ar"), (r"\bACTION\b", "ekşın"), (r"\bGOTO\b", "go tu"),
-    (r"\bshift", "şift"), (r"\breduce", "ridyus"), (r"\bhandle\b", "hendıl"), (r"\byacc\b", "yak"), (r"\bbison\b", "bayzın"), (r"\bANTLR\b", "Antlır"),
+    (r"\bshift", "şift"), (r"\breduce", "rıdyuus"), (r"\bhandle\b", "hendıl"), (r"\byacc\b", "yak"), (r"\bbison\b", "bayzın"), (r"\bANTLR\b", "Antlır"),
     (r"\bid\b", "ay di"), (r"\bEOF\b", "i o ef"), (r"lookahead", "luk ehed"), (r"\bsum1\b", "sam bir"), (r"\bsum\b", "sam"), (r"\bint\b", "int"),
     (r"\bEBNF", "E Bi En Ef"), (r"Noam Chomsky", "Noam Çomski"), (r"\bCFG\b", "Si Ef Ci"), (r"lexeme", "leksim"), (r"\bindex\b", "indeks"),
     (r"\bstmts\b", "steytmınts"), (r"\bstmt\b", "steytmınt"), (r"expr(\d)", r"ekspreşın \1"), (r"\bexpr\b", "ekspreşın"), (r"\bterm\b", "törm"),

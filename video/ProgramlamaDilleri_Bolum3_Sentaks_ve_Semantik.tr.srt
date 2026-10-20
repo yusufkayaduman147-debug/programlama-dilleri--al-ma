@@ -1,0 +1,2214 @@
+1
+00:00:00,300 --> 00:00:01,235
+Merhaba!
+
+2
+00:00:01,275 --> 00:00:04,967
+Programlama Dilleri dersinin üçüncü
+bölümüne hoş geldiniz.
+
+3
+00:00:05,833 --> 00:00:11,348
+Bu bölümde bir programlama dilinin nasıl
+kesin ve açık biçimde tanımlandığını öğreneceğiz.
+
+4
+00:00:11,668 --> 00:00:14,957
+Önce dilin biçimini,
+yani sentaksını; sonra anlamını,
+
+5
+00:00:14,997 --> 00:00:18,138
+yani semantiğini tanımlamanın
+yollarını göreceğiz.
+
+6
+00:00:18,458 --> 00:00:23,409
+Bu bölüm biraz teknik; o yüzden her
+kavramı adım adım, örneklerle ilerleteceğiz.
+
+7
+00:00:24,633 --> 00:00:26,189
+Yol haritamıza bakalım.
+
+8
+00:00:27,033 --> 00:00:30,203
+Önce sentaks ile semantiğin farkını göreceğiz.
+
+9
+00:00:30,523 --> 00:00:35,345
+Sonra sentaksı tanımlamanın
+genel problemine ve biçimsel yöntemlere,
+
+10
+00:00:35,385 --> 00:00:37,458
+yani BNF ve EBNF'e geçeceğiz.
+
+11
+00:00:38,300 --> 00:00:42,608
+Ardından sentaksın yetmediği yerde devreye
+giren özellik gramerlerini,
+
+12
+00:00:42,648 --> 00:00:47,825
+son olarak da programların anlamını tanımlayan üç
+yaklaşımı inceleyeceğiz: işlemsel,
+
+13
+00:00:47,865 --> 00:00:50,163
+aksiyomatik ve denotasyonel semantik.
+
+14
+00:00:51,367 --> 00:00:53,283
+Bölüm 3.1: Giriş.
+
+15
+00:00:53,603 --> 00:00:55,006
+Her programlama dilinde,
+
+16
+00:00:55,046 --> 00:00:59,617
+geçerli programları belirleyen
+kurallar vardır ve bu kurallar ikiye ayrılır.
+
+17
+00:00:59,937 --> 00:01:04,099
+Sentaks, yani sözdizimi, ifadelerin ve
+program birimlerinin biçimidir;
+
+18
+00:01:04,139 --> 00:01:08,161
+örneğin her deyimin noktalı
+virgülle bitmesi bir sentaks kuralıdır.
+
+19
+00:01:08,481 --> 00:01:10,562
+Semantik ise bu yapıların anlamıdır;
+
+20
+00:01:10,602 --> 00:01:15,199
+örneğin bir değişkenin kullanılmadan
+önce tanımlanması bir semantik kuralıdır.
+
+21
+00:01:16,033 --> 00:01:18,657
+Farkı günlük hayattan bir örnekle görelim.
+
+22
+00:01:18,977 --> 00:01:22,007
+Tarih gün nokta ay
+nokta yıl biçiminde yazılsın.
+
+23
+00:01:22,327 --> 00:01:28,130
+03.04.2025 yazısının biçimi
+her yerde aynıdır; ama Türkiye'de 3 Nisan,
+
+24
+00:01:28,170 --> 00:01:33,178
+ay-gün sırası kullanan
+Amerika'da ise 4 Mart anlamına gelir.
+
+25
+00:01:33,498 --> 00:01:35,379
+Biçim aynı, anlam farklı.
+
+26
+00:01:36,233 --> 00:01:40,589
+Programlarda da küçük bir sentaks
+farkı büyük bir anlam farkı yaratabilir.
+
+27
+00:01:40,909 --> 00:01:44,264
+Bu iki döngüde tek
+fark artı artı işaretinin yeri.
+
+28
+00:01:44,584 --> 00:01:48,979
+Ama birincisinde i önce artırılıp yazılır,
+ikincisinde eski değer yazılır;
+
+29
+00:01:49,019 --> 00:01:51,776
+dolayısıyla diziye farklı değerler kaydedilir.
+
+30
+00:01:53,000 --> 00:01:57,342
+Bir dilin soyut sözdizimi,
+her yapıdaki anlamlı bileşenleri tanımlar.
+
+31
+00:01:57,662 --> 00:02:02,666
+Bakın: artı a b önek, a artı
+b araek, a b artı ise sonek gösterimidir.
+
+32
+00:02:03,500 --> 00:02:08,678
+Üçünde de anlamlı bileşenler aynıdır: bir artı
+işlemcisi ve a ile b işlenenleri.
+
+33
+00:02:08,998 --> 00:02:11,547
+Bu yüzden üçü de aynı ağaçla gösterilir.
+
+34
+00:02:11,867 --> 00:02:13,549
+İşlemci ve işlenen yapısını,
+
+35
+00:02:13,589 --> 00:02:18,449
+yazılış biçiminden bağımsız gösteren
+bu ağaçlara soyut sözdizim ağaçları denir.
+
+36
+00:02:19,300 --> 00:02:21,947
+Bu fikir diğer yapılara da genişletilebilir.
+
+37
+00:02:22,267 --> 00:02:25,542
+Örneğin if a küçük eşit b then
+a else b ifadesi,
+
+38
+00:02:25,582 --> 00:02:30,417
+üç çocuklu bir if düğümüyle
+gösterilir: koşul, then kolu ve else kolu.
+
+39
+00:02:31,633 --> 00:02:35,190
+Bölüm 3.2: Genel sentaks tanımlama problemi.
+
+40
+00:02:35,510 --> 00:02:37,297
+Önce terimleri netleştirelim.
+
+41
+00:02:37,617 --> 00:02:41,899
+Bir cümle, herhangi bir alfabedeki
+karakterlerden oluşan bir dizidir.
+
+42
+00:02:42,219 --> 00:02:45,133
+Bir dil ise cümlelerden oluşan bir kümedir.
+
+43
+00:02:46,000 --> 00:02:50,398
+Lexeme, bir dilin en alt düzeydeki
+sözdizimsel birimidir: çarpı işareti,
+
+44
+00:02:50,438 --> 00:02:53,767
+sum gibi bir isim ya da begin gibi
+bir anahtar kelime.
+
+45
+00:02:54,633 --> 00:02:57,152
+Token ise lexeme'lerin bir kategorisidir.
+
+46
+00:02:57,472 --> 00:03:01,976
+Örneğin tanıtıcı token'ının toplam, sonuc
+gibi pek çok lexeme'i olabilir.
+
+47
+00:03:02,296 --> 00:03:05,292
+Bazı token'ların ise
+tek bir olası lexeme'i vardır;
+
+48
+00:03:05,332 --> 00:03:08,308
+toplama operatörünün
+tek lexeme'i artı işaretidir.
+
+49
+00:03:09,167 --> 00:03:13,486
+Şu C deyimine bakalım: index eşittir
+2 çarpı count artı 17.
+
+50
+00:03:13,806 --> 00:03:18,860
+Sözcüksel analiz bu satırı lexeme'lere ayırır
+ve her birinin token'ını belirler:
+
+51
+00:03:18,900 --> 00:03:24,123
+index ve count tanıtıcı, 2 ve 17 tam
+sayı sabiti, diğerleri operatör ve noktalama.
+
+52
+00:03:24,443 --> 00:03:28,761
+Lexeme'ler arasındaki boşlukların
+programın anlamına bir etkisi yoktur.
+
+53
+00:03:29,967 --> 00:03:35,009
+Bir derleyicide program önce sözcüksel
+analizden, sonra sözdizim analizinden,
+
+54
+00:03:35,049 --> 00:03:37,294
+sonra da anlamsal analizden geçer.
+
+55
+00:03:37,614 --> 00:03:40,296
+Her aşama farklı türde hataları yakalar.
+
+56
+00:03:41,133 --> 00:03:44,071
+Sözcüksel hatalar,
+token düzeyindeki hatalardır:
+
+57
+00:03:44,111 --> 00:03:47,112
+x dolar y gibi geçersiz bir
+karakter içeren isim,
+
+58
+00:03:47,152 --> 00:03:51,805
+rakamla başlayan bir tanıtıcı
+ya da dilde olmayan bir et işareti operatörü.
+
+59
+00:03:52,667 --> 00:03:56,288
+Sözdizim hatalarında
+ise her token tek başına geçerlidir,
+
+60
+00:03:56,328 --> 00:03:59,885
+ama dizilişleri gramere
+uymaz: X eşittir noktalı virgül,
+
+61
+00:03:59,925 --> 00:04:04,099
+ya da Y eşittir x artı noktalı virgül
+gibi yarım kalmış ifadeler.
+
+62
+00:04:04,933 --> 00:04:09,232
+Anlamsal hatalarda sözdizimi
+tamamen doğrudur, ama anlam yanlıştır:
+
+63
+00:04:09,272 --> 00:04:12,446
+int olarak tanımlanmış x'e bir
+metin atamak gibi.
+
+64
+00:04:12,766 --> 00:04:16,793
+Bunu yakalamak için derleyicinin sembol
+tablosuna bakması gerekir.
+
+65
+00:04:18,000 --> 00:04:21,320
+Bir dili biçimsel olarak
+tanımlamanın iki yolu vardır.
+
+66
+00:04:22,167 --> 00:04:23,722
+Birincisi tanıyıcıdır.
+
+67
+00:04:24,042 --> 00:04:24,533
+Tanıyıcı,
+
+68
+00:04:24,573 --> 00:04:28,956
+bir girdi dizisini okur ve bu
+dizinin dile ait olup olmadığına karar verir:
+
+69
+00:04:28,996 --> 00:04:29,996
+kabul ya da red.
+
+70
+00:04:30,259 --> 00:04:33,353
+Derleyicinin sözdizim
+analizcisi bir tanıyıcıdır.
+
+71
+00:04:33,673 --> 00:04:36,355
+Bunu dördüncü bölümde ayrıntılı göreceğiz.
+
+72
+00:04:37,200 --> 00:04:38,568
+İkincisi üreteçtir.
+
+73
+00:04:38,888 --> 00:04:42,395
+Üreteç, dilin cümlelerini üreten
+bir mekanizmadır.
+
+74
+00:04:42,715 --> 00:04:46,967
+Düzenli ifadeler ve içerikten bağımsız
+gramerler birer üreteçtir.
+
+75
+00:04:47,287 --> 00:04:49,459
+Bu bölümde asıl odaklanacağımız araç,
+
+76
+00:04:49,499 --> 00:04:53,922
+programlama dillerinin sentaksını tanımlamak
+için kullanılan gramerlerdir.
+
+77
+00:04:55,133 --> 00:04:59,255
+Bölüm 3.3: Sentaks
+tanımlamanın biçimsel yöntemleri.
+
+78
+00:04:59,575 --> 00:05:03,708
+Bir dilin sözdizimini anlatmak
+için kullanılan dile metadil denir.
+
+79
+00:05:04,028 --> 00:05:07,994
+Programlama dilleri için
+en çok bilinen metadil BNF'tir.
+
+80
+00:05:08,314 --> 00:05:10,938
+Ama hikâyesi iki farklı kaynaktan gelir.
+
+81
+00:05:11,800 --> 00:05:13,248
+Dilbilimci Noam Chomsky,
+
+82
+00:05:13,288 --> 00:05:17,961
+ellilerin ortasında doğal dillerin sentaksını
+tanımlamak için dil üreteçleri
+
+83
+00:05:18,001 --> 00:05:22,837
+üzerinde çalıştı ve içerikten bağımsız diller
+adı verilen bir sınıf tanımladı.
+
+84
+00:05:23,157 --> 00:05:27,745
+Bu dillerde her kural, A ok gama
+biçimindedir: sol tarafta tek bir sembol,
+
+85
+00:05:27,785 --> 00:05:29,661
+sağ tarafta bir sembol dizisi.
+
+86
+00:05:29,981 --> 00:05:33,371
+Neredeyse bütün programlama
+dilleri bu sınıfa dayanır.
+
+87
+00:05:34,233 --> 00:05:36,627
+Neredeyse aynı zamanda John Backus,
+
+88
+00:05:36,667 --> 00:05:40,144
+ALGOL 58'i tanımlamak için bir
+gösterim icat etti.
+
+89
+00:05:40,464 --> 00:05:46,140
+Peter Naur bu gösterimi ALGOL 60 için
+biraz değiştirdi ve ortaya Backus-Naur Formu,
+
+90
+00:05:46,180 --> 00:05:47,350
+kısaca BNF çıktı.
+
+91
+00:05:48,200 --> 00:05:53,040
+Sonradan anlaşıldı ki BNF ile
+içerikten bağımsız gramerler eşdeğerdir.
+
+92
+00:05:53,360 --> 00:05:57,598
+BNF, başka bir dili tanımlamak için
+kullanılan bir metadildir.
+
+93
+00:05:58,800 --> 00:06:02,410
+BNF ile tanımlanan
+bir gramer dört bileşenden oluşur.
+
+94
+00:06:03,267 --> 00:06:07,874
+Birincisi terminal sembollerdir:
+daha alt parçalara ayrılamayan atomik birimler,
+
+95
+00:06:07,914 --> 00:06:09,598
+yani lexeme'ler ve token'lar.
+
+96
+00:06:09,918 --> 00:06:12,683
+Artı, çarpı, if, büyük eşit ya da begin gibi.
+
+97
+00:06:13,533 --> 00:06:16,074
+İkincisi terminal olmayan sembollerdir.
+
+98
+00:06:16,394 --> 00:06:18,366
+Bunlar dilde doğrudan görünmez;
+
+99
+00:06:18,406 --> 00:06:21,869
+kurallarla tanımlanan
+ara soyutlamalardır ve küçüktür,
+
+100
+00:06:21,909 --> 00:06:26,969
+büyüktür işaretleri arasında yazılır: stmt,
+yani deyim; expr, yani ifade gibi.
+
+101
+00:06:27,833 --> 00:06:29,424
+Üçüncüsü kurallardır.
+
+102
+00:06:29,744 --> 00:06:33,913
+Her kuralın sol tarafında tek
+bir terminal olmayan, ardından bir ok,
+
+103
+00:06:33,953 --> 00:06:38,718
+sağ tarafında ise terminal ve terminal
+olmayanlardan oluşan bir dizi bulunur.
+
+104
+00:06:39,038 --> 00:06:43,315
+Bir terminal olmayanın birden
+çok tanımı varsa, bunlar dikey çizgiyle,
+
+105
+00:06:43,355 --> 00:06:44,712
+yani veya ile ayrılır.
+
+106
+00:06:45,032 --> 00:06:46,054
+Örneğin bir deyim,
+
+107
+00:06:46,094 --> 00:06:50,222
+tek bir deyim ya da begin ile end arasında
+bir deyim listesi olabilir.
+
+108
+00:06:51,067 --> 00:06:55,870
+Dördüncüsü başlangıç sembolüdür:
+dilin ana yapısını gösteren terminal olmayan,
+
+109
+00:06:55,910 --> 00:06:56,910
+örneğin program.
+
+110
+00:06:57,767 --> 00:06:59,103
+Bir önemli nokta daha:
+
+111
+00:06:59,143 --> 00:07:03,395
+Sol taraftaki sembol sağ tarafta
+da geçiyorsa kural özyinelemelidir.
+
+112
+00:07:03,715 --> 00:07:07,456
+Tanıtıcı listesi kuralı,
+ya tek bir tanıtıcı ya da bir tanıtıcı,
+
+113
+00:07:07,496 --> 00:07:09,978
+virgül ve yine bir tanıtıcı listesi diyor.
+
+114
+00:07:10,298 --> 00:07:14,872
+Böylece sonlu sayıda kuralla
+istenen uzunlukta listeler tanımlanabiliyor.
+
+115
+00:07:16,100 --> 00:07:19,202
+Gramer kullanarak
+dildeki cümleleri üretebiliriz.
+
+116
+00:07:19,522 --> 00:07:24,119
+Başlangıç sembolünden başlayıp
+kuralları sırayla uygulamaya türetme denir.
+
+117
+00:07:24,439 --> 00:07:28,863
+Soldaki gramer, atama deyimlerinden
+oluşan küçük bir dili tanımlıyor.
+
+118
+00:07:29,183 --> 00:07:32,421
+Şimdi a eşittir b
+artı const cümlesini türetelim.
+
+119
+00:07:33,267 --> 00:07:35,050
+Başlangıç sembolü program.
+
+120
+00:07:35,370 --> 00:07:38,760
+İlk kural program
+yerine stmts yazmamızı söylüyor.
+
+121
+00:07:39,600 --> 00:07:42,352
+stmts, tek bir stmt olabilir.
+
+122
+00:07:42,672 --> 00:07:46,062
+stmt ise var eşittir expr biçimindedir.
+
+123
+00:07:46,900 --> 00:07:49,106
+En soldaki terminal olmayan var.
+
+124
+00:07:49,426 --> 00:07:51,063
+Onu a ile değiştiriyoruz.
+
+125
+00:07:51,900 --> 00:07:53,741
+Şimdi en soldaki expr.
+
+126
+00:07:54,061 --> 00:07:56,158
+Onu term artı term ile açıyoruz.
+
+127
+00:07:57,000 --> 00:07:58,892
+Soldaki term, bir var olsun.
+
+128
+00:07:59,733 --> 00:08:01,010
+O var da b olsun.
+
+129
+00:08:01,867 --> 00:08:03,953
+Son olarak kalan term, const olsun.
+
+130
+00:08:04,273 --> 00:08:07,080
+Artık cümlede hiç terminal olmayan kalmadı;
+
+131
+00:08:07,120 --> 00:08:11,158
+türetme bitti ve a eşittir
+b artı const cümlesini elde ettik.
+
+132
+00:08:12,000 --> 00:08:15,834
+Dikkat edin: her adımda
+en soldaki terminal olmayanı açtık.
+
+133
+00:08:16,154 --> 00:08:18,139
+Buna sola dayalı türetme denir.
+
+134
+00:08:18,459 --> 00:08:22,249
+Farklı kurallar seçerek
+dildeki farklı cümleleri üretebiliriz.
+
+135
+00:08:23,467 --> 00:08:26,230
+Türetmeyle ilgili birkaç terimi netleştirelim.
+
+136
+00:08:27,067 --> 00:08:31,362
+Türetme sırasında oluşan her
+sembol dizisine cümlesel biçim denir.
+
+137
+00:08:31,682 --> 00:08:35,308
+Örneğin a eşittir term artı term
+bir cümlesel biçimdir.
+
+138
+00:08:36,167 --> 00:08:40,416
+Yalnızca terminal semboller
+içeren cümlesel biçime ise cümle denir.
+
+139
+00:08:40,736 --> 00:08:43,217
+a eşittir b artı const bir cümledir.
+
+140
+00:08:44,067 --> 00:08:47,691
+Her adımda en soldaki terminal
+olmayanı açarsak sola dayalı,
+
+141
+00:08:47,731 --> 00:08:51,090
+en sağdakini açarsak
+sağa dayalı türetme yapmış oluruz.
+
+142
+00:08:51,410 --> 00:08:54,115
+Bir türetme bunların hiçbiri de olmayabilir.
+
+143
+00:08:54,967 --> 00:08:59,133
+Biraz daha uzun bir örnek: a eşittir b
+çarpı parantez a artı c.
+
+144
+00:08:59,453 --> 00:09:00,236
+Bu cümle, id,
+
+145
+00:09:00,276 --> 00:09:05,909
+expr ve assign kurallarını içeren bir
+gramerle dokuz adımda sola dayalı olarak türetilir.
+
+146
+00:09:06,229 --> 00:09:08,473
+Ekranda adımları takip edebilirsiniz;
+
+147
+00:09:08,513 --> 00:09:11,786
+her adımda yine en
+soldaki terminal olmayan açılıyor.
+
+148
+00:09:13,000 --> 00:09:16,471
+Gramerler, cümlelerin
+hiyerarşik yapısını da gösterebilir.
+
+149
+00:09:16,791 --> 00:09:18,916
+Bu yapılara ayrıştırma ağacı denir.
+
+150
+00:09:19,236 --> 00:09:23,558
+Az önce türettiğimiz a eşittir
+b artı const cümlesinin ağacını kuralım.
+
+151
+00:09:23,878 --> 00:09:26,433
+Kökte başlangıç sembolü program var.
+
+152
+00:09:27,267 --> 00:09:30,521
+program'dan stmts, ondan da stmt dalı çıkıyor.
+
+153
+00:09:31,367 --> 00:09:35,114
+stmt üç çocuğa ayrılıyor: var,
+eşittir ve expr.
+
+154
+00:09:35,434 --> 00:09:37,338
+var'ın altında a yaprağı var.
+
+155
+00:09:38,200 --> 00:09:41,680
+expr de üç çocuğa
+ayrılıyor: term, artı ve term.
+
+156
+00:09:42,533 --> 00:09:46,922
+Soldaki term, var üzerinden
+b'ye; sağdaki term ise const'a iniyor.
+
+157
+00:09:47,767 --> 00:09:52,342
+Gördüğünüz gibi iç düğümler terminal
+olmayanlar, yapraklar ise terminallerdir.
+
+158
+00:09:52,662 --> 00:09:56,316
+Yaprakları soldan sağa
+okuduğunuzda cümleyi elde edersiniz.
+
+159
+00:09:56,636 --> 00:10:00,432
+Ayrıştırma ağaçları ve türetmeler
+birbirinden elde edilebilir.
+
+160
+00:10:01,633 --> 00:10:02,252
+Bir gramer,
+
+161
+00:10:02,292 --> 00:10:07,682
+iki ya da daha fazla farklı ayrıştırma ağacına sahip
+bir cümle üretebiliyorsa belirsizdir.
+
+162
+00:10:08,002 --> 00:10:12,461
+Bu gramere bakalım: bir ifade,
+ifade işlemci ifade ya da bir sabittir;
+
+163
+00:10:12,501 --> 00:10:14,494
+işlemci ise bölü ya da eksidir.
+
+164
+00:10:15,333 --> 00:10:18,079
+const eksi const
+bölü const cümlesini düşünelim.
+
+165
+00:10:18,399 --> 00:10:23,801
+Somut olsun diye sabitler yerine 8, 4 ve
+2 yazalım: 8 eksi 4 bölü 2.
+
+166
+00:10:24,667 --> 00:10:29,894
+Birinci ağaçta eksi işlemi ağacın
+daha derininde; yani önce 8 eksi 4 hesaplanır,
+
+167
+00:10:29,934 --> 00:10:31,580
+sonra sonuç 2'ye bölünür.
+
+168
+00:10:32,433 --> 00:10:37,498
+İkinci ağaçta ise bölme derinde: önce 4
+bölü 2, sonra 8'den çıkarılır.
+
+169
+00:10:38,333 --> 00:10:42,316
+Değerlere bakın: birinci
+ağaç 2, ikinci ağaç 6 sonucunu veriyor.
+
+170
+00:10:42,636 --> 00:10:44,702
+Aynı cümle, iki farklı anlam!
+
+171
+00:10:45,022 --> 00:10:48,231
+Bir derleyici sentaksa
+bakarak anlamı belirlediği için,
+
+172
+00:10:48,271 --> 00:10:51,520
+programlama dillerinin gramerleri
+belirsiz olmamalıdır.
+
+173
+00:10:52,733 --> 00:10:56,855
+Çözüm, operatörlerin öncelik
+seviyelerini gramerin içine gömmektir.
+
+174
+00:10:57,175 --> 00:11:01,092
+Bu yeni gramerde ifade, ifade
+eksi terim ya da tek bir terimdir;
+
+175
+00:11:01,132 --> 00:11:04,224
+terim ise terim bölü sabit ya da
+tek bir sabittir.
+
+176
+00:11:05,067 --> 00:11:09,638
+Fikir şu: her öncelik seviyesi için ayrı bir
+terminal olmayan kullanıyoruz.
+
+177
+00:11:09,958 --> 00:11:16,216
+Bölme term seviyesinde tanımlandığı için ağaçta her zaman
+eksiden daha derinde kalır ve önce hesaplanır.
+
+178
+00:11:17,067 --> 00:11:21,641
+Aynı cümleyi bu gramerle türettiğimizde
+artık tek bir ağaç elde ediliyor.
+
+179
+00:11:22,500 --> 00:11:27,887
+Önce 4 bölü 2, yani 2 hesaplanır; sonra
+8'den çıkarılır ve sonuç 6 olur.
+
+180
+00:11:28,207 --> 00:11:32,035
+Matematikteki işlem önceliğiyle tam
+uyumlu, tek bir anlam.
+
+181
+00:11:33,267 --> 00:11:36,426
+Peki aynı öncelikteki
+operatörler yan yana gelirse?
+
+182
+00:11:36,746 --> 00:11:40,856
+10 eksi 4 eksi 3 ifadesi soldan mı
+hesaplanmalı, sağdan mı?
+
+183
+00:11:41,176 --> 00:11:45,112
+Buna operatör birleşirliği
+denir ve o da gramerle gösterilebilir.
+
+184
+00:11:45,967 --> 00:11:50,123
+Bu gramerde kural sola
+özyinelemeli: ifade, ifade eksi sabit.
+
+185
+00:11:50,443 --> 00:11:55,197
+Ağaç sola doğru büyüyor ve
+önce 10 eksi 4, yani 6, sonra 6 eksi 3,
+
+186
+00:11:55,237 --> 00:11:56,689
+yani 3 hesaplanıyor.
+
+187
+00:11:57,009 --> 00:11:58,009
+Doğru cevap.
+
+188
+00:11:58,767 --> 00:12:03,410
+Kuralı sağa özyinelemeli
+yazarsak, yani ifade, sabit eksi ifade,
+
+189
+00:12:03,450 --> 00:12:08,573
+ağaç sağa doğru büyür: önce
+4 eksi 3, yani 1, sonra 10 eksi 1, yani 9.
+
+190
+00:12:08,893 --> 00:12:10,066
+Yanlış cevap!
+
+191
+00:12:10,900 --> 00:12:13,929
+Genel kural şu: sol özyineleme sola birleşimi,
+
+192
+00:12:13,969 --> 00:12:16,705
+sağ özyineleme sağa birleşimi ifade eder.
+
+193
+00:12:17,025 --> 00:12:22,876
+Üs alma gibi sağa birleşimli operatörler
+için ise sağ özyineleme tam da istediğimiz şeydir.
+
+194
+00:12:24,100 --> 00:12:29,551
+BNF'in okunabilirliğini ve yazılabilirliğini
+artırmak için birkaç ekleme yapıldı;
+
+195
+00:12:29,591 --> 00:12:32,777
+bu sürüme genişletilmiş BNF,
+kısaca EBNF denir.
+
+196
+00:12:33,097 --> 00:12:34,652
+Üç yeni gösterim var.
+
+197
+00:12:35,500 --> 00:12:38,612
+Birincisi köşeli parantez:
+seçimlik kısmı gösterir;
+
+198
+00:12:38,652 --> 00:12:41,990
+içindeki bölüm hiç olmayabilir ya
+da bir kez olabilir.
+
+199
+00:12:42,310 --> 00:12:45,156
+if deyiminin else kısmı buna güzel bir örnek.
+
+200
+00:12:45,476 --> 00:12:48,201
+BNF'te bunun için iki ayrı kural gerekirdi.
+
+201
+00:12:49,067 --> 00:12:51,806
+İkincisi süslü parantez: yinelemeyi gösterir;
+
+202
+00:12:51,846 --> 00:12:55,429
+içindeki bölüm sıfır ya
+da daha fazla kez tekrar edebilir.
+
+203
+00:12:55,749 --> 00:13:00,583
+Tanıtıcı listesi artık özyineleme olmadan, tek
+kuralla yazılıyor: bir tanıtıcı,
+
+204
+00:13:00,623 --> 00:13:03,276
+ardından istenen sayıda virgül ve tanıtıcı.
+
+205
+00:13:04,133 --> 00:13:06,481
+Üçüncüsü parantez içinde dikey çizgi:
+
+206
+00:13:06,521 --> 00:13:09,813
+bir gruptan tek bir
+elemanın seçileceğini gösterir.
+
+207
+00:13:10,133 --> 00:13:13,515
+Pascal'ın for deyiminde
+to ya da downto'dan biri seçilir.
+
+208
+00:13:14,367 --> 00:13:19,192
+Farkı yan yana görelim: BNF'te altı satır
+tutan ifade ve terim tanımı,
+
+209
+00:13:19,232 --> 00:13:21,039
+EBNF'te iki satıra iniyor.
+
+210
+00:13:21,359 --> 00:13:26,212
+Bu yeni semboller dilin parçası
+değildir; gösterimi kısaltan metasembollerdir.
+
+211
+00:13:27,433 --> 00:13:32,310
+BNF ve EBNF kuralları, sözdizim
+grafikleriyle de gösterilebilir.
+
+212
+00:13:32,630 --> 00:13:36,084
+İlk kez Pascal'ın gramerini
+açıklamak için kullanıldılar.
+
+213
+00:13:36,404 --> 00:13:40,866
+Ovaller terminal sembolleri,
+dikdörtgenler terminal olmayanları gösterir.
+
+214
+00:13:41,186 --> 00:13:45,273
+Grafikte izlenebilecek
+her yol, geçerli bir sembol dizisidir.
+
+215
+00:13:46,133 --> 00:13:49,547
+Tanıtıcı kuralına bakalım:
+bir tanıtıcı bir harfle başlar.
+
+216
+00:13:50,400 --> 00:13:53,430
+Sonra istenen sayıda harf ya da
+rakam gelebilir.
+
+217
+00:13:53,750 --> 00:13:57,767
+Yukarıdaki kesikli geri
+dönüş yolu, EBNF'teki süslü parantezin,
+
+218
+00:13:57,807 --> 00:13:59,738
+yani yinelemenin karşılığıdır.
+
+219
+00:14:00,600 --> 00:14:04,833
+İkinci örnek C'deki if
+deyimi: if, açma parantezi, bir ifade,
+
+220
+00:14:04,873 --> 00:14:06,974
+kapama parantezi ve bir deyim.
+
+221
+00:14:07,833 --> 00:14:10,920
+Yukarıdaki yan yol ise isteğe
+bağlı else kısmı;
+
+222
+00:14:10,960 --> 00:14:13,489
+EBNF'teki köşeli parantezin karşılığı.
+
+223
+00:14:13,809 --> 00:14:14,542
+Bu grafikler,
+
+224
+00:14:14,582 --> 00:14:18,985
+özellikle dil kılavuzlarında kuralları bir
+bakışta anlamayı kolaylaştırır.
+
+225
+00:14:20,200 --> 00:14:22,741
+Bölüm 3.4: Özellik gramerleri.
+
+226
+00:14:23,061 --> 00:14:25,434
+İçerikten bağımsız gramerler güçlüdür,
+
+227
+00:14:25,474 --> 00:14:29,412
+ama bir programlama dilinin
+bütün kurallarını ifade edemezler.
+
+228
+00:14:30,267 --> 00:14:34,859
+Örneğin tip uyumluluğu: Java'da
+bir float değer, bir int değişkene atanamaz.
+
+229
+00:14:35,179 --> 00:14:37,408
+Ya da önce tanımla sonra kullan kuralı:
+
+230
+00:14:37,448 --> 00:14:40,590
+bir değişken kullanılmadan önce
+bildirilmiş olmalıdır.
+
+231
+00:14:40,910 --> 00:14:45,832
+Bunları gramerle ifade etmek ya
+imkânsızdır ya da gramer ve ağaç aşırı büyür.
+
+232
+00:14:46,667 --> 00:14:51,641
+Bu tür kurallara statik semantik
+denir: derleme zamanında kontrol edilebilirler,
+
+233
+00:14:51,681 --> 00:14:53,060
+ama gramere sığmazlar.
+
+234
+00:14:53,380 --> 00:14:58,107
+Çözüm, Donald Knuth'un 1968'de
+önerdiği özellik gramerleridir.
+
+235
+00:14:58,967 --> 00:15:03,778
+Bir örnek: Ada'da bir prosedürün
+sonundaki end kelimesinden sonra gelen isim,
+
+236
+00:15:03,818 --> 00:15:05,898
+prosedürün adıyla aynı olmalıdır.
+
+237
+00:15:06,218 --> 00:15:10,919
+Sentaks kuralı iki proc_name içerir; özellik
+grameri bunlara bir koşul ekler:
+
+238
+00:15:10,959 --> 00:15:14,346
+birinci ismin metni
+ile ikinci ismin metni eşit olmalı.
+
+239
+00:15:15,200 --> 00:15:20,134
+Böylece procedure Hesapla ile başlayıp
+end Hesapla ile biten program geçerli olur;
+
+240
+00:15:20,174 --> 00:15:25,633
+end Topla ile biten program ise sentaks olarak doğru
+olsa da bu koşul yüzünden reddedilir.
+
+241
+00:15:26,833 --> 00:15:31,165
+Bir özellik grameri, içerikten bağımsız
+bir gramere üç şey ekler.
+
+242
+00:15:32,000 --> 00:15:35,692
+Birincisi özellikler:
+her gramer sembolüne bağlı değerler.
+
+243
+00:15:36,012 --> 00:15:39,112
+Örneğin bir değişkenin gerçek
+tipi, actual_type.
+
+244
+00:15:39,967 --> 00:15:44,692
+İkincisi semantik fonksiyonlar: özelliklerin
+nasıl hesaplanacağını söyler.
+
+245
+00:15:45,012 --> 00:15:49,899
+Değeri ağaçta çocuklardan yukarı doğru
+hesaplanan özelliklere sentezlenen özellik;
+
+246
+00:15:49,939 --> 00:15:55,587
+değeri ebeveynden ya da kardeşlerden aşağı doğru gelen
+özelliklere miras alınan özellik denir.
+
+247
+00:15:56,433 --> 00:15:57,518
+Üçüncüsü koşullar:
+
+248
+00:15:57,558 --> 00:16:01,870
+özelliklerin tutarlı olup olmadığını
+kontrol eden mantıksal ifadeler.
+
+249
+00:16:02,190 --> 00:16:05,999
+Bir koşul yanlışsa, program statik
+semantik hatası içerir.
+
+250
+00:16:06,833 --> 00:16:10,572
+Sağdaki örnek, basit
+atamalarda tip kontrolü yapıyor.
+
+251
+00:16:10,892 --> 00:16:11,384
+Atamada,
+
+252
+00:16:11,424 --> 00:16:16,546
+ifadenin beklenen tipi sol taraftaki
+değişkenin gerçek tipinden miras alınır.
+
+253
+00:16:16,866 --> 00:16:20,720
+Toplamada, iki taraf da int ise sonuç
+int, değilse real olur;
+
+254
+00:16:20,760 --> 00:16:23,761
+ve bu gerçek tip
+beklenen tiple aynı olmalıdır.
+
+255
+00:16:24,081 --> 00:16:28,075
+Değişkenin gerçek tipi ise
+sembol tablosundan bakılarak bulunur.
+
+256
+00:16:29,300 --> 00:16:34,223
+Şimdi bu gramerin A eşittir A artı
+B deyimi üzerinde nasıl çalıştığını görelim.
+
+257
+00:16:34,543 --> 00:16:36,992
+A'nın tipi int, B'nin tipi real olsun.
+
+258
+00:16:37,833 --> 00:16:41,228
+Birinci adım: sol taraftaki var
+düğümünün gerçek tipi,
+
+259
+00:16:41,268 --> 00:16:43,940
+sembol tablosundan bakılarak bulunur: int.
+
+260
+00:16:44,260 --> 00:16:47,816
+Bu sentezlenen bir özelliktir;
+yapraktan yukarı çıkar.
+
+261
+00:16:48,667 --> 00:16:54,139
+İkinci adım: expr düğümünün beklenen
+tipi, kardeşi olan var'dan miras alınır: int.
+
+262
+00:16:54,459 --> 00:16:56,956
+Bilgi bu kez ağaçta aşağı doğru akıyor.
+
+263
+00:16:57,800 --> 00:17:02,973
+Üçüncü adım: sağ taraftaki iki değişkenin gerçek
+tipleri sembol tablosundan bulunur:
+
+264
+00:17:03,013 --> 00:17:04,502
+A için int, B için real.
+
+265
+00:17:05,367 --> 00:17:08,759
+Dördüncü adım: expr'in gerçek tipi hesaplanır.
+
+266
+00:17:09,079 --> 00:17:12,225
+İki işlenen de int
+olmadığı için sonuç real olur.
+
+267
+00:17:13,067 --> 00:17:15,505
+Beşinci adım: koşul kontrol edilir.
+
+268
+00:17:15,825 --> 00:17:18,199
+Beklenen tip int, gerçek tip real.
+
+269
+00:17:18,519 --> 00:17:20,523
+Eşit değiller; koşul yanlış.
+
+270
+00:17:20,843 --> 00:17:23,031
+Derleyici bir tip hatası bildirir.
+
+271
+00:17:23,351 --> 00:17:28,428
+Gördüğünüz gibi, özellik değerleri
+ağaçta hem yukarı hem aşağı akarak hesaplandı.
+
+272
+00:17:29,633 --> 00:17:34,505
+Bölüm 3.5: Programların anlamını
+açıklamak, yani dinamik semantik.
+
+273
+00:17:34,825 --> 00:17:37,429
+Sözdizimi BNF ile kolayca tanımlanabilir;
+
+274
+00:17:37,469 --> 00:17:42,242
+ama semantiği tanımlamak için
+yaygın kabul görmüş tek bir gösterim yoktur.
+
+275
+00:17:43,100 --> 00:17:43,870
+En yaygın yol,
+
+276
+00:17:43,910 --> 00:17:48,073
+dil yapılarını Türkçe ya da İngilizce gibi
+doğal bir dille açıklamaktır.
+
+277
+00:17:48,393 --> 00:17:51,470
+Bu anlaşılırdır,
+ama belirsiz ve eksik olabilir.
+
+278
+00:17:51,790 --> 00:17:54,762
+Bu yüzden biçimsel yöntemlere ihtiyaç vardır.
+
+279
+00:17:55,600 --> 00:17:57,318
+Üç temel yaklaşım var.
+
+280
+00:17:57,638 --> 00:17:58,744
+İşlemsel semantik,
+
+281
+00:17:58,784 --> 00:18:03,049
+programı bir makinede çalıştırınca
+durumun nasıl değiştiğine bakar.
+
+282
+00:18:03,369 --> 00:18:04,672
+Aksiyomatik semantik,
+
+283
+00:18:04,712 --> 00:18:09,510
+program çalıştıktan sonra hangi
+mantıksal iddiaların doğru olduğunu söyler.
+
+284
+00:18:09,830 --> 00:18:14,154
+Denotasyonel semantik ise programı
+matematiksel bir fonksiyona eşler.
+
+285
+00:18:14,474 --> 00:18:16,344
+Şimdi hepsini sırayla görelim.
+
+286
+00:18:17,567 --> 00:18:22,518
+İşlemsel semantik, bir programın
+anlamını, onu bir makinede çalıştırarak açıklar.
+
+287
+00:18:22,838 --> 00:18:25,488
+Anlamı, makinenin durumundaki değişiklikler,
+
+288
+00:18:25,528 --> 00:18:28,525
+yani bellek ve yazmaçlardaki
+değişimler tanımlar.
+
+289
+00:18:29,367 --> 00:18:33,209
+Gerçek bir makine kullanmak
+tanımı makineye bağımlı hale getirir.
+
+290
+00:18:33,529 --> 00:18:35,294
+Bu yüzden önce bir çevirici,
+
+291
+00:18:35,334 --> 00:18:39,458
+kaynak kodu idealleştirilmiş
+bir makinenin basit diline çevirir.
+
+292
+00:18:39,778 --> 00:18:42,240
+Örneğin C'deki for döngüsünü ele alalım.
+
+293
+00:18:43,100 --> 00:18:48,046
+Bu döngü, her yapısının anlamı
+açık olan basit bir ara dile şöyle çevrilir:
+
+294
+00:18:48,086 --> 00:18:49,349
+önce expr1 çalışır.
+
+295
+00:18:49,669 --> 00:18:54,475
+loop etiketinde expr2 sıfırsa
+out'a atlanır; değilse gövde çalışır,
+
+296
+00:18:54,515 --> 00:18:57,191
+expr3 çalışır ve loop'a geri dönülür.
+
+297
+00:18:58,033 --> 00:19:01,314
+Böylece for döngüsünün
+ne yaptığını, yalnızca atama,
+
+298
+00:19:01,354 --> 00:19:06,207
+koşullu atlama ve etiketlerden
+oluşan çok basit yapılarla tarif etmiş olduk.
+
+299
+00:19:07,067 --> 00:19:11,629
+Fikir şu: programın anlamını, sanal makinenin
+durum değişiklikleri tanımlar.
+
+300
+00:19:12,467 --> 00:19:15,930
+Değerlendirelim: işlemsel semantik
+gayriresmî kullanımda,
+
+301
+00:19:15,970 --> 00:19:18,551
+örneğin dil kılavuzlarında çok faydalıdır.
+
+302
+00:19:18,871 --> 00:19:22,228
+Ama tamamen biçimsel
+yapıldığında aşırı karmaşıklaşır;
+
+303
+00:19:22,268 --> 00:19:27,677
+örneğin PL/I'ın semantiğini tanımlamak
+için kullanılan VDL dili son derece karmaşıktı.
+
+304
+00:19:28,900 --> 00:19:33,521
+Aksiyomatik semantik, biçimsel
+mantığa, yani yüklem mantığına dayanır.
+
+305
+00:19:33,841 --> 00:19:37,057
+Asıl amacı programların
+doğruluğunu kanıtlamaktır.
+
+306
+00:19:37,377 --> 00:19:40,235
+Programdaki mantıksal ifadelere iddia denir.
+
+307
+00:19:41,100 --> 00:19:43,514
+Temel gösterim şudur: P, ifade, Q.
+
+308
+00:19:43,834 --> 00:19:49,232
+P önkoşuldur; ifade çalışmadan önce
+değişkenler arasında doğru olan ilişkiyi söyler.
+
+309
+00:19:49,552 --> 00:19:54,185
+Q sonkoşuldur; ifade çalıştıktan sonra
+doğru olacak ilişkiyi söyler.
+
+310
+00:19:55,033 --> 00:19:55,644
+Bir örnek:
+
+311
+00:19:55,684 --> 00:20:00,631
+a eşittir b artı bir ifadesinden sonra a'nın
+1'den büyük olmasını istiyoruz.
+
+312
+00:20:00,951 --> 00:20:02,391
+Önkoşul ne olmalı?
+
+313
+00:20:03,233 --> 00:20:05,579
+b 10'dan büyükse elbette çalışır.
+
+314
+00:20:06,433 --> 00:20:08,271
+b 5'ten büyükse de çalışır.
+
+315
+00:20:09,133 --> 00:20:13,383
+Ama bizi ilgilendiren en zayıf
+önkoşuldur: sonkoşulu garanti eden,
+
+316
+00:20:13,423 --> 00:20:14,983
+en az kısıtlayıcı koşul.
+
+317
+00:20:15,303 --> 00:20:18,322
+Burada en zayıf önkoşul b büyüktür sıfırdır.
+
+318
+00:20:18,642 --> 00:20:22,961
+b pozitif bir tam sayıysa en az
+1'dir, a da en az 2 olur.
+
+319
+00:20:23,281 --> 00:20:26,645
+b sıfır olsaydı a
+1 olurdu ve koşul sağlanmazdı.
+
+320
+00:20:27,867 --> 00:20:30,610
+Atama ifadeleri için aksiyom çok basittir:
+
+321
+00:20:30,650 --> 00:20:33,791
+x eşittir E ataması
+ve Q sonkoşulu verildiğinde,
+
+322
+00:20:33,831 --> 00:20:37,210
+önkoşulu bulmak için Q'daki her
+x yerine E yazarız.
+
+323
+00:20:38,067 --> 00:20:43,445
+Örnek: x eşittir 2 çarpı y
+eksi 3 ataması, ve sonkoşul x büyüktür 25.
+
+324
+00:20:44,300 --> 00:20:49,942
+Sonkoşuldaki x yerine 2 çarpı
+y eksi 3 yazıyoruz: 2y eksi 3 büyüktür 25.
+
+325
+00:20:50,800 --> 00:20:54,193
+Her iki tarafa 3 ekleyince 2y büyüktür 28.
+
+326
+00:20:55,033 --> 00:20:58,327
+Yani en zayıf önkoşul y büyüktür 14'tür.
+
+327
+00:20:59,167 --> 00:21:04,872
+İkinci örnek bir kanıt: x büyüktür
+5 önkoşuluyla x eşittir x eksi 3 çalışırsa,
+
+328
+00:21:04,912 --> 00:21:06,458
+x büyüktür 0 olur mu?
+
+329
+00:21:07,300 --> 00:21:12,631
+Önce en zayıf önkoşulu bulalım: x eksi 3
+büyüktür 0, yani x büyüktür 3.
+
+330
+00:21:13,467 --> 00:21:17,583
+Verilen önkoşul x büyüktür 5, x
+büyüktür 3'ü gerektirir.
+
+331
+00:21:17,903 --> 00:21:22,981
+Buna sonuç kuralı denir: daha güçlü bir önkoşul
+en zayıf önkoşulu gerektiriyorsa,
+
+332
+00:21:23,021 --> 00:21:24,021
+ifade doğrudur.
+
+333
+00:21:24,289 --> 00:21:25,289
+Kanıt tamam.
+
+334
+00:21:26,200 --> 00:21:30,119
+Birden çok ifadeden oluşan sıralarda
+geriye doğru çalışırız.
+
+335
+00:21:30,439 --> 00:21:36,655
+Örnek: y eşittir 3x artı 1, sonra
+x eşittir y artı 3, ve sonkoşul x küçüktür 10.
+
+336
+00:21:37,500 --> 00:21:42,144
+Önce ikinci ifadeye atama aksiyomunu
+uygularız: y artı 3 küçüktür 10,
+
+337
+00:21:42,184 --> 00:21:43,406
+yani y küçüktür 7.
+
+338
+00:21:43,726 --> 00:21:48,788
+Bu, ikinci ifadenin önkoşulu ve aynı zamanda
+birinci ifadenin sonkoşuludur.
+
+339
+00:21:49,633 --> 00:21:54,831
+Sonra birinci ifade: 3x
+artı 1 küçüktür 7, yani x küçüktür 2.
+
+340
+00:21:55,151 --> 00:21:58,083
+Programın tamamının önkoşulu x küçüktür 2.
+
+341
+00:21:58,933 --> 00:22:03,851
+Seçim ifadelerinde ise iki kolun ikisi için
+de geçerli bir önkoşul gerekir.
+
+342
+00:22:04,171 --> 00:22:08,840
+Örnek: x pozitifse y'yi azalt, değilse
+artır; sonkoşul y büyüktür 0.
+
+343
+00:22:09,700 --> 00:22:13,682
+Then kolu için: y eksi 1 büyüktür
+0, yani y büyüktür 1.
+
+344
+00:22:14,533 --> 00:22:19,153
+Else kolu için: y artı
+1 büyüktür 0, yani y büyüktür eksi 1.
+
+345
+00:22:20,000 --> 00:22:24,811
+İki kol için ortak önkoşul y büyüktür 1'dir;
+çünkü y büyüktür 1 olduğunda,
+
+346
+00:22:24,851 --> 00:22:27,867
+y büyüktür eksi 1 de otomatik olarak sağlanır.
+
+347
+00:22:29,100 --> 00:22:30,969
+Döngüler en zor kısımdır.
+
+348
+00:22:31,289 --> 00:22:35,028
+Şu döngüye bakalım: y, x'e
+eşit olmadığı sürece y'yi bir artır.
+
+349
+00:22:35,348 --> 00:22:37,266
+Sonkoşul: y eşittir x.
+
+350
+00:22:38,100 --> 00:22:41,583
+Döngü hiç dönmezse
+önkoşul y eşittir x olmalıdır.
+
+351
+00:22:42,433 --> 00:22:47,228
+Bir kez dönerse, y artı
+1 eşittir x, yani y eşittir x eksi 1.
+
+352
+00:22:48,067 --> 00:22:53,036
+İki kez dönerse y eşittir x
+eksi 2; üç kez dönerse y eşittir x eksi 3,
+
+353
+00:22:53,076 --> 00:22:54,507
+ve böyle devam eder.
+
+354
+00:22:55,367 --> 00:22:59,628
+Bunların hepsini birleştirirsek
+önkoşul y küçük eşit x olur.
+
+355
+00:22:59,948 --> 00:23:04,275
+Ama genel olarak tur sayısı bilinmediği
+için bu yöntem işe yaramaz.
+
+356
+00:23:04,595 --> 00:23:09,148
+Bunun yerine döngü değişmezi
+adı verilen bir I iddiası bulmamız gerekir.
+
+357
+00:23:10,000 --> 00:23:14,195
+Döngü değişmezi şu şartları sağlamalıdır:
+önkoşul I'yı gerektirmeli;
+
+358
+00:23:14,235 --> 00:23:16,748
+döngü koşulunu hesaplamak I'yı bozmamalı;
+
+359
+00:23:16,788 --> 00:23:20,360
+I ve koşul doğruyken gövde çalışınca
+I yine doğru kalmalı;
+
+360
+00:23:20,400 --> 00:23:24,719
+I doğru ve koşul yanlışsa, yani
+döngü bittiğinde, sonkoşul sağlanmalı;
+
+361
+00:23:24,759 --> 00:23:26,192
+ve döngü sonlanmalıdır.
+
+362
+00:23:26,512 --> 00:23:29,097
+Kısacası I, başta sağlanacak kadar zayıf,
+
+363
+00:23:29,137 --> 00:23:32,401
+çıkışta sonkoşulu
+zorlayacak kadar güçlü olmalıdır.
+
+364
+00:23:33,633 --> 00:23:36,713
+Şimdi küçük bir programın
+doğruluğunu kanıtlayalım:
+
+365
+00:23:36,753 --> 00:23:39,200
+iki değişkeni değiş tokuş eden üç satır.
+
+366
+00:23:39,520 --> 00:23:41,213
+Başta x a'ya, y b'ye eşit.
+
+367
+00:23:41,533 --> 00:23:44,876
+Sonunda x'in b'ye, y'nin a'ya eşit
+olmasını istiyoruz.
+
+368
+00:23:45,733 --> 00:23:47,156
+Sondan başlıyoruz.
+
+369
+00:23:47,476 --> 00:23:51,199
+y eşittir t ataması için,
+sonkoşuldaki y yerine t yazarız:
+
+370
+00:23:51,239 --> 00:23:52,990
+x eşittir b ve t eşittir a.
+
+371
+00:23:53,833 --> 00:23:59,093
+x eşittir y için, bu iddiadaki x
+yerine y yazarız: y eşittir b ve t eşittir a.
+
+372
+00:23:59,933 --> 00:24:04,461
+t eşittir x için, t yerine x yazarız: y
+eşittir b ve x eşittir a.
+
+373
+00:24:05,300 --> 00:24:09,793
+Bulduğumuz önkoşul, programın
+başında verilen önkoşulla tamamen aynı.
+
+374
+00:24:10,113 --> 00:24:11,889
+Demek ki program doğrudur.
+
+375
+00:24:12,209 --> 00:24:15,916
+Aksiyomatik semantikte program kanıtı
+tam olarak böyle yapılır:
+
+376
+00:24:15,956 --> 00:24:21,486
+istenen sonuçtan geriye doğru çalışılır
+ve ilk ifadenin önkoşulu şartnameyle karşılaştırılır.
+
+377
+00:24:22,700 --> 00:24:25,117
+Aksiyomatik semantiği değerlendirelim.
+
+378
+00:24:25,967 --> 00:24:26,759
+Güçlü yanları:
+
+379
+00:24:26,799 --> 00:24:33,223
+program doğruluğunu kanıtlamak için çok iyi bir
+araçtır ve programlama mantığı için mükemmel bir çatı sunar.
+
+380
+00:24:33,543 --> 00:24:36,062
+Döngü değişmezleri gibi kavramları anlamak,
+
+381
+00:24:36,102 --> 00:24:38,899
+daha doğru programlar
+yazmanıza da yardım eder.
+
+382
+00:24:39,733 --> 00:24:40,585
+Zayıf yanları:
+
+383
+00:24:40,625 --> 00:24:45,914
+bir dilin bütün ifadeleri için aksiyom
+ve çıkarım kuralları geliştirmek çok zordur.
+
+384
+00:24:46,234 --> 00:24:50,761
+Bu yüzden dil kullanıcıları ve derleyici
+yazarları için pek kullanışlı değildir.
+
+385
+00:24:51,967 --> 00:24:53,482
+Denotasyonel semantik,
+
+386
+00:24:53,522 --> 00:24:58,260
+Dana Scott ve Christopher
+Strachey tarafından 1970'te geliştirildi.
+
+387
+00:24:58,580 --> 00:25:01,250
+Özyinelemeli fonksiyon teorisine dayanır.
+
+388
+00:25:01,570 --> 00:25:02,065
+Fikir şu:
+
+389
+00:25:02,105 --> 00:25:08,463
+dildeki her varlık için bir matematiksel nesne ve varlıkları
+bu nesnelere eşleyen bir fonksiyon tanımlanır.
+
+390
+00:25:08,783 --> 00:25:10,943
+Anlam, bu matematiksel nesnedir.
+
+391
+00:25:11,800 --> 00:25:14,099
+Basit bir örnek: ikili sayılar.
+
+392
+00:25:14,419 --> 00:25:17,234
+Gramere göre bir ikili sayı 0 ya da 1'dir,
+
+393
+00:25:17,274 --> 00:25:21,149
+ya da bir ikili sayının
+sonuna 0 veya 1 eklenmiş halidir.
+
+394
+00:25:22,000 --> 00:25:26,887
+Anlam fonksiyonu M_bin, her ikili
+sayıyı negatif olmayan bir tam sayıya eşler.
+
+395
+00:25:27,207 --> 00:25:30,725
+Sıfır karakteri
+0'a, bir karakteri 1'e eşlenir.
+
+396
+00:25:31,045 --> 00:25:34,356
+Bir sayının sonuna
+0 eklemek değeri ikiyle çarpar;
+
+397
+00:25:34,396 --> 00:25:36,943
+1 eklemek ise ikiyle çarpıp bir ekler.
+
+398
+00:25:37,800 --> 00:25:41,504
+Şimdi 110 dizisinin anlamını ağaç
+üzerinde hesaplayalım.
+
+399
+00:25:41,824 --> 00:25:43,762
+En alttaki 1'in anlamı 1.
+
+400
+00:25:44,600 --> 00:25:48,573
+Onun sonuna 1 eklenince: 2 çarpı
+1 artı 1, yani 3.
+
+401
+00:25:49,433 --> 00:25:52,678
+Sonuna 0 eklenince: 2 çarpı 3, yani 6.
+
+402
+00:25:52,998 --> 00:25:57,509
+Böylece 110 ikili dizisinin
+anlamı, matematiksel olarak 6 sayısıdır.
+
+403
+00:25:58,733 --> 00:26:02,525
+Gerçek programlar için önce programın
+durumunu tanımlarız: durum,
+
+404
+00:26:02,565 --> 00:26:05,158
+tüm değişkenlerin isim ve değer çiftleridir.
+
+405
+00:26:05,478 --> 00:26:06,496
+VARMAP fonksiyonu,
+
+406
+00:26:06,536 --> 00:26:10,883
+bir değişkenin adını ve durumu
+alıp o değişkenin o anki değerini döndürür.
+
+407
+00:26:11,733 --> 00:26:14,734
+Atama ifadesinin anlam
+fonksiyonu bir durumu alır,
+
+408
+00:26:14,774 --> 00:26:19,516
+ifadeyi hesaplar ve atanan değişkenin değeri
+değişmiş yeni bir durum döndürür.
+
+409
+00:26:19,836 --> 00:26:22,100
+Bir hata varsa sonuç error olur.
+
+410
+00:26:22,967 --> 00:26:26,332
+while döngüsünün anlamı
+ise özyinelemeyle tanımlanır:
+
+411
+00:26:26,372 --> 00:26:28,493
+koşul yanlışsa durum aynen döner.
+
+412
+00:26:28,813 --> 00:26:29,342
+Doğruysa,
+
+413
+00:26:29,382 --> 00:26:34,189
+gövdenin ürettiği yeni durum üzerinde aynı
+döngünün anlamı tekrar uygulanır.
+
+414
+00:26:34,509 --> 00:26:35,316
+Yani yineleme,
+
+415
+00:26:35,356 --> 00:26:40,017
+matematiksel olarak açıklaması
+daha kolay olan özyinelemeye dönüştürülmüştür.
+
+416
+00:26:40,867 --> 00:26:43,404
+İşlemsel semantikten farkına dikkat edin:
+
+417
+00:26:43,444 --> 00:26:47,364
+orada durum değişiklikleri kodlanmış
+algoritmalarla tanımlanır;
+
+418
+00:26:47,404 --> 00:26:51,301
+denotasyonel semantikte
+ise kesin matematiksel fonksiyonlarla.
+
+419
+00:26:52,167 --> 00:26:53,390
+Denotasyonel semantik,
+
+420
+00:26:53,430 --> 00:26:59,247
+programların doğruluğunu kanıtlamak ve programlar hakkında
+titizlikle düşünmek için güçlü bir araçtır;
+
+421
+00:26:59,287 --> 00:27:03,766
+dil tasarımına yardımcı olur ve
+derleyici üretme sistemlerinde kullanılmıştır.
+
+422
+00:27:04,086 --> 00:27:08,169
+Ama karmaşıklığı yüzünden dil
+kullanıcıları tarafından pek kullanılmaz.
+
+423
+00:27:09,400 --> 00:27:12,452
+Üç yaklaşımı aynı
+program üzerinde karşılaştıralım:
+
+424
+00:27:12,492 --> 00:27:17,222
+x'in faktöriyelini hesaplayan bir
+C fonksiyonu, ve x eşittir 3 için çalışması.
+
+425
+00:27:18,067 --> 00:27:23,067
+İşlemsel bakış durumları adım adım izler: z
+bir ve y üç ile başlar; z üç,
+
+426
+00:27:23,107 --> 00:27:27,665
+y iki olur; z altı, y bir
+olur; sonra y sıfır olur ve döngü biter.
+
+427
+00:27:27,985 --> 00:27:29,157
+Sonuç 6.
+
+428
+00:27:30,000 --> 00:27:33,470
+Aksiyomatik bakış ise
+bir değişmez kullanarak kanıt yapar:
+
+429
+00:27:33,510 --> 00:27:37,565
+döngü boyunca z eşittir n
+faktöriyel bölü y faktöriyel doğru kalır.
+
+430
+00:27:37,885 --> 00:27:40,134
+Döngü bittiğinde y sıfır olduğundan,
+
+431
+00:27:40,174 --> 00:27:43,353
+z eşittir n faktöriyel sonkoşulu
+kanıtlanmış olur.
+
+432
+00:27:44,200 --> 00:27:48,959
+Denotasyonel bakış ise programı
+bir matematiksel fonksiyon olarak görür: f,
+
+433
+00:27:48,999 --> 00:27:52,837
+x sıfırsa 1, değilse x
+çarpı f x eksi bir olan fonksiyondur.
+
+434
+00:27:53,700 --> 00:27:58,227
+Özetle: işlemsel semantiği gerçekleştirmek
+kolaydır ama muhakeme zordur;
+
+435
+00:27:58,267 --> 00:28:03,365
+aksiyomatik semantik teorem kanıtlamak için
+iyidir ama uygulamadan biraz uzaktır;
+
+436
+00:28:03,405 --> 00:28:06,601
+denotasyonel semantik
+ise muhakemeyi kolaylaştırır,
+
+437
+00:28:06,641 --> 00:28:10,700
+ama uygun matematiksel alanları bulmak
+her zaman kolay değildir.
+
+438
+00:28:11,933 --> 00:28:15,508
+Son bir not: programlama dillerinin
+standartlaştırılması.
+
+439
+00:28:15,828 --> 00:28:18,686
+Bir dil yaygın olarak
+kullanılmaya başlandığında,
+
+440
+00:28:18,726 --> 00:28:23,419
+farklı donanımlarda birbiriyle uyumlu
+gerçekleştirimler yapılabilmesi için dilin
+
+441
+00:28:23,459 --> 00:28:26,772
+sözdizimi ve anlamı tam
+ve açık biçimde tanımlanmalıdır.
+
+442
+00:28:27,092 --> 00:28:31,130
+Bu bölümde gördüğümüz biçimsel
+yöntemler, işte bu yüzden önemlidir.
+
+443
+00:28:31,967 --> 00:28:34,368
+Bir dil standardını, dilin tasarımcısı,
+
+444
+00:28:34,408 --> 00:28:37,310
+dili destekleyen kuruluş ya da
+Amerika'da ANSI,
+
+445
+00:28:37,350 --> 00:28:41,418
+uluslararası alanda ISO gibi standart
+kuruluşları belirleyebilir.
+
+446
+00:28:42,633 --> 00:28:43,633
+Toparlayalım.
+
+447
+00:28:44,467 --> 00:28:49,672
+BNF ve içerikten bağımsız gramerler
+eşdeğer metadillerdir ve programlama dillerinin
+
+448
+00:28:49,712 --> 00:28:52,240
+sentaksını tanımlamak için çok uygundur.
+
+449
+00:28:53,100 --> 00:28:56,548
+Türetmeler ve ayrıştırma
+ağaçları birbirinin karşılığıdır.
+
+450
+00:28:56,868 --> 00:29:01,333
+Belirsizlik, operatör önceliği
+ve birleşirlik gramerin yapısıyla çözülür.
+
+451
+00:29:02,167 --> 00:29:04,554
+Özellik gramerleri, gramere özellikler,
+
+452
+00:29:04,594 --> 00:29:08,889
+fonksiyonlar ve koşullar ekleyerek dilin
+statik semantiğini tanımlar.
+
+453
+00:29:09,733 --> 00:29:10,857
+Dinamik semantiği,
+
+454
+00:29:10,897 --> 00:29:15,190
+yani programların anlamını
+tanımlamanın üç temel yolu ise işlemsel,
+
+455
+00:29:15,230 --> 00:29:17,817
+aksiyomatik ve denotasyonel semantiktir.
+
+456
+00:29:19,033 --> 00:29:21,320
+Şimdi kısa bir mini test yapalım.
+
+457
+00:29:21,640 --> 00:29:25,065
+Her sorudan sonra birkaç saniye
+düşünme süreniz var.
+
+458
+00:29:25,900 --> 00:29:26,900
+Soru 1.
+
+459
+00:29:27,102 --> 00:29:29,982
+Sentaks ile semantik arasındaki fark nedir?
+
+460
+00:29:34,333 --> 00:29:38,118
+Cevap: Sentaks programın biçimi,
+semantik ise anlamıdır.
+
+461
+00:29:38,967 --> 00:29:39,967
+Soru 2.
+
+462
+00:29:40,031 --> 00:29:42,020
+Bir gramer ne zaman belirsizdir?
+
+463
+00:29:46,367 --> 00:29:51,127
+Cevap: Bir cümle için iki ya da daha
+fazla farklı ayrıştırma ağacı üretebiliyorsa.
+
+464
+00:29:51,967 --> 00:29:52,967
+Soru 3.
+
+465
+00:29:53,215 --> 00:29:56,083
+EBNF'te süslü parantez ne anlama gelir?
+
+466
+00:30:00,433 --> 00:30:03,046
+Cevap: Sıfır ya da daha fazla kez yineleme.
+
+467
+00:30:04,700 --> 00:30:05,700
+Soru 4.
+
+468
+00:30:05,960 --> 00:30:11,858
+a eşittir b artı 1 ifadesi ve a büyüktür 1
+sonkoşulu için en zayıf önkoşul nedir?
+
+469
+00:30:16,200 --> 00:30:17,673
+Cevap: b büyüktür sıfır.
+
+470
+00:30:20,467 --> 00:30:21,467
+Soru 5.
+
+471
+00:30:21,621 --> 00:30:26,105
+Programın anlamını matematiksel
+fonksiyonlarla tanımlayan semantik hangisidir?
+
+472
+00:30:30,467 --> 00:30:32,538
+Cevap: Denotasyonel semantik.
+
+473
+00:30:38,733 --> 00:30:40,224
+Bölüm 3'ü tamamladık!
+
+474
+00:30:40,544 --> 00:30:41,712
+Bir sonraki bölümde,
+
+475
+00:30:41,752 --> 00:30:48,116
+bu gramerleri kullanarak bir derleyicinin kaynak kodu nasıl
+token'lara ayırdığını ve nasıl ayrıştırdığını,
+
+476
+00:30:48,156 --> 00:30:50,814
+yani sözcüksel ve sentaks analizi göreceğiz.
+
+477
+00:30:51,667 --> 00:30:53,211
+Pratik için şunu deneyin:
+
+478
+00:30:53,251 --> 00:30:58,470
+a eşittir a çarpı parantez b artı
+parantez c çarpı a ifadesi için bir gramer yazın,
+
+479
+00:30:58,510 --> 00:31:02,185
+sola dayalı türetmesini
+yapın ve ayrıştırma ağacını çizin.
+
+480
+00:31:02,505 --> 00:31:05,141
+İzlediğiniz için teşekkürler, görüşmek üzere!
