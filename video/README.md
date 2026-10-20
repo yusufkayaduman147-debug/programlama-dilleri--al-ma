@@ -1,6 +1,6 @@
 # Programlama Dilleri — Konu Anlatım Videoları
 
-Ders sunumlarındaki (PD1–PD7) konuları anlatan, animasyonlu, Türkçe seslendirmeli videolar.
+Ders sunumlarındaki (PD1–PD10) konuları anlatan, animasyonlu, Türkçe seslendirmeli videolar.
 Her videoda gömülü Türkçe altyazı (ayrıca `.tr.srt` dosyası), bölüm işaretleri (chapter) ve sonunda 5 soruluk mini test var.
 
 | Video | Süre | İçerik |
@@ -12,6 +12,7 @@ Her videoda gömülü Türkçe altyazı (ayrıca `.tr.srt` dosyası), bölüm i�
 | `ProgramlamaDilleri_Bolum5_Adlar_Baglama_Kapsam.mp4` | ~30 dk | Değişkenin özellikleri (isim, adres, değer, tip, ömür, kapsam), takma adlar, sabitler, işlemciler ve ifadeler, yan etkiler, kısa devre, bağlama zamanları, tip ve bellek bağlama, statik/dinamik kapsam, tip kontrolü ve uyumluluk |
 | `ProgramlamaDilleri_Bolum6_Veri_Tipleri.mp4` | ~44 dk | Bellek düzeni, tam sayı/kayan nokta/decimal, Boolean ve karakter, dizgiler, enum ve altalan, dizi kategorileri, satır/sütun tabanlı yerleşim ve erişim fonksiyonu, kesitler, ilişkili diziler, demet ve liste, kayıt, bileşim, küme, işaretçiler, sallanan işaretçi ve çöp toplama, kuvvetli tipleme, tip dönüşümleri |
 | `ProgramlamaDilleri_Bolum7_Yapisal_Programlama_Akis_Denetimi.mp4` | ~33 dk | Yapısal programlama ve üç temel yapı, atama deyimi ve biçimleri, if-else ve sallanan else, kısa devre, case/switch ve düşme, sayaç ve mantık denetimli döngüler, goto, break/continue, yineleyiciler, Dijkstra'nın güvenlikli komutları |
+| `ProgramlamaDilleri_Bolum8_Altprogramlar.mp4` | ~36 dk | Altprogram kavramları, yerel değişkenler, yordam/fonksiyon, parametre eşleme, değer/sonuç/değer-sonuç/başvuru/isim ile çağırma (adım adım izlemeli), fonksiyon parametreleri ve derin/yüzeysel bağlama, aşırı yükleme, jenerikler, kapatmalar, etkinlik kaydı, özyineleme, eşyordamlar |
 
 ## Nasıl üretildi
 - **Sahneler:** HTML/CSS ile tasarlandı (`kaynak/bolumN/scenes*.js`), Chromium (Playwright) ile kare kare yakalanıp 30 fps kaydedildi (`kaynak/render.js`).

@@ -7,6 +7,13 @@ import sys, os, re, json, glob
 GAP = 0.32  # silence between sentences of one step
 
 SUBS = [
+    (r"\bextern\b", "ekstörn"), (r"\bheader\b", "hedır"), (r"\bpublic\b", "pablik"), (r"\bprivate\b", "prayvıt"), (r"\bunit", "yunit"), (r"\bTurbo\b", "Törbo"), (r"\bh'dir", "ha'dır"),
+    (r"MAIN_(\d)", r"meyn \1"), (r"\bBIGSUB", "big sab"), (r"\bSUB(\d)", r"sab \1"), (r"\bbufferA", "bafır A"), (r"\bbufferB", "bafır Be"), (r"\bfactorial", "faktöriyel"),
+    (r"myFunction", "may fankşın"), (r"\bstrcpy\b", "es te ar kopi"), (r"\bstr\b", "es te ar"), (r"\bw'si", "dabılyu'su"), (r"\bw\b", "dabılyu"), (r"\bv'si", "vi'si"), (r"\bv\b", "vi"), (r"\bu\b", "yu"),
+    (r"\bCswap", "Si suap"), (r"\bswap", "suap"), (r"Comparable", "kompırıbıl"), (r"\bExecute\b", "Eksekyut"), (r"\bPlus\b", "Plas"), (r"\bSquare\b", "Skuer"), (r"\bFun\b", "Fan"),
+    (r"Integer_Sort", "İntecır Sort"), (r"Generic_Sort", "Cenerik Sort"), (r"\bLENGTH\b", "lenkt"), (r"\bLIST\b", "list"), (r"SUBROUTINE", "sabrutin"), (r"\badd10\b", "ed on"), (r"\badd5\b", "ed beş"),
+    (r"makeAdder", "meyk edır"), (r"mk_counter", "meyk kaunter"), (r"\bsub(\d)", r"sab \1"), (r"\bextends\b", "ikstends"), (r"\bdelegate", "delıgeyt"), (r"\basync\b", "eysink"),
+    (r"\bgeneric\b", "cenerik"), (r"\bfunction\b", "fankşın"), (r"\byield\b", "yiild"), (r"\bparams\b", "params"), (r"printf", "print ef"),
     (r"\bbreak", "breyk"), (r"\bcontinue", "kontinyu"), (r"\bswitch", "suiç"), (r"\b[Cc]ase", "keys"), (r"\bdefault\b", "difolt"), (r"\belsif\b", "els if"), (r"\bexit\b", "egzit"),
     (r"\bfor-each\b", "for iç"), (r"\bforeach\b", "for iç"), (r"\beach\b", "iç"), (r"\bupto\b", "ap tu"), (r"\bnext\b", "nekst"), (r"\breset\b", "riset"), (r"\bcurrent\b", "karınt"),
     (r"\bflag\b", "fleg"), (r"\bsubtotal", "sab toutıl"), (r"\btotal", "toutıl"), (r"\brange\b", "reync"), (r"\breverse\b", "rivörs"), (r"\bbody\b", "badi"), (r"\botherwise\b", "adırvayz"),
