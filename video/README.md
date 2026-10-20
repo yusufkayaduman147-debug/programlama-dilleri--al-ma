@@ -14,6 +14,7 @@ Her videoda gömülü Türkçe altyazı (ayrıca `.tr.srt` dosyası), bölüm i�
 | `ProgramlamaDilleri_Bolum7_Yapisal_Programlama_Akis_Denetimi.mp4` | ~33 dk | Yapısal programlama ve üç temel yapı, atama deyimi ve biçimleri, if-else ve sallanan else, kısa devre, case/switch ve düşme, sayaç ve mantık denetimli döngüler, goto, break/continue, yineleyiciler, Dijkstra'nın güvenlikli komutları |
 | `ProgramlamaDilleri_Bolum8_Altprogramlar.mp4` | ~36 dk | Altprogram kavramları, yerel değişkenler, yordam/fonksiyon, parametre eşleme, değer/sonuç/değer-sonuç/başvuru/isim ile çağırma (adım adım izlemeli), fonksiyon parametreleri ve derin/yüzeysel bağlama, aşırı yükleme, jenerikler, kapatmalar, etkinlik kaydı, özyineleme, eşyordamlar |
 | `ProgramlamaDilleri_Bolum9_Altprogramlari_Uygulamak.mp4` | ~20 dk | Altprogram bağlanması, basit (statik) altprogramlar, yığıt-dinamik etkinlik kayıtları, özyinelemede kayıtlar, statik zincir ve (zincir, yerel) çiftleri, ekranlar, bloklar, dinamik kapsamın derin/sığ erişimle uygulanması, arabellek aşımı saldırısı |
+| `ProgramlamaDilleri_Bolum10_Program_Ayristirma.mp4` | ~14 dk | Neden ayrıştırma, soyutlama ve modülerlik, bilgi saklama (arayüz/gerçekleştirim), C ve C++'ta koruma, ayrı ve bağımsız derleme, Pascal ve C'de modüller (extern/static), veri soyutlama |
 
 ## Nasıl üretildi
 - **Sahneler:** HTML/CSS ile tasarlandı (`kaynak/bolumN/scenes*.js`), Chromium (Playwright) ile kare kare yakalanıp 30 fps kaydedildi (`kaynak/render.js`).
