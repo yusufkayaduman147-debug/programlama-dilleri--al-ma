@@ -1,172 +1,172 @@
 1
-00:00:00,300 --> 00:00:01,300
+00:00:00,300 --> 00:00:01,245
 Merhaba!
 
 2
-00:00:01,360 --> 00:00:04,752
+00:00:01,285 --> 00:00:04,873
 Programlama Dilleri
 dersinin ilk bölümüne hoş geldiniz.
 
 3
-00:00:05,600 --> 00:00:09,046
+00:00:05,600 --> 00:00:09,025
 Bu bölümde programlama dillerine
 kuş bakışı bakacağız.
 
 4
-00:00:09,366 --> 00:00:11,827
+00:00:09,345 --> 00:00:11,539
 Neden bu kavramları öğrenmeliyiz?
 
 5
-00:00:12,147 --> 00:00:14,132
+00:00:11,859 --> 00:00:13,722
 Bir dili nasıl değerlendiririz?
 
 6
-00:00:14,452 --> 00:00:18,579
+00:00:14,042 --> 00:00:17,979
 Diller nasıl tasarlanır ve
 yazdığımız kod makinede nasıl çalışır?
 
 7
-00:00:19,433 --> 00:00:19,878
+00:00:19,433 --> 00:00:19,864
 Anlatım,
 
 8
-00:00:19,918 --> 00:00:25,131
+00:00:19,904 --> 00:00:24,966
 Robert Sebesta'nın Programlama Dilleri Kavramları
 kitabının ilk bölümünü takip ediyor.
 
 9
-00:00:25,451 --> 00:00:27,157
+00:00:25,286 --> 00:00:26,888
 Hazırsanız başlayalım.
 
 10
-00:00:28,367 --> 00:00:30,433
+00:00:28,367 --> 00:00:30,306
 Önce yol haritamıza bakalım.
 
 11
-00:00:30,753 --> 00:00:32,541
+00:00:30,626 --> 00:00:32,197
 Bu bölümde sekiz konu var.
 
 12
-00:00:33,400 --> 00:00:37,725
+00:00:33,400 --> 00:00:37,646
 Programlama dili kavramlarını
 öğrenmenin nedenleri, programlama alanları,
 
 13
-00:00:37,765 --> 00:00:41,771
+00:00:37,686 --> 00:00:41,620
 dil değerlendirme kriterleri
 ve dil tasarımını etkileyen faktörler.
 
 14
-00:00:42,633 --> 00:00:46,075
+00:00:42,633 --> 00:00:45,989
 Ardından dil kategorilerini,
 tasarımda verilen ödünleri,
 
 15
-00:00:46,115 --> 00:00:51,027
+00:00:46,029 --> 00:00:50,818
 implementasyon yöntemlerini ve son
 olarak programlama platformlarını göreceğiz.
 
 16
-00:00:52,233 --> 00:00:53,658
+00:00:52,233 --> 00:00:53,488
 Bölüm 1.1.
 
 17
-00:00:53,978 --> 00:00:56,392
+00:00:53,808 --> 00:00:56,227
 Zaten bir iki programlama dili biliyorken,
 
 18
-00:00:56,432 --> 00:00:59,469
+00:00:56,267 --> 00:00:59,312
 neden programlama dillerinin
 kavramlarını öğrenelim?
 
 19
-00:00:59,789 --> 00:01:01,810
+00:00:59,632 --> 00:01:01,512
 Sebesta altı neden sayıyor.
 
 20
-00:01:02,667 --> 00:01:06,601
+00:01:02,667 --> 00:01:06,348
 Birincisi, fikirlerimizi ifade etme
 yeteneğimizi artırmak.
 
 21
-00:01:06,921 --> 00:01:10,254
+00:01:06,668 --> 00:01:09,966
 İkincisi, bir proje
 için en uygun dili seçebilmek.
 
 22
-00:01:11,100 --> 00:01:13,874
+00:01:11,100 --> 00:01:13,878
 Üçüncüsü, yeni dilleri daha kolay öğrenmek.
 
 23
-00:01:14,194 --> 00:01:17,478
+00:01:14,198 --> 00:01:17,378
 Dördüncüsü, dillerin
 nasıl gerçekleştirildiğini,
 
 24
-00:01:17,518 --> 00:01:20,150
+00:01:17,418 --> 00:01:19,968
 yani implementasyonun önemini anlamak.
 
 25
-00:01:21,000 --> 00:01:24,470
+00:01:21,000 --> 00:01:24,400
 Beşincisi, zaten bildiğimiz dili
 daha iyi kullanmak.
 
 26
-00:01:24,790 --> 00:01:28,486
+00:01:24,720 --> 00:01:28,368
 Altıncısı ise bilgisayar biliminin
 genel olarak ilerlemesi.
 
 27
-00:01:28,806 --> 00:01:30,814
+00:01:28,688 --> 00:01:30,592
 Şimdi bunlara tek tek bakalım.
 
 28
-00:01:32,033 --> 00:01:34,831
+00:01:32,033 --> 00:01:34,715
 İlk neden, fikirleri ifade etme yeteneği.
 
 29
-00:01:35,151 --> 00:01:36,987
+00:01:35,035 --> 00:01:36,832
 Düşüncelerimizin derinliğinin,
 
 30
-00:01:37,027 --> 00:01:40,654
+00:01:36,872 --> 00:01:40,422
 kullandığımız dilin ifade gücünden
 etkilendiğine inanılır.
 
 31
-00:01:40,974 --> 00:01:44,647
+00:01:40,742 --> 00:01:44,492
 Sözle anlatamadığımız
 bir yapıyı kavramlaştırmak da zordur.
 
 32
-00:01:45,500 --> 00:01:47,776
+00:01:45,500 --> 00:01:47,694
 Programcılar için de durum aynı.
 
 33
-00:01:48,096 --> 00:01:52,063
+00:01:48,014 --> 00:01:51,951
 Bildiğimiz dilin kontrol yapıları, veri
 yapıları ve soyutlamaları,
 
 34
-00:01:52,103 --> 00:01:54,168
+00:01:51,991 --> 00:01:54,040
 aklımıza gelen çözümleri sınırlar.
 
 35
-00:01:54,488 --> 00:01:58,419
+00:01:54,360 --> 00:01:58,177
 Ne kadar çok dil özelliği tanırsak, bu
 sınır o kadar genişler.
 
 36
-00:01:59,267 --> 00:02:03,179
+00:01:59,267 --> 00:02:03,040
 Peki bir dili kullanmak zorundaysak bu
 bilgi yine de işe yarar mı?
 
 37
-00:02:03,499 --> 00:02:04,380
+00:02:03,360 --> 00:02:04,360
 Evet!
 
 38
-00:02:04,420 --> 00:02:10,192
+00:02:04,400 --> 00:02:09,987
 Örneğin Fortran 90'da bir metnin içinde
 alt metin arayan hazır bir INDEX fonksiyonu vardır.
 
@@ -175,2443 +175,2443 @@ alt metin arayan hazır bir INDEX fonksiyonu vardır.
 Standart Pascal'da böyle bir fonksiyon yok.
 
 40
-00:02:14,314 --> 00:02:16,418
+00:02:14,314 --> 00:02:16,383
 Ama bu kavramı bilen bir programcı,
 
 41
-00:02:16,458 --> 00:02:20,746
+00:02:16,423 --> 00:02:20,641
 aynı işi yapan küçük bir alt
 program yazarak özelliği simüle edebilir.
 
 42
-00:02:21,600 --> 00:02:23,415
+00:02:21,600 --> 00:02:23,431
 Yine de seçme şansımız varsa,
 
 43
-00:02:23,455 --> 00:02:27,102
+00:02:23,471 --> 00:02:27,150
 özelliği doğrudan destekleyen dili
 kullanmak daha iyidir.
 
 44
-00:02:27,422 --> 00:02:31,218
+00:02:27,470 --> 00:02:31,092
 Çünkü simülasyon her zaman
 daha hantal ve daha karmaşıktır.
 
 45
-00:02:32,433 --> 00:02:35,127
+00:02:32,433 --> 00:02:34,976
 İkinci neden, uygun dili seçebilmek.
 
 46
-00:02:35,447 --> 00:02:40,716
+00:02:35,296 --> 00:02:40,208
 Bir programcı yalnızca bir iki dil
 biliyorsa, yeni bir projede en uygun dili değil,
 
 47
-00:02:40,756 --> 00:02:41,972
+00:02:40,248 --> 00:02:41,382
 bildiği dili seçer.
 
 48
-00:02:42,292 --> 00:02:46,541
+00:02:41,702 --> 00:02:45,928
 Hani derler ya: elinde sadece çekiç olana
 her şey çivi gibi görünür.
 
 49
-00:02:47,400 --> 00:02:52,423
+00:02:47,400 --> 00:02:52,321
 Diğer dillerin özelliklerini ve kavramlarını
 tanıyan programcı ise proje için doğru
 
 50
-00:02:52,463 --> 00:02:55,269
+00:02:52,361 --> 00:02:55,110
 aracı seçer ve çok daha verimli işler çıkarır.
 
 51
-00:02:56,133 --> 00:02:58,673
+00:02:56,133 --> 00:02:58,630
 Üçüncü neden, yeni dilleri öğrenebilmek.
 
 52
-00:02:58,993 --> 00:03:02,500
+00:02:58,950 --> 00:03:02,192
 Bilgisayar programcılığı genç ve
 hızla değişen bir alan.
 
 53
-00:03:02,820 --> 00:03:06,587
+00:03:02,512 --> 00:03:06,169
 Diller, araçlar ve tasarım yöntemleri
 gelişmeye devam ediyor.
 
 54
-00:03:06,907 --> 00:03:10,424
+00:03:06,489 --> 00:03:09,773
 Bu yüzden programcılık ömür boyu
 öğrenmeyi gerektirir.
 
 55
-00:03:11,267 --> 00:03:12,994
+00:03:11,267 --> 00:03:12,973
 Temel kavramları bilen biri,
 
 56
-00:03:13,034 --> 00:03:17,199
+00:03:13,013 --> 00:03:17,130
 yeni bir dilde bu kavramların
 nasıl birleştirildiğini hemen görür.
 
 57
-00:03:17,519 --> 00:03:21,582
+00:03:17,450 --> 00:03:21,508
 Örneğin veri soyutlamayı bilen
 biri Java'daki soyut veri tiplerini,
 
 58
-00:03:21,622 --> 00:03:26,643
+00:03:21,548 --> 00:03:26,565
 nesne yönelimli kavramları bilen biri de C++ ya
 da Java'yı çok daha hızlı öğrenir.
 
 59
-00:03:27,867 --> 00:03:31,359
+00:03:27,867 --> 00:03:31,199
 Dördüncü neden, implementasyonun
 önemini kavramak.
 
 60
-00:03:31,679 --> 00:03:34,747
+00:03:31,519 --> 00:03:34,559
 Bir dilin nasıl gerçekleştirildiğini
 bilen programcı,
 
 61
-00:03:34,787 --> 00:03:40,711
+00:03:34,599 --> 00:03:40,470
 hataları daha kolay bulur ve aynı işi yapan
 iki yapıdan hangisinin daha verimli olduğunu anlayabilir.
 
 62
-00:03:41,031 --> 00:03:45,165
+00:03:40,790 --> 00:03:45,132
 Detaylar derleyici tasarımı dersinde;
 burada kısaca değineceğiz.
 
 63
-00:03:46,000 --> 00:03:49,484
+00:03:46,000 --> 00:03:49,483
 Beşincisi, zaten bildiğimiz dili
 daha iyi kullanmak.
 
 64
-00:03:49,804 --> 00:03:51,917
+00:03:49,803 --> 00:03:51,903
 Modern diller çok büyük ve karmaşık;
 
 65
-00:03:51,957 --> 00:03:54,947
+00:03:51,943 --> 00:03:54,916
 çoğumuz bir dilin
 yalnızca bir kısmını kullanırız.
 
 66
-00:03:55,267 --> 00:03:56,225
+00:03:55,236 --> 00:03:56,196
 Kavramları bilen,
 
 67
-00:03:56,265 --> 00:04:00,433
+00:03:56,236 --> 00:04:00,414
 dilin daha önce kullanmadığı özelliklerini
 de rahatça öğrenip kullanır.
 
 68
-00:04:01,267 --> 00:04:04,588
+00:04:01,267 --> 00:04:04,429
 Ve altıncısı, bilgisayar
 biliminin genel ilerlemesi.
 
 69
-00:04:04,908 --> 00:04:09,494
+00:04:04,749 --> 00:04:09,231
 Tarih, popüler olan dilin her
 zaman en iyi dil olmadığını gösteriyor.
 
 70
-00:04:09,814 --> 00:04:14,562
+00:04:09,551 --> 00:04:14,032
 Altmışlı yıllarda ALGOL 60'ın
 FORTRAN'ın yerini alacağı düşünülüyordu.
 
 71
-00:04:14,882 --> 00:04:17,997
+00:04:14,352 --> 00:04:17,384
 Ama ALGOL'un tanımı
 karmaşık ve okunması zor bulundu,
 
 72
-00:04:18,037 --> 00:04:20,180
+00:04:17,424 --> 00:04:19,510
 bu yüzden FORTRAN'ın yerini alamadı.
 
 73
-00:04:21,033 --> 00:04:23,326
+00:04:21,033 --> 00:04:23,179
 O halde şu soruyu sormakta fayda var:
 
 74
-00:04:23,366 --> 00:04:26,896
+00:04:23,219 --> 00:04:26,526
 Bugün popüler olan diller sonsuza
 kadar kullanılacak mı?
 
 75
-00:04:28,100 --> 00:04:30,979
+00:04:28,100 --> 00:04:30,840
 Bölüm 1.2: Programlama alanları.
 
 76
-00:04:31,299 --> 00:04:36,611
+00:04:31,160 --> 00:04:36,396
 Bilgisayarlar çok farklı işlerde kullanılır ve her
 alan dillere farklı ihtiyaçlar yükler.
 
 77
-00:04:37,467 --> 00:04:39,644
+00:04:37,467 --> 00:04:39,583
 İlk alan bilimsel uygulamalardı.
 
 78
-00:04:39,964 --> 00:04:43,597
+00:04:39,903 --> 00:04:43,383
 Bunlar basit veri yapıları,
 özellikle diziler ve matrisler,
 
 79
-00:04:43,637 --> 00:04:46,501
+00:04:43,423 --> 00:04:46,167
 ama çok sayıda kayan noktalı hesaplama içerir.
 
 80
-00:04:46,821 --> 00:04:49,746
+00:04:46,487 --> 00:04:49,157
 Bu alanın ilk ve en önemli dili FORTRAN'dır.
 
 81
-00:04:50,600 --> 00:04:53,667
+00:04:50,600 --> 00:04:53,645
 Ardından ticari uygulamalar
 geldi: rapor üretmek,
 
 82
-00:04:53,707 --> 00:04:56,624
+00:04:53,685 --> 00:04:56,581
 ondalık sayıları ve karakter verisini işlemek.
 
 83
-00:04:56,944 --> 00:04:59,092
+00:04:56,901 --> 00:04:58,979
 Bu alanın klasik dili COBOL'dur.
 
 84
-00:04:59,933 --> 00:05:05,645
+00:04:59,933 --> 00:05:05,611
 Yapay zekâda ise sayılar yerine semboller
 işlenir ve diziler yerine bağlı listeler kullanılır.
 
 85
-00:05:05,965 --> 00:05:09,460
+00:05:05,931 --> 00:05:09,472
 Hatta bazı programlar çalışırken
 kendi kodunu üretir.
 
 86
-00:05:09,780 --> 00:05:12,311
+00:05:09,792 --> 00:05:12,241
 LISP ve Prolog bu alanın dilleridir.
 
 87
-00:05:13,167 --> 00:05:17,378
+00:05:13,167 --> 00:05:17,393
 Sistem programlamada, yani
 işletim sistemleri ve destek araçlarında,
 
 88
-00:05:17,418 --> 00:05:23,044
+00:05:17,433 --> 00:05:23,080
 sürekli kullanım nedeniyle verimlilik
 kritiktir ve donanıma alçak seviyeli erişim gerekir.
 
 89
-00:05:23,364 --> 00:05:27,378
+00:05:23,400 --> 00:05:27,396
 Örneğin UNIX işletim sistemi büyük
 ölçüde C ile yazılmıştır.
 
 90
-00:05:28,233 --> 00:05:32,330
+00:05:28,233 --> 00:05:32,283
 Son olarak web yazılımı:
 burada XHTML gibi işaretleme dilleri,
 
 91
-00:05:32,370 --> 00:05:37,440
+00:05:32,323 --> 00:05:37,336
 PHP gibi betik diller ve Java gibi
 genel amaçlı diller bir arada kullanılır.
 
 92
-00:05:38,667 --> 00:05:42,894
+00:05:38,667 --> 00:05:42,939
 Bölüm 1.3, bu bölümün
 kalbi: Dil değerlendirme kriterleri.
 
 93
-00:05:43,214 --> 00:05:45,523
+00:05:43,259 --> 00:05:45,476
 Bir dili iyi ya da kötü yapan nedir?
 
 94
-00:05:46,367 --> 00:05:51,019
+00:05:46,367 --> 00:05:51,001
 Birinci kriter okunabilirlik: programların ne
 kolaylıkla okunup anlaşılabildiği.
 
 95
-00:05:51,867 --> 00:05:53,894
+00:05:51,867 --> 00:05:53,893
 İkincisi yazılabilirlik: bir dille,
 
 96
-00:05:53,934 --> 00:05:57,301
+00:05:53,933 --> 00:05:57,298
 seçilen problem için
 ne kolaylıkla program yazılabildiği.
 
 97
-00:05:58,167 --> 00:06:02,194
+00:05:58,167 --> 00:06:02,076
 Üçüncüsü güvenilirlik: programın her
 koşulda şartnameye uygun,
 
 98
-00:06:02,234 --> 00:06:03,678
+00:06:02,116 --> 00:06:03,517
 yani doğru davranması.
 
 99
-00:06:04,533 --> 00:06:08,167
+00:06:04,533 --> 00:06:07,879
 Ve dördüncüsü maliyet:
 dilin toplam, nihai maliyeti.
 
 100
-00:06:09,400 --> 00:06:13,127
+00:06:09,400 --> 00:06:12,825
 Bu kriterler, dilin bazı
 temel özelliklerinden etkilenir.
 
 101
-00:06:13,447 --> 00:06:16,022
+00:06:13,145 --> 00:06:15,920
 Bu tabloyu bölüm boyunca aklınızda tutun.
 
 102
-00:06:16,867 --> 00:06:19,369
+00:06:16,867 --> 00:06:19,304
 Okunabilirliği sadelik, kontrol yapıları,
 
 103
-00:06:19,409 --> 00:06:22,138
+00:06:19,344 --> 00:06:22,003
 veri tipleri ve sözdizimi tasarımı belirler.
 
 104
-00:06:23,000 --> 00:06:28,550
+00:06:23,000 --> 00:06:28,108
 Yazılabilirliği bu dört özelliğe ek
 olarak soyutlama desteği ve ifade gücü etkiler.
 
 105
-00:06:29,400 --> 00:06:31,861
+00:06:29,400 --> 00:06:31,749
 Güvenilirlik ise hepsinden etkilenir.
 
 106
-00:06:32,181 --> 00:06:37,006
+00:06:32,069 --> 00:06:36,759
 Üstüne tip kontrolü, istisna yönetimi ve
 kısıtlı takma adlandırma eklenir.
 
 107
-00:06:37,867 --> 00:06:40,850
+00:06:37,867 --> 00:06:40,803
 Dikkat edin: okunabilirliği
 iyileştiren her şey,
 
 108
-00:06:40,890 --> 00:06:43,661
+00:06:40,843 --> 00:06:43,571
 dolaylı yoldan güvenilirliği de iyileştirir.
 
 109
-00:06:43,981 --> 00:06:46,164
+00:06:43,891 --> 00:06:45,970
 Şimdi bunları tek tek inceleyelim.
 
 110
-00:06:47,367 --> 00:06:52,254
+00:06:47,367 --> 00:06:52,100
 Okunabilirlik, bir dilin değerlendirilmesindeki
 en önemli kriterlerden biridir.
 
 111
-00:06:52,574 --> 00:06:57,825
+00:06:52,420 --> 00:06:57,540
 Çünkü bir programın ömrünün büyük kısmı
 bakımla geçer ve bakım için kodu okumak gerekir.
 
 112
-00:06:58,667 --> 00:07:02,062
+00:06:58,667 --> 00:07:01,983
 Okunabilirliği etkileyen
 ilk özellik genel sadeliktir.
 
 113
-00:07:02,382 --> 00:07:05,981
+00:07:02,303 --> 00:07:05,809
 Çok fazla temel yapıya sahip bir
 dili öğrenmek zordur.
 
 114
-00:07:06,301 --> 00:07:11,200
+00:07:06,129 --> 00:07:10,830
 Programcılar dilin sadece bir alt
 kümesini öğrenir ve kodu yazan ile okuyan farklı
 
 115
-00:07:11,240 --> 00:07:13,348
+00:07:10,870 --> 00:07:12,893
 alt kümeleri biliyorsa sorun çıkar.
 
 116
-00:07:14,200 --> 00:07:19,317
+00:07:14,200 --> 00:07:19,141
 İkinci sorun özellik çokluğu, yani
 aynı işi yapmanın birden fazla yolu olması.
 
 117
-00:07:19,637 --> 00:07:23,503
+00:07:19,461 --> 00:07:23,234
 Örneğin Java'da bir değişkeni bir
 artırmanın tam dört yolu var.
 
 118
-00:07:24,367 --> 00:07:27,679
+00:07:24,367 --> 00:07:27,667
 Tek başlarına kullanıldıklarında
 hepsi aynı işi yapar.
 
 119
-00:07:27,999 --> 00:07:30,797
+00:07:27,987 --> 00:07:30,587
 Ama bir ifadenin içinde fark ederler.
 
 120
-00:07:31,117 --> 00:07:35,431
+00:07:30,907 --> 00:07:35,221
 x eşittir count artı artı,
 önce eski değeri atar, sonra artırır.
 
 121
-00:07:35,751 --> 00:07:38,923
+00:07:35,541 --> 00:07:38,757
 Artı artı count ise önce artırır, sonra atar.
 
 122
-00:07:39,243 --> 00:07:41,710
+00:07:39,077 --> 00:07:41,626
 Okuyucunun bu farkları bilmesi gerekir.
 
 123
-00:07:42,933 --> 00:07:46,719
+00:07:42,933 --> 00:07:46,654
 Sadeliği etkileyen bir
 diğer konu operatör aşırı yüklemedir,
 
 124
-00:07:46,759 --> 00:07:49,819
+00:07:46,694 --> 00:07:49,703
 yani bir operatöre birden fazla
 anlam verilmesi.
 
 125
-00:07:50,667 --> 00:07:55,578
+00:07:50,667 --> 00:07:55,473
 Artı operatörünün tam sayıları,
 reel sayıları ve matrisleri toplaması makuldür.
 
 126
-00:07:55,898 --> 00:07:58,474
+00:07:55,793 --> 00:07:58,423
 Bu, dildeki operatör sayısını azaltır.
 
 127
-00:07:59,333 --> 00:08:05,112
+00:07:59,333 --> 00:08:04,954
 Ama bir programcı artı operatörünü örneğin
 bir dizinin bütün elemanlarını toplamak için tanımlarsa,
 
 128
-00:08:05,152 --> 00:08:08,737
+00:08:04,994 --> 00:08:08,482
 kodu okuyan kişi artının
 burada ne yaptığından şüpheye düşer.
 
 129
-00:08:09,057 --> 00:08:11,797
+00:08:08,802 --> 00:08:11,279
 Bu yüzden aşırı yükleme ölçülü olmalıdır.
 
 130
-00:08:12,633 --> 00:08:15,549
+00:08:12,633 --> 00:08:15,408
 Öte yandan aşırı sadelik de zararlıdır.
 
 131
-00:08:15,869 --> 00:08:18,577
+00:08:15,728 --> 00:08:18,383
 Assembly dili çok basit yapılara sahiptir,
 
 132
-00:08:18,617 --> 00:08:24,309
+00:08:18,423 --> 00:08:24,006
 ama c eşittir a artı b gibi basit bir
 işlem bile birkaç satır sürer ve okunması zordur.
 
 133
-00:08:24,629 --> 00:08:27,926
+00:08:24,326 --> 00:08:27,670
 Yani sadelik okunabilirliği
 artırır, ama dengeyle.
 
 134
-00:08:29,133 --> 00:08:32,643
+00:08:29,133 --> 00:08:32,518
 Okunabilirliği etkileyen
 ikinci özellik ortogonalliktir.
 
 135
-00:08:32,963 --> 00:08:35,490
+00:08:32,838 --> 00:08:35,352
 Ortogonal bir dilde, az sayıda temel yapı,
 
 136
-00:08:35,530 --> 00:08:39,808
+00:08:35,392 --> 00:08:39,650
 az sayıda yolla birleştirilir
 ve bu birleşimlerin her biri geçerlidir.
 
 137
-00:08:40,128 --> 00:08:43,263
+00:08:39,970 --> 00:08:42,977
 Yani dilin özellikleri
 birbirinden bağımsızdır.
 
 138
-00:08:44,100 --> 00:08:45,447
+00:08:44,100 --> 00:08:45,389
 Bir örnek verelim.
 
 139
-00:08:45,767 --> 00:08:49,013
+00:08:45,709 --> 00:08:48,977
 Dört temel tipimiz
 olsun: int, float, char ve double.
 
 140
-00:08:49,333 --> 00:08:52,384
+00:08:49,297 --> 00:08:52,296
 Ve iki tip operatörümüz olsun:
 dizi ve işaretçi.
 
 141
-00:08:53,233 --> 00:08:59,432
+00:08:53,233 --> 00:08:59,374
 Bu operatörler hem temel tiplere hem de birbirlerine
 uygulanabiliyorsa çok sayıda veri yapısı elde ederiz:
 
 142
-00:08:59,472 --> 00:09:04,121
+00:08:59,414 --> 00:09:04,020
 int dizisi, float'a işaretçi, işaretçi dizisi,
 diziye işaretçi ve daha fazlası.
 
 143
-00:09:04,967 --> 00:09:08,264
+00:09:04,967 --> 00:09:07,975
 Peki dizi operatörü
 sadece float ile çalışsaydı?
 
 144
-00:09:08,584 --> 00:09:13,254
+00:09:08,295 --> 00:09:12,915
 O zaman int dizisi, işaretçi
 dizisi ya da int dizisine işaretçi olmazdı.
 
 145
-00:09:13,574 --> 00:09:17,289
+00:09:13,235 --> 00:09:16,950
 Dil istisnalarla dolu
 ve esnekliği az bir dil olurdu.
 
 146
-00:09:18,133 --> 00:09:20,079
+00:09:18,133 --> 00:09:20,075
 İngilizce öğrenen birini düşünün:
 
 147
-00:09:20,119 --> 00:09:23,450
+00:09:20,115 --> 00:09:23,438
 geçmiş zaman için fiilin sonuna -ed
 eklendiğini öğrenir,
 
 148
-00:09:23,490 --> 00:09:25,476
+00:09:23,478 --> 00:09:25,460
 ama go fiilinin geçmişi went'tir.
 
 149
-00:09:25,796 --> 00:09:29,255
+00:09:25,780 --> 00:09:29,117
 Her istisna, ayrıca
 öğrenilmesi gereken bir kuraldır.
 
 150
-00:09:29,575 --> 00:09:32,257
+00:09:29,437 --> 00:09:31,968
 Ortogonallik, az istisna demektir.
 
 151
-00:09:33,467 --> 00:09:37,237
+00:09:33,467 --> 00:09:37,263
 Ortogonalliğe klasik
 bir örnek: iki farklı assembly dili.
 
 152
-00:09:37,557 --> 00:09:38,855
+00:09:37,583 --> 00:09:38,792
 Görev, biri bellekte,
 
 153
-00:09:38,895 --> 00:09:42,909
+00:09:38,832 --> 00:09:42,580
 diğeri yazmaçta duran iki
 tane otuz iki bitlik sayıyı toplamak.
 
 154
-00:09:43,767 --> 00:09:47,640
+00:09:43,767 --> 00:09:47,581
 IBM ana bilgisayarlarında bunun
 için iki ayrı komut var.
 
 155
-00:09:47,960 --> 00:09:53,057
+00:09:47,901 --> 00:09:52,870
 Yazmaç ile bellek hücresini toplamak için A,
 iki yazmacı toplamak için AR.
 
 156
-00:09:53,377 --> 00:09:56,230
+00:09:53,190 --> 00:09:55,987
 Üstelik sonuç her zaman bir yazmaca yazılır.
 
 157
-00:09:57,067 --> 00:10:00,096
+00:09:57,067 --> 00:09:59,996
 VAX'ta ise tek bir toplama komutu var: ADDL.
 
 158
-00:10:00,416 --> 00:10:04,314
+00:10:00,316 --> 00:10:04,001
 İşlenenlerin her biri yazmaç
 da olabilir, bellek hücresi de.
 
 159
-00:10:05,167 --> 00:10:07,814
+00:10:05,167 --> 00:10:07,744
 Yani VAX tasarımı daha ortogonaldir.
 
 160
-00:10:08,134 --> 00:10:12,963
+00:10:08,064 --> 00:10:12,871
 Tek bir komut, her kombinasyonda çalışır ve
 öğrenilecek bir istisna yoktur.
 
 161
-00:10:13,800 --> 00:10:16,865
+00:10:13,800 --> 00:10:16,737
 Ama dikkat: aşırı ortogonallik de sorundur.
 
 162
-00:10:17,185 --> 00:10:23,100
+00:10:17,057 --> 00:10:22,989
 Her şeyin her şeyle birleşebildiği bir dilde
 gereksiz karmaşıklık doğar ve hata yapma olasılığı artar.
 
 163
-00:10:23,420 --> 00:10:25,197
+00:10:23,309 --> 00:10:25,105
 LISP gibi fonksiyonel diller,
 
 164
-00:10:25,237 --> 00:10:28,807
+00:10:25,145 --> 00:10:28,754
 sade ve ortogonal tasarımlarıyla
 iyi bir denge örneğidir.
 
 165
-00:10:30,033 --> 00:10:33,937
+00:10:30,033 --> 00:10:33,823
 Okunabilirliği etkileyen
 üçüncü özellik kontrol ifadeleridir.
 
 166
-00:10:34,257 --> 00:10:41,351
+00:10:34,143 --> 00:10:41,214
 Altmışlı yıllarda birçok dilde düzgün döngü yapıları
 yoktu ve programcılar goto komutlarıyla dallanmak zorundaydı.
 
 167
-00:10:42,200 --> 00:10:45,293
+00:10:42,200 --> 00:10:45,091
 Soldaki kod, iç içe iki döngüyü
 goto ile kuruyor.
 
 168
-00:10:45,613 --> 00:10:49,641
+00:10:45,411 --> 00:10:49,324
 Akışı takip etmek için sürekli yukarı
 aşağı zıplamanız gerekiyor.
 
 169
-00:10:50,500 --> 00:10:54,703
+00:10:50,500 --> 00:10:54,680
 Aynı mantık while döngüleriyle yazılınca,
 yapı bir bakışta okunuyor.
 
 170
-00:10:55,023 --> 00:10:59,210
+00:10:55,000 --> 00:10:59,107
 İyi tasarlanmış kontrol yapıları
 okunabilirliği büyük ölçüde artırır.
 
 171
-00:11:00,067 --> 00:11:02,911
+00:11:00,067 --> 00:11:02,590
 Dördüncü özellik veri tipleri ve yapıları.
 
 172
-00:11:03,231 --> 00:11:09,690
+00:11:02,910 --> 00:11:09,372
 Örneğin boolean tipi olmayan bir dilde zaman
 aşımını timeout eşittir 1 diye göstermek zorunda kalırız.
 
 173
-00:11:10,010 --> 00:11:14,243
+00:11:09,692 --> 00:11:13,721
 timeout eşittir true ise
 anlamı hiç tartışmaya açık bırakmaz.
 
 174
-00:11:15,467 --> 00:11:19,356
+00:11:15,467 --> 00:11:19,240
 Beşinci özellik sözdizimi, yani
 dilin biçimsel görünüşü.
 
 175
-00:11:20,200 --> 00:11:21,849
+00:11:20,200 --> 00:11:21,637
 Önce tanıtıcı isimleri.
 
 176
-00:11:22,169 --> 00:11:27,010
+00:11:21,957 --> 00:11:26,581
 Fortran 77'de değişken isimleri en fazla
 altı karakter olabiliyordu.
 
 177
-00:11:27,330 --> 00:11:30,690
+00:11:26,901 --> 00:11:30,243
 ogrenci_no gibi açıklayıcı bir isim veremez,
 
 178
-00:11:30,730 --> 00:11:34,052
+00:11:30,283 --> 00:11:33,589
 OGRNNO gibi şifreli kısaltmalar yazardınız.
 
 179
-00:11:34,900 --> 00:11:36,583
+00:11:34,900 --> 00:11:36,360
 Sonra özel kelimeler.
 
 180
-00:11:36,903 --> 00:11:39,329
+00:11:36,680 --> 00:11:38,967
 Blokların nasıl kapandığı önemlidir.
 
 181
-00:11:39,649 --> 00:11:39,869
+00:11:39,287 --> 00:11:39,500
 Ada,
 
 182
-00:11:39,909 --> 00:11:45,820
+00:11:39,540 --> 00:11:45,299
 end if ve end loop gibi ayrık kapanışlar kullanarak
 hangi bloğun bittiğini açıkça gösterir.
 
 183
-00:11:46,140 --> 00:11:51,892
+00:11:45,619 --> 00:11:51,346
 Fortran 95'te ise Do ve End gibi özel
 kelimeler değişken ismi olarak bile kullanılabilir;
 
 184
-00:11:51,932 --> 00:11:53,624
+00:11:51,386 --> 00:11:53,071
 bu da okumayı zorlaştırır.
 
 185
-00:11:54,467 --> 00:11:58,569
+00:11:54,467 --> 00:11:58,530
 Son olarak biçim ve anlam: Bir
 yapının görünüşü anlamını yansıtmalıdır.
 
 186
-00:11:58,889 --> 00:12:01,793
+00:11:58,850 --> 00:12:01,757
 C'deki static kelimesi buna ters bir örnek.
 
 187
-00:12:02,113 --> 00:12:04,218
+00:12:02,077 --> 00:12:04,155
 Bir fonksiyonun içinde kullanılırsa,
 
 188
-00:12:04,258 --> 00:12:09,799
+00:12:04,195 --> 00:12:09,669
 değişkenin derleme zamanında oluşturulduğunu
 ve değerini çağrılar arasında koruduğunu söyler.
 
 189
-00:12:10,119 --> 00:12:12,278
+00:12:09,989 --> 00:12:12,058
 Fonksiyonların dışında kullanılırsa,
 
 190
-00:12:12,318 --> 00:12:15,494
+00:12:12,098 --> 00:12:15,144
 değişkenin sadece o
 dosyada görünür olduğunu söyler.
 
 191
-00:12:15,814 --> 00:12:17,904
+00:12:15,464 --> 00:12:17,372
 Aynı kelime, iki farklı anlam.
 
 192
-00:12:19,133 --> 00:12:23,443
+00:12:19,133 --> 00:12:23,552
 UNIX kabuk komutları, biçimle
 anlamın kopuk olduğu güzel bir örnektir.
 
 193
-00:12:23,763 --> 00:12:26,421
+00:12:23,872 --> 00:12:26,449
 grep komutunun adı size ne anlatıyor?
 
 194
-00:12:27,267 --> 00:12:28,860
+00:12:27,267 --> 00:12:28,751
 Muhtemelen hiçbir şey.
 
 195
-00:12:29,180 --> 00:12:34,285
+00:12:29,071 --> 00:12:34,023
 Aslında g, global; r e, regular
 expression yani düzenli ifade; p ise print,
 
 196
-00:12:34,325 --> 00:12:35,765
+00:12:34,063 --> 00:12:35,460
 yani yazdır demektir.
 
 197
-00:12:36,600 --> 00:12:40,524
+00:12:36,600 --> 00:12:40,221
 Bunu ancak eski ed editörünü
 bilenler tahmin edebilir.
 
 198
-00:12:40,844 --> 00:12:45,295
+00:12:40,541 --> 00:12:44,968
 Anlamlı anahtar sözcükler ve anlaşılır
 yapılar, okunabilirliğin temelidir.
 
 199
-00:12:46,500 --> 00:12:48,818
+00:12:46,500 --> 00:12:48,863
 Şimdi yazılabilirliğe geçelim: Bir dil,
 
 200
-00:12:48,858 --> 00:12:52,607
+00:12:48,903 --> 00:12:52,723
 seçilen problem için program yazmayı
 ne kadar kolaylaştırıyor?
 
 201
-00:12:52,927 --> 00:12:56,834
+00:12:53,043 --> 00:12:56,902
 Okunabilirliği etkileyen
 sadelik, ortogonallik ve sözdizimi,
 
 202
-00:12:56,874 --> 00:12:58,651
+00:12:56,942 --> 00:12:58,697
 yazılabilirliği de etkiler.
 
 203
-00:12:59,500 --> 00:13:02,275
+00:12:59,500 --> 00:13:02,192
 Yazılabilirlik uygulama alanına göre değişir.
 
 204
-00:13:02,595 --> 00:13:05,210
+00:13:02,512 --> 00:13:05,013
 Grafik arayüzlü bir program yazacaksanız,
 
 205
-00:13:05,250 --> 00:13:08,035
+00:13:05,053 --> 00:13:07,717
 Visual Basic C'den çok daha yazılabilirdir.
 
 206
-00:13:08,900 --> 00:13:13,010
+00:13:08,900 --> 00:13:13,114
 Ama bir işletim sistemi
 yazacaksanız, C açık ara daha uygundur.
 
 207
-00:13:13,867 --> 00:13:20,403
+00:13:13,867 --> 00:13:20,174
 Çok sayıda yapı içeren bir dilde programcı bazı
 yapıları hiç bilmeyebilir ve daha zahmetli yollarla kod yazar.
 
 208
-00:13:20,723 --> 00:13:25,241
+00:13:20,494 --> 00:13:25,058
 Az sayıda temel yapı ve tutarlı birleştirme
 kuralları, yani ortogonallik,
 
 209
-00:13:25,281 --> 00:13:26,655
+00:13:25,098 --> 00:13:26,485
 yazmayı kolaylaştırır.
 
 210
-00:13:26,975 --> 00:13:31,538
+00:13:26,805 --> 00:13:31,263
 Ama aşırı ortogonallik, hataların fark
 edilmesini zorlaştırabilir.
 
 211
-00:13:32,767 --> 00:13:37,515
+00:13:32,767 --> 00:13:37,364
 Yazılabilirliği etkileyen en önemli
 kavramlardan biri soyutlama desteğidir.
 
 212
-00:13:37,835 --> 00:13:38,404
+00:13:37,684 --> 00:13:38,228
 Soyutlama,
 
 213
-00:13:38,444 --> 00:13:43,559
+00:13:38,268 --> 00:13:43,176
 karmaşık yapıları ayrıntılarını göz
 ardı ederek tanımlayıp kullanabilme yeteneğidir.
 
 214
-00:13:44,400 --> 00:13:46,339
+00:13:44,400 --> 00:13:46,200
 İki tür soyutlama vardır.
 
 215
-00:13:46,659 --> 00:13:50,653
+00:13:46,520 --> 00:13:50,513
 Birincisi süreç soyutlaması; en iyi
 örneği alt programlardır.
 
 216
-00:13:50,973 --> 00:13:53,493
+00:13:50,833 --> 00:13:53,291
 Bir sıralama algoritmasını bir kez yazar,
 
 217
-00:13:53,533 --> 00:13:56,344
+00:13:53,331 --> 00:13:56,071
 gerektiği her yerde tek satırla çağırırsınız.
 
 218
-00:13:56,664 --> 00:13:58,127
+00:13:56,391 --> 00:13:57,958
 Kod tekrarı azalır.
 
 219
-00:13:58,967 --> 00:14:00,833
+00:13:58,967 --> 00:14:00,732
 İkincisi veri soyutlaması.
 
 220
-00:14:01,153 --> 00:14:03,641
+00:14:01,052 --> 00:14:03,490
 Diyelim ki ikili ağaç kurmak istiyoruz.
 
 221
-00:14:03,961 --> 00:14:11,264
+00:14:03,810 --> 00:14:11,060
 Fortran 77'de işaretçi ve dinamik bellek olmadığı
 için ağacı paralel tam sayı dizileriyle taklit etmeniz gerekir:
 
 222
-00:14:11,304 --> 00:14:14,748
+00:14:11,100 --> 00:14:14,519
 değer, sol çocuk ve
 sağ çocuk için ayrı ayrı diziler.
 
 223
-00:14:15,600 --> 00:14:20,626
+00:14:15,600 --> 00:14:20,547
 Java'da ise bir düğümü, bir tam sayı
 ve iki referansla doğal biçimde tanımlarsınız.
 
 224
-00:14:20,946 --> 00:14:23,593
+00:14:20,867 --> 00:14:23,156
 Kod hem daha kısa hem daha anlaşılırdır.
 
 225
-00:14:24,433 --> 00:14:29,762
+00:14:24,433 --> 00:14:29,644
 Bu iki soyutlama türü sınıf yapısında
 birleşir ve ortaya nesne yönelimli programlama çıkar.
 
 226
-00:14:30,967 --> 00:14:33,462
+00:14:30,967 --> 00:14:33,415
 Yazılabilirliğin son etkeni ifade gücü,
 
 227
-00:14:33,502 --> 00:14:37,273
+00:14:33,455 --> 00:14:37,155
 yani işlemleri belirtmenin elverişli
 yollarının olmasıdır.
 
 228
-00:14:38,133 --> 00:14:39,990
+00:14:38,133 --> 00:14:39,980
 C'de count artı artı yazmak,
 
 229
-00:14:40,030 --> 00:14:44,501
+00:14:40,020 --> 00:14:44,467
 count eşittir count artı bir yazmaktan
 daha kısa ve kullanışlıdır.
 
 230
-00:14:45,367 --> 00:14:48,564
+00:14:45,367 --> 00:14:48,459
 Benzer şekilde, sayaçlı döngüler
 için for ifadesi,
 
 231
-00:14:48,604 --> 00:14:51,387
+00:14:48,499 --> 00:14:51,192
 aynı işi while ile kurmaktan daha kolaydır.
 
 232
-00:14:52,233 --> 00:14:56,935
+00:14:52,233 --> 00:14:56,808
 Ama hatırlayın: aynı işi yapmanın çok fazla
 yolu okunabilirliği düşürebilir.
 
 233
-00:14:57,255 --> 00:14:59,821
+00:14:57,128 --> 00:14:59,445
 Kriterler arasında hep bir denge var.
 
 234
-00:15:01,033 --> 00:15:02,577
+00:15:01,033 --> 00:15:02,392
 Gelelim güvenilirliğe.
 
 235
-00:15:02,897 --> 00:15:07,367
+00:15:02,712 --> 00:15:06,996
 Bir program her koşulda istenen görevi
 doğru yapıyorsa güvenilirdir.
 
 236
-00:15:07,687 --> 00:15:11,105
+00:15:07,316 --> 00:15:10,718
 Bunu destekleyen ilk
 dil özelliği tip kontrolüdür.
 
 237
-00:15:11,967 --> 00:15:12,701
+00:15:11,967 --> 00:15:12,685
 Tip kontrolü,
 
 238
-00:15:12,741 --> 00:15:17,206
+00:15:12,725 --> 00:15:17,098
 tip hatalarının derleme sırasında
 ya da çalışma sırasında test edilmesidir.
 
 239
-00:15:17,526 --> 00:15:22,496
+00:15:17,418 --> 00:15:22,342
 Derleme zamanında yapmak daha ucuzdur; çalışma
 zamanı kontrolü ise maliyetlidir.
 
 240
-00:15:22,816 --> 00:15:27,100
+00:15:22,662 --> 00:15:26,830
 Ayrıca hata ne kadar erken
 bulunursa, düzeltmesi o kadar ucuzdur.
 
 241
-00:15:27,933 --> 00:15:32,885
+00:15:27,933 --> 00:15:32,775
 Bir örnek: Eski C sürümlerinde fonksiyon
 parametrelerinin tipi kontrol edilmezdi.
 
 242
-00:15:33,205 --> 00:15:38,527
+00:15:33,095 --> 00:15:38,468
 int bekleyen bir fonksiyona 23 yerine 23.0
 gibi bir float gönderirseniz,
 
 243
-00:15:38,567 --> 00:15:40,280
+00:15:38,508 --> 00:15:40,237
 derleyici itiraz etmez.
 
 244
-00:15:41,133 --> 00:15:41,738
+00:15:41,133 --> 00:15:41,684
 Fonksiyon,
 
 245
-00:15:41,778 --> 00:15:47,577
+00:15:41,724 --> 00:15:47,035
 float'ın bit desenini bir tam sayıymış gibi yorumlar
 ve tamamen anlamsız bir sonuç üretir.
 
 246
-00:15:47,897 --> 00:15:51,865
+00:15:47,355 --> 00:15:51,278
 Üstelik program çökmediği
 için bu hatayı fark etmek çok zordur.
 
 247
-00:15:53,067 --> 00:15:54,955
+00:15:53,067 --> 00:15:54,973
 İkinci özellik istisna yönetimi:
 
 248
-00:15:54,995 --> 00:15:59,394
+00:15:55,013 --> 00:15:59,452
 programın çalışma zamanı hatalarını
 yakalayıp düzeltici önlem alabilmesi.
 
 249
-00:15:59,714 --> 00:16:05,148
+00:15:59,772 --> 00:16:04,985
 Ada, C++ ve Java bu özelliğe sahiptir; C
 ve Fortran'da ise yoktur.
 
 250
-00:16:05,468 --> 00:16:08,591
+00:16:05,305 --> 00:16:08,126
 Bu konuyu ileriki
 bölümlerde ayrıntılı göreceğiz.
 
 251
-00:16:09,433 --> 00:16:12,077
+00:16:09,433 --> 00:16:11,944
 Üçüncüsü takma adlandırma, yani aliasing:
 
 252
-00:16:12,117 --> 00:16:16,829
+00:16:11,984 --> 00:16:16,464
 aynı bellek hücresine iki ya
 da daha fazla farklı isimle erişilebilmesi.
 
 253
-00:16:17,149 --> 00:16:21,015
+00:16:16,784 --> 00:16:20,604
 Burada p ve q işaretçileri aynı x
 hücresini gösteriyor.
 
 254
-00:16:21,867 --> 00:16:27,368
+00:16:21,867 --> 00:16:27,506
 q üzerinden değeri 99 yaptığımızda,
 p'nin gösterdiği değer de sessizce değişir.
 
 255
-00:16:28,233 --> 00:16:31,437
+00:16:28,233 --> 00:16:31,328
 Programcı bunu unutursa
 beklenmedik hatalar çıkar.
 
 256
-00:16:31,757 --> 00:16:37,887
+00:16:31,648 --> 00:16:37,717
 Bu yüzden aliasing tehlikeli bir özellik kabul edilir ve
 programcının çok dikkatli olmasını gerektirir.
 
 257
-00:16:39,100 --> 00:16:43,191
+00:16:39,100 --> 00:16:43,046
 Son olarak, okunabilirlik ve
 yazılabilirlik de güvenilirliği etkiler.
 
 258
-00:16:43,511 --> 00:16:46,689
+00:16:43,366 --> 00:16:46,545
 Bir algoritmayı doğal
 biçimde ifade edemeyen bir dil,
 
 259
-00:16:46,729 --> 00:16:50,737
+00:16:46,585 --> 00:16:50,595
 programcıyı doğal olmayan
 ve bu yüzden hataya açık çözümlere iter.
 
 260
-00:16:51,600 --> 00:16:54,700
+00:16:51,600 --> 00:16:54,664
 Okunabilirlik, güvenilirliği
 iki yoldan etkiler.
 
 261
-00:16:55,020 --> 00:17:00,035
+00:16:54,984 --> 00:16:59,849
 Birincisi: okunabilirlik yazılabilirliği,
 yazılabilirlik de güvenilirliği etkiler.
 
 262
-00:17:00,900 --> 00:17:04,900
+00:17:00,900 --> 00:17:04,929
 İkincisi: okunması zor bir programın
 bakımını yapmak da zordur.
 
 263
-00:17:05,220 --> 00:17:08,561
+00:17:05,249 --> 00:17:08,546
 Bakım sırasında yapılan hatalar
 güvenilirliği düşürür.
 
 264
-00:17:09,767 --> 00:17:11,540
+00:17:09,767 --> 00:17:11,601
 Dördüncü kriter maliyet.
 
 265
-00:17:11,860 --> 00:17:15,862
+00:17:11,921 --> 00:17:15,920
 Bir dilin maliyeti tek bir
 kalem değil, birçok bileşenin toplamıdır.
 
 266
-00:17:16,182 --> 00:17:19,607
+00:17:16,240 --> 00:17:19,688
 Çubuklar, kalemlerin
 kabaca büyüklüğünü temsil ediyor.
 
 267
-00:17:20,467 --> 00:17:23,408
+00:17:20,467 --> 00:17:23,352
 Programcıları eğitme maliyeti,
 dilin sadeliğine,
 
 268
-00:17:23,448 --> 00:17:26,678
+00:17:23,392 --> 00:17:26,562
 ortogonalliğine ve
 programcının deneyimine bağlıdır.
 
 269
-00:17:26,998 --> 00:17:30,673
+00:17:26,882 --> 00:17:30,470
 Program yazma maliyeti ise
 dilin yazılabilirliğiyle ilgilidir.
 
 270
-00:17:31,533 --> 00:17:36,656
+00:17:31,533 --> 00:17:36,549
 Sonra derleme maliyeti: örneğin Ada'nın ilk
 derleyicileri çok pahalı çalışıyordu.
 
 271
-00:17:36,976 --> 00:17:38,102
+00:17:36,869 --> 00:17:37,991
 Ve yürütme maliyeti:
 
 272
-00:17:38,142 --> 00:17:42,457
+00:17:38,031 --> 00:17:42,332
 çalışma zamanında çok fazla tip
 kontrolü yapan bir dil daha yavaş çalışır.
 
 273
-00:17:43,300 --> 00:17:45,384
+00:17:43,300 --> 00:17:45,441
 Uygulama sisteminin maliyeti de var:
 
 274
-00:17:45,424 --> 00:17:49,671
+00:17:45,481 --> 00:17:49,844
 Java'nın derleyicisinin ücretsiz
 olması yayılmasına büyük katkı sağladı.
 
 275
-00:17:49,991 --> 00:17:56,701
+00:17:50,164 --> 00:17:56,805
 Zayıf güvenilirliğin maliyeti ise bir uzay görevinde ya da bir
 kriptografi sisteminde çok pahalıya patlayabilir.
 
 276
-00:17:57,567 --> 00:17:59,077
+00:17:57,567 --> 00:17:59,134
 Ve en büyük kalem: bakım.
 
 277
-00:17:59,397 --> 00:18:04,500
+00:17:59,454 --> 00:18:04,532
 Eskiden maliyetin büyük kısmı kodlamadaydı;
 bugün en önemli parametre bakımdır.
 
 278
-00:18:04,820 --> 00:18:09,708
+00:18:04,852 --> 00:18:09,856
 Sebesta'ya göre bakım maliyeti, geliştirme
 maliyetinin iki ila dört katı olabilir.
 
 279
-00:18:10,567 --> 00:18:14,108
+00:18:10,567 --> 00:18:14,154
 Peki derleme maliyeti ile
 yürütme maliyeti nasıl dengelenir?
 
 280
-00:18:14,428 --> 00:18:15,533
+00:18:14,474 --> 00:18:15,585
 Cevap optimizasyon:
 
 281
-00:18:15,573 --> 00:18:19,691
+00:18:15,625 --> 00:18:19,764
 Derleyici ne kadar çok optimizasyon
 yaparsa derleme o kadar yavaşlar,
 
 282
-00:18:19,731 --> 00:18:22,563
+00:18:19,804 --> 00:18:22,651
 ama ortaya çıkan
 program o kadar hızlı çalışır.
 
 283
-00:18:22,883 --> 00:18:28,944
+00:18:22,971 --> 00:18:28,930
 Bugün yükselen low-code ve no-code platformlar da bu
 maliyetleri düşürme arayışının bir sonucudur.
 
 284
-00:18:30,167 --> 00:18:33,197
+00:18:30,167 --> 00:18:33,000
 Ana kriterlerin
 yanında birkaç kriter daha var.
 
 285
-00:18:33,517 --> 00:18:34,617
+00:18:33,320 --> 00:18:34,436
 İlki taşınabilirlik:
 
 286
-00:18:34,657 --> 00:18:38,818
+00:18:34,476 --> 00:18:38,696
 bir programın bir implementasyondan
 diğerine ne kolaylıkla taşınabildiği.
 
 287
-00:18:39,138 --> 00:18:42,121
+00:18:39,016 --> 00:18:41,832
 Bu, dilin standartlaşma derecesine bağlıdır.
 
 288
-00:18:42,441 --> 00:18:46,830
+00:18:42,152 --> 00:18:46,482
 Örneğin BASIC'in standardı
 zayıftır ve programlarını taşımak zordur.
 
 289
-00:18:47,667 --> 00:18:50,504
+00:18:47,667 --> 00:18:50,363
 Standartlaşma ise zahmetli bir süreçtir.
 
 290
-00:18:50,824 --> 00:18:55,530
+00:18:50,683 --> 00:18:55,427
 C++'ı standartlaştırmak
 için 1989'da kurulan komite,
 
 291
-00:18:55,570 --> 00:18:59,311
+00:18:55,467 --> 00:18:59,240
 çalışmasını ancak 1998'de tamamlayabildi.
 
 292
-00:19:00,167 --> 00:19:04,943
+00:19:00,167 --> 00:19:04,895
 Diğerleri genellik, yani dilin geniş
 bir uygulama yelpazesinde kullanılabilmesi;
 
 293
-00:19:04,983 --> 00:19:09,498
+00:19:04,935 --> 00:19:09,406
 ve iyi tanımlanmışlık, yani dilin
 resmî tanımının kesin ve eksiksiz olması.
 
 294
-00:19:10,700 --> 00:19:14,273
+00:19:10,700 --> 00:19:14,057
 Bölüm 1.4: Dil tasarımını etkileyen faktörler.
 
 295
-00:19:14,593 --> 00:19:19,376
+00:19:14,377 --> 00:19:18,918
 İki ana etken var: bilgisayar
 mimarisi ve programlama tasarım yöntemleri.
 
 296
-00:19:19,696 --> 00:19:21,414
+00:19:19,238 --> 00:19:20,747
 Önce mimariye bakalım.
 
 297
-00:19:22,267 --> 00:19:27,488
+00:19:22,267 --> 00:19:27,747
 Son yetmiş yılın popüler dillerinin
 çoğu, von Neumann mimarisi etrafında tasarlandı.
 
 298
-00:19:27,808 --> 00:19:32,019
+00:19:28,067 --> 00:19:32,276
 Bu mimaride veriler ve programlar aynı
 bellekte saklanır ve bellek,
 
 299
-00:19:32,059 --> 00:19:33,265
+00:19:32,316 --> 00:19:33,521
 işlemciden ayrıdır.
 
 300
-00:19:34,100 --> 00:19:38,099
+00:19:34,100 --> 00:19:38,129
 Komutlar ve veriler bellekten işlemciye
 taşınır, orada işlenir...
 
 301
-00:19:38,933 --> 00:19:42,107
+00:19:38,933 --> 00:19:42,254
 ...ve işlemlerin sonuçları tekrar
 belleğe gönderilir.
 
 302
-00:19:42,967 --> 00:19:48,005
+00:19:42,967 --> 00:19:47,808
 1940'lardan bu yana üretilen
 bilgisayarların çoğu bu mimariyi kullanır.
 
 303
-00:19:48,325 --> 00:19:51,924
+00:19:48,128 --> 00:19:51,623
 Ve bu mimari, zorunlu,
 yani imperatif dilleri doğurdu.
 
 304
-00:19:55,267 --> 00:19:59,574
+00:19:55,267 --> 00:19:59,319
 İmperatif dillerin temel
 özellikleri doğrudan bu mimariden gelir.
 
 305
-00:20:00,433 --> 00:20:03,208
+00:20:00,433 --> 00:20:02,959
 Değişkenler bellek hücrelerini modeller.
 
 306
-00:20:04,067 --> 00:20:08,896
+00:20:04,067 --> 00:20:08,653
 Atama ifadeleri, verinin bellek ile işlemci
 arasında aktarılmasına dayanır.
 
 307
-00:20:09,216 --> 00:20:13,737
+00:20:08,973 --> 00:20:13,463
 a eşittir b artı c ifadesinde,
 b ve c bellekten işlemciye getirilir,
 
 308
-00:20:13,777 --> 00:20:16,928
+00:20:13,503 --> 00:20:16,635
 toplanır ve sonuç
 a'nın hücresine geri yazılır.
 
 309
-00:20:17,767 --> 00:20:22,146
+00:20:17,767 --> 00:20:22,145
 Yineleme ise bu mimaride tekrarı
 gerçekleştirmenin en verimli yoludur;
 
 310
-00:20:22,186 --> 00:20:25,280
+00:20:22,185 --> 00:20:25,278
 çünkü komutlar bellekte ardışık
 hücrelerde durur.
 
 311
-00:20:25,600 --> 00:20:29,337
+00:20:25,598 --> 00:20:29,283
 Bu yüzden özyineleme bazı problemler
 için daha doğal olsa da,
 
 312
-00:20:29,377 --> 00:20:33,030
+00:20:29,323 --> 00:20:32,926
 von Neumann makinelerinde döngüler
 genelde daha verimlidir.
 
 313
-00:20:34,233 --> 00:20:38,654
+00:20:34,233 --> 00:20:38,519
 Makine kodu, von Neumann bilgisayarında
 getir yürüt döngüsüyle çalışır.
 
 314
-00:20:38,974 --> 00:20:42,259
+00:20:38,839 --> 00:20:42,112
 Komutlar bellekte
 durur ama işlemcide işlenmelidir.
 
 315
-00:20:42,579 --> 00:20:47,385
+00:20:42,432 --> 00:20:47,052
 Bir sonraki komutun adresi,
 program sayacı denen bir yazmaçta tutulur.
 
 316
-00:20:48,233 --> 00:20:52,017
+00:20:48,233 --> 00:20:51,915
 Önce program sayacının
 gösterdiği komut bellekten getirilir.
 
 317
-00:20:52,867 --> 00:20:56,609
+00:20:52,867 --> 00:20:56,503
 Sayaç bir artırılır;
 böylece bir sonraki komutu gösterir.
 
 318
-00:20:57,467 --> 00:21:00,450
+00:20:57,467 --> 00:21:00,220
 Komut çözülür, yani ne yapılacağı anlaşılır.
 
 319
-00:21:01,300 --> 00:21:02,856
+00:21:01,300 --> 00:21:02,682
 Ve komut yürütülür.
 
 320
-00:21:03,176 --> 00:21:07,194
+00:21:03,002 --> 00:21:07,053
 Sonra döngü baştan başlar;
 bu, bilgisayar kapanana kadar sürer.
 
 321
-00:21:08,400 --> 00:21:11,596
+00:21:08,400 --> 00:21:11,616
 Bu mimarinin bir zaafı var: von
 Neumann darboğazı.
 
 322
-00:21:11,916 --> 00:21:12,445
+00:21:11,936 --> 00:21:12,449
 Komutlar,
 
 323
-00:21:12,485 --> 00:21:18,174
+00:21:12,489 --> 00:21:18,020
 bellek ile işlemci arasındaki bağlantının
 taşıyabileceğinden çok daha hızlı yürütülebilir.
 
 324
-00:21:18,494 --> 00:21:23,440
+00:21:18,340 --> 00:21:23,100
 Bu yüzden bağlantının hızı, bilgisayarın
 hızını sınırlayan birincil etkendir.
 
 325
-00:21:24,300 --> 00:21:28,665
+00:21:24,300 --> 00:21:28,468
 Fonksiyonel dillerde ise değişkenler,
 atamalar ve döngüler yoktur.
 
 326
-00:21:28,985 --> 00:21:30,268
+00:21:28,788 --> 00:21:30,086
 John Backus 1978'de,
 
 327
-00:21:30,308 --> 00:21:35,890
+00:21:30,126 --> 00:21:35,771
 fonksiyonel dilleri verimli çalıştıracak bir von
 Neumann alternatifi tasarlanmadıkça,
 
 328
-00:21:35,930 --> 00:21:40,097
+00:21:35,811 --> 00:21:40,024
 bu dillerin imperatif dillerin yerini
 alamayacağını söylemişti.
 
 329
-00:21:40,933 --> 00:21:42,473
+00:21:40,933 --> 00:21:42,452
 Bazı bilim insanları ise,
 
 330
-00:21:42,513 --> 00:21:49,339
+00:21:42,492 --> 00:21:49,223
 öyle bir mimari olsa bile imperatif dillerin daha
 doğal olduğu için tercih edilmeye devam edeceğini savunur.
 
 331
-00:21:50,567 --> 00:21:53,690
+00:21:50,567 --> 00:21:53,515
 İkinci etken, programlama tasarım yöntemleri.
 
 332
-00:21:54,010 --> 00:21:59,583
+00:21:53,835 --> 00:21:59,268
 Yazılım geliştirme yöntemleri değiştikçe
 yeni programlama yaklaşımları ve yeni diller doğdu.
 
 333
-00:22:00,433 --> 00:22:05,556
+00:22:00,433 --> 00:22:05,332
 Elli ve altmışlı yıllarda uygulamalar basitti
 ve asıl ilgi makine verimliliğiydi.
 
 334
-00:22:06,400 --> 00:22:09,664
+00:22:06,400 --> 00:22:09,628
 Altmışların sonunda
 insan verimliliği önem kazandı.
 
 335
-00:22:09,984 --> 00:22:13,080
+00:22:09,948 --> 00:22:13,020
 Donanım ucuzlarken programcı maliyeti arttı.
 
 336
-00:22:13,400 --> 00:22:18,426
+00:22:13,340 --> 00:22:18,340
 Okunabilirlik, daha iyi kontrol yapıları,
 yapısal programlama ve yukarıdan aşağıya,
 
 337
-00:22:18,466 --> 00:22:20,481
+00:22:18,380 --> 00:22:20,383
 adım adım tasarım ön plana çıktı.
 
 338
-00:22:21,333 --> 00:22:27,545
+00:22:21,333 --> 00:22:27,417
 Yetmişlerin sonunda süreç odaklı tasarımdan veri odaklı
 tasarıma geçildi ve veri soyutlama doğdu.
 
 339
-00:22:27,865 --> 00:22:30,866
+00:22:27,737 --> 00:22:30,776
 Yine de süreç odaklı yaklaşım
 hiç terk edilmedi;
 
 340
-00:22:30,906 --> 00:22:34,012
+00:22:30,816 --> 00:22:33,960
 özellikle eşzamanlı
 programlamada hâlâ önemlidir.
 
 341
-00:22:34,867 --> 00:22:39,722
+00:22:34,867 --> 00:22:39,581
 Seksenlerin ortasında ise nesne
 yönelimli programlama geldi: veri soyutlama,
 
 342
-00:22:39,762 --> 00:22:41,437
+00:22:39,621 --> 00:22:41,247
 kalıtım ve çok biçimlilik.
 
 343
-00:22:41,757 --> 00:22:46,551
+00:22:41,567 --> 00:22:46,168
 Hatta fonksiyonel ve mantıksal dillere de
 nesne özellikleri eklendi;
 
 344
-00:22:46,591 --> 00:22:48,368
+00:22:46,208 --> 00:22:47,914
 örneğin CLOS ve Prolog++.
 
 345
-00:22:49,600 --> 00:22:52,005
+00:22:49,600 --> 00:22:51,996
 Bölüm 1.5: Dil kategorileri.
 
 346
-00:22:52,325 --> 00:22:53,146
+00:22:52,316 --> 00:22:53,101
 Bir paradigma,
 
 347
-00:22:53,186 --> 00:22:57,553
+00:22:53,141 --> 00:22:57,328
 bir topluluğun bir konuya bakışını
 belirleyen kavramsal bir çerçevedir.
 
 348
-00:22:57,873 --> 00:23:03,458
+00:22:57,648 --> 00:23:03,046
 Programlama paradigması da programcının
 problemlere nasıl çözüm ürettiğini derinden etkiler.
 
 349
-00:23:04,300 --> 00:23:09,280
+00:23:04,300 --> 00:23:09,272
 Bazı diller tek bir paradigmayı
 destekler: Smalltalk ve Eiffel nesne yönelimli,
 
 350
-00:23:09,320 --> 00:23:11,545
+00:23:09,312 --> 00:23:11,533
 FORTRAN ve Pascal ise imperatiftir.
 
 351
-00:23:11,865 --> 00:23:14,862
+00:23:11,853 --> 00:23:14,872
 Bazıları da birden çok paradigmayı destekler;
 
 352
-00:23:14,902 --> 00:23:19,761
+00:23:14,912 --> 00:23:19,806
 örneğin C++ hem imperatif hem
 de nesne yönelimli kod yazmaya izin verir.
 
 353
-00:23:20,600 --> 00:23:25,720
+00:23:20,600 --> 00:23:25,646
 Dört temel paradigma vardır: imperatif,
 fonksiyonel, mantıksal ve nesne yönelimli.
 
 354
-00:23:26,040 --> 00:23:31,693
+00:23:25,966 --> 00:23:31,538
 Aynı paradigmadaki diller kavramları paylaştığı için
 birini öğrenmek diğerini kolaylaştırır.
 
 355
-00:23:32,013 --> 00:23:37,135
+00:23:31,858 --> 00:23:36,942
 Şimdi ilk üçünü aynı problemle tanıyalım:
 Öklid'in en büyük ortak bölen algoritması.
 
 356
-00:23:38,367 --> 00:23:42,861
+00:23:38,367 --> 00:23:42,694
 İmperatif paradigmada program,
 belleği değiştiren komutların sırasıdır.
 
 357
-00:23:43,181 --> 00:23:47,105
+00:23:43,014 --> 00:23:46,798
 Deyimler birbirleriyle değişkenler
 aracılığıyla iletişim kurar.
 
 358
-00:23:47,425 --> 00:23:51,268
+00:23:47,118 --> 00:23:50,752
 C, FORTRAN, Pascal, COBOL ve
 Ada bu ailedendir.
 
 359
-00:23:52,133 --> 00:23:54,296
+00:23:52,133 --> 00:23:54,126
 İşte C'de en büyük ortak bölen.
 
 360
-00:23:54,616 --> 00:23:58,458
+00:23:54,446 --> 00:23:58,217
 İki sayı eşit olana kadar,
 büyük olandan küçük olanı çıkarıyoruz.
 
 361
-00:23:59,300 --> 00:24:02,028
+00:23:59,300 --> 00:24:01,913
 Fonksiyonu 12 ve 8 ile çağıralım.
 
 362
-00:24:02,348 --> 00:24:06,818
+00:24:02,233 --> 00:24:06,575
 a, b'den büyük; bu
 yüzden a, 12 eksi 8, yani 4 olur.
 
 363
-00:24:07,667 --> 00:24:11,283
+00:24:07,667 --> 00:24:11,082
 Şimdi b büyük; b, 8 eksi 4, yani 4 olur.
 
 364
-00:24:12,133 --> 00:24:15,256
+00:24:12,133 --> 00:24:15,280
 a ile b eşitlendi, döngü biter ve sonuç 4.
 
 365
-00:24:15,576 --> 00:24:19,651
+00:24:15,600 --> 00:24:19,675
 Dikkat edin: her adımda bellekteki
 değişkenlerin değeri değişti.
 
 366
-00:24:19,971 --> 00:24:22,548
+00:24:19,995 --> 00:24:22,537
 İmperatif programlamanın özü budur.
 
 367
-00:24:23,767 --> 00:24:28,759
+00:24:23,767 --> 00:24:28,713
 Fonksiyonel paradigmada hesaplama, fonksiyonları
 parametrelere uygulayarak yapılır.
 
 368
-00:24:29,079 --> 00:24:30,943
+00:24:29,033 --> 00:24:30,951
 Değişkene atama ve döngü yoktur;
 
 369
-00:24:30,983 --> 00:24:35,864
+00:24:30,991 --> 00:24:36,010
 fonksiyonlar başka fonksiyonları çağırır ya da
 başka fonksiyonlara parametre olur.
 
 370
-00:24:36,700 --> 00:24:39,510
+00:24:36,700 --> 00:24:39,370
 Aynı algoritma Scheme dilinde böyle yazılır.
 
 371
-00:24:39,830 --> 00:24:44,293
+00:24:39,690 --> 00:24:44,011
 Döngü yerine özyineleme var:
 fonksiyon kendini yeni değerlerle çağırıyor.
 
 372
-00:24:45,133 --> 00:24:52,053
+00:24:45,133 --> 00:24:51,832
 gcd2 12 8, gcd2 4 8'i çağırır; o da
 gcd2 4 4'ü; sonuç yine 4.
 
 373
-00:24:52,373 --> 00:24:54,877
+00:24:52,152 --> 00:24:54,735
 Bu kez hiçbir değişkenin değeri değişmedi;
 
 374
-00:24:54,917 --> 00:24:57,642
+00:24:54,775 --> 00:24:57,586
 sadece yeni değerlerle yeni çağrılar yapıldı.
 
 375
-00:24:58,500 --> 00:25:00,472
+00:24:58,500 --> 00:25:00,527
 İlk fonksiyonel dil LISP'tir.
 
 376
-00:25:00,792 --> 00:25:04,136
+00:25:00,847 --> 00:25:04,132
 ML ve Haskell ise
 modern fonksiyonel dillerdir.
 
 377
-00:25:04,456 --> 00:25:09,172
+00:25:04,452 --> 00:25:09,177
 ML ve LISP, değişken ve atama
 gibi imperatif özellikleri de destekler;
 
 378
-00:25:09,212 --> 00:25:11,863
+00:25:09,217 --> 00:25:11,871
 Haskell ise tamamen saf fonksiyoneldir.
 
 379
-00:25:13,067 --> 00:25:16,639
+00:25:13,067 --> 00:25:16,692
 Mantıksal paradigmada,
 bir işin nasıl yapılacağını değil,
 
 380
-00:25:16,679 --> 00:25:18,518
+00:25:16,732 --> 00:25:18,596
 ne istendiğini belirtirsiniz.
 
 381
-00:25:18,838 --> 00:25:21,166
+00:25:18,916 --> 00:25:21,219
 Program gerçekler ve kurallardan oluşur;
 
 382
-00:25:21,206 --> 00:25:24,582
+00:25:21,259 --> 00:25:24,597
 kuralların hangi sırayla
 kullanılacağına dil karar verir.
 
 383
-00:25:25,433 --> 00:25:28,179
+00:25:25,433 --> 00:25:28,278
 Örneğin bir gerçek verelim: Ali insandır.
 
 384
-00:25:28,499 --> 00:25:30,856
+00:25:28,598 --> 00:25:30,873
 Ve bir kural: İnsanlar ölümlüdür.
 
 385
-00:25:31,700 --> 00:25:33,880
+00:25:31,700 --> 00:25:33,790
 Şimdi soralım: Ali ölümlü müdür?
 
 386
-00:25:34,200 --> 00:25:38,937
+00:25:34,110 --> 00:25:38,645
 Prolog gerçeklere ve kurallara
 bakarak çıkarım yapar ve evet yanıtını verir.
 
 387
-00:25:39,800 --> 00:25:44,645
+00:25:39,800 --> 00:25:44,684
 Öklid algoritması Prolog'da üç kural
 olarak yazılır: A ile B eşitse sonuç A'dır;
 
 388
-00:25:44,685 --> 00:25:48,348
+00:25:44,724 --> 00:25:48,416
 A büyükse A eksi B ile,
 B büyükse B eksi A ile devam edilir.
 
 389
-00:25:48,668 --> 00:25:54,578
+00:25:48,736 --> 00:25:54,576
 En tanınmış mantıksal dil Prolog'dur ve doğal
 dil işleme gibi alanlarda yaygın olarak kullanılır.
 
 390
-00:25:55,800 --> 00:26:00,757
+00:25:55,800 --> 00:26:00,792
 Nesne yönelimli paradigmada program,
 birbiriyle mesajlaşan nesnelerden oluşur.
 
 391
-00:26:01,077 --> 00:26:05,605
+00:26:01,112 --> 00:26:05,643
 Bir nesne, verileri ve bu veriler
 üzerinde çalışan işlemleri bir arada tutar.
 
 392
-00:26:06,467 --> 00:26:10,148
+00:26:06,467 --> 00:26:09,940
 Temel kavramları veri
 soyutlama, kalıtım ve geç bağlamadır.
 
 393
-00:26:10,468 --> 00:26:16,436
+00:26:10,260 --> 00:26:16,001
 Simula 67, Smalltalk, C++, Java ve C# bu
 paradigmanın örnekleridir.
 
 394
-00:26:17,300 --> 00:26:21,400
+00:26:17,300 --> 00:26:21,345
 Nesne yönelimli yaklaşım imperatif
 dillerden çok farklı görünse de,
 
 395
-00:26:21,440 --> 00:26:26,135
+00:26:21,385 --> 00:26:26,019
 imperatif bir dili nesneleri destekleyecek
 şekilde genişletmek zor değildir.
 
 396
-00:26:26,455 --> 00:26:31,076
+00:26:26,339 --> 00:26:30,728
 Örneğin C ve Java'da atama
 ve kontrol ifadeleri neredeyse aynıdır.
 
 397
-00:26:32,300 --> 00:26:36,367
+00:26:32,300 --> 00:26:36,433
 Paradigmalar arasındaki farkı eğlenceli
 bir örnekle pekiştirelim.
 
 398
-00:26:36,687 --> 00:26:39,371
+00:26:36,753 --> 00:26:39,350
 Dexter, Mimi'ye çiçek göndermek istiyor.
 
 399
-00:26:39,691 --> 00:26:42,584
+00:26:39,670 --> 00:26:42,559
 Bu problemi farklı
 paradigmalarla nasıl çözeriz?
 
 400
-00:26:43,433 --> 00:26:48,035
+00:26:43,433 --> 00:26:48,026
 İmperatif çözüm, adım adım bir
 tarif gibidir: para ve çiçek için yer ayır,
 
 401
-00:26:48,075 --> 00:26:53,155
+00:26:48,066 --> 00:26:53,137
 bankadan parayı çek, sakla, çiçekçiye
 ver, çiçekleri al, adrese git ve teslim et.
 
 402
-00:26:53,475 --> 00:26:55,729
+00:26:53,457 --> 00:26:55,779
 Her şeyi sırasıyla biz yönetiyoruz.
 
 403
-00:26:56,567 --> 00:27:00,773
+00:26:56,567 --> 00:27:00,649
 Nesne yönelimli çözümde ise
 işi nesneler arasında paylaştırırız.
 
 404
-00:27:01,093 --> 00:27:05,599
+00:27:00,969 --> 00:27:05,418
 Dexter banka memuruna para çekme
 mesajı gönderir, çiçekçiye sipariş verir;
 
 405
-00:27:05,639 --> 00:27:08,465
+00:27:05,458 --> 00:27:08,249
 çiçekçi de dağıtımcıya teslimat mesajı yollar.
 
 406
-00:27:08,785 --> 00:27:10,829
+00:27:08,569 --> 00:27:10,566
 Her nesne kendi işini bilir.
 
 407
-00:27:11,667 --> 00:27:17,170
+00:27:11,667 --> 00:27:17,024
 Fonksiyonel çözümde neyin yapılacağını ve sırasını
 fonksiyon bileşimiyle ifade ederiz:
 
 408
-00:27:17,210 --> 00:27:20,432
+00:27:17,064 --> 00:27:20,202
 önce nakit çek, sonra
 çiçek satın al, sonra dağıt.
 
 409
-00:27:20,752 --> 00:27:22,863
+00:27:20,522 --> 00:27:22,670
 Yani Dağıt, Satın al, Çek.
 
 410
-00:27:23,183 --> 00:27:26,422
+00:27:22,990 --> 00:27:26,020
 Her fonksiyonun çıktısı bir
 sonrakinin girdisidir.
 
 411
-00:27:27,633 --> 00:27:32,595
+00:27:27,633 --> 00:27:32,325
 Mantıksal çözümde ise kuralları
 ve gerçekleri yazar, sadece soruyu sorarız.
 
 412
-00:27:32,915 --> 00:27:34,794
+00:27:32,645 --> 00:27:34,502
 Kurallarımız şöyle: Bir çiçekçi,
 
 413
-00:27:34,834 --> 00:27:39,512
+00:27:34,542 --> 00:27:39,166
 parası olan ve ödeme yapan bir kişiden sipariş
 alırsa, o kişiye çiçek dağıtır.
 
 414
-00:27:40,367 --> 00:27:43,350
+00:27:40,367 --> 00:27:43,327
 Gerçeklerimiz de şunlar: Dexter'ın parası var.
 
 415
-00:27:43,670 --> 00:27:44,937
+00:27:43,647 --> 00:27:44,852
 Faruk bir çiçekçi.
 
 416
-00:27:45,257 --> 00:27:47,509
+00:27:45,172 --> 00:27:47,238
 Dexter, Faruk'a para veriyor.
 
 417
-00:27:48,367 --> 00:27:50,979
+00:27:48,367 --> 00:27:50,840
 Şimdi soruyu soralım: Mimi çiçek alır mı?
 
 418
-00:27:51,299 --> 00:27:53,006
+00:27:51,160 --> 00:27:52,808
 Ama cevap bulunamıyor.
 
 419
-00:27:53,326 --> 00:27:54,267
+00:27:53,128 --> 00:27:54,000
 Neden?
 
 420
-00:27:54,307 --> 00:27:55,307
+00:27:54,040 --> 00:27:55,040
 Ne eksik?
 
 421
-00:27:55,933 --> 00:27:59,868
+00:27:55,933 --> 00:28:00,090
 Çünkü kişi koşulu sağlanmıyor: Dexter ve
 Mimi aslında birer köpek!
 
 422
-00:28:00,188 --> 00:28:05,186
+00:28:00,410 --> 00:28:05,419
 Mantıksal programlamada sistem, yalnızca
 verdiğiniz gerçeklerden çıkarım yapabilir.
 
 423
-00:28:05,506 --> 00:28:06,609
+00:28:05,739 --> 00:28:06,889
 Cevap: Hayır.
 
 424
-00:28:07,833 --> 00:28:11,413
+00:28:07,833 --> 00:28:11,293
 Dört temel paradigmanın
 dışında başka kategoriler de var.
 
 425
-00:28:12,267 --> 00:28:17,493
+00:28:12,267 --> 00:28:17,487
 İşaretleme dilleri, XHTML ve XML
 gibi, kendi başına programlama dili değildir;
 
 426
-00:28:17,533 --> 00:28:19,963
+00:28:17,527 --> 00:28:19,955
 web belgelerindeki bilgiyi düzenler.
 
 427
-00:28:20,283 --> 00:28:25,572
+00:28:20,275 --> 00:28:25,587
 Bunlara bazı programlama yetenekleri
 eklenince hibrit diller ortaya çıkar;
 
 428
-00:28:25,612 --> 00:28:27,124
+00:28:25,627 --> 00:28:27,146
 örneğin JSTL ve XSLT.
 
 429
-00:28:27,967 --> 00:28:29,816
+00:28:27,967 --> 00:28:29,718
 Görsel diller, VB.NET gibi,
 
 430
-00:28:29,856 --> 00:28:34,405
+00:28:29,758 --> 00:28:34,072
 sürükle bırak mantığıyla
 grafik arayüz tasarlamayı kolaylaştırır.
 
 431
-00:28:34,725 --> 00:28:38,607
+00:28:34,392 --> 00:28:37,969
 Betik diller ise Perl,
 JavaScript ve Ruby gibi dillerdir.
 
 432
-00:28:38,927 --> 00:28:41,240
+00:28:38,289 --> 00:28:40,489
 Bazıları bunları ayrı kategori sayar,
 
 433
-00:28:41,280 --> 00:28:45,094
+00:28:40,529 --> 00:28:44,160
 ama ikisi de aslında imperatif
 dillerin alt kategorileridir.
 
 434
-00:28:45,933 --> 00:28:49,760
+00:28:45,933 --> 00:28:49,757
 Son olarak özel amaçlı
 diller: ticari raporlar için RPG,
 
 435
-00:28:49,800 --> 00:28:54,496
+00:28:49,797 --> 00:28:54,489
 programlanabilir tezgâhlar
 için APT ve sistem simülasyonu için GPSS.
 
 436
-00:28:55,700 --> 00:28:59,128
+00:28:55,700 --> 00:28:58,952
 Bölüm 1.6: Dil tasarımında verilen ödünler.
 
 437
-00:28:59,448 --> 00:29:02,612
+00:28:59,272 --> 00:29:02,405
 Hoare'un 1973'teki sözü durumu
 çok iyi özetliyor:
 
 438
-00:29:02,652 --> 00:29:07,947
+00:29:02,445 --> 00:29:07,691
 Bir dil tasarlanırken birçok önemli
 kriter vardır, ama bunlar birbiriyle çelişir.
 
 439
-00:29:08,267 --> 00:29:11,795
+00:29:08,011 --> 00:29:11,529
 İyi bir dil tasarlamak çok zor bir
 mühendislik görevidir.
 
 440
-00:29:12,633 --> 00:29:15,532
+00:29:12,633 --> 00:29:15,664
 Birinci çatışma: güvenilirlik ve
 yürütme maliyeti.
 
 441
-00:29:15,852 --> 00:29:20,763
+00:29:15,984 --> 00:29:20,871
 Java, her dizi erişiminde indisin
 geçerli aralıkta olup olmadığını kontrol eder.
 
 442
-00:29:21,083 --> 00:29:24,213
+00:29:21,191 --> 00:29:24,122
 Bu güvenilirliği artırır ama
 yürütmeyi yavaşlatır.
 
 443
-00:29:24,533 --> 00:29:28,707
+00:29:24,442 --> 00:29:28,332
 C bu kontrolü yapmaz; daha hızlıdır ama
 taşma hatalarına açıktır.
 
 444
-00:29:29,027 --> 00:29:32,208
+00:29:28,652 --> 00:29:31,856
 Java tasarımcıları güvenlik için
 hızdan ödün verdi.
 
 445
-00:29:33,067 --> 00:29:35,989
+00:29:33,067 --> 00:29:35,946
 İkinci çatışma: yazılabilirlik
 ve okunabilirlik.
 
 446
-00:29:36,309 --> 00:29:39,945
+00:29:36,266 --> 00:29:39,850
 APL, çok güçlü operatörler ve
 birçok özel sembol sunar;
 
 447
-00:29:39,985 --> 00:29:42,791
+00:29:39,890 --> 00:29:42,657
 karmaşık hesaplamalar tek satırda yazılır.
 
 448
-00:29:43,111 --> 00:29:46,408
+00:29:42,977 --> 00:29:46,205
 Ekrandaki satır, R'ye kadar olan
 asal sayıları bulur.
 
 449
-00:29:46,728 --> 00:29:47,769
+00:29:46,525 --> 00:29:47,545
 Daniel McCracken,
 
 450
-00:29:47,809 --> 00:29:52,893
+00:29:47,585 --> 00:29:52,574
 dört satırlık bir APL programını
 anlamak için dört saat uğraştığını söylemiştir.
 
 451
-00:29:53,733 --> 00:29:56,701
+00:29:53,733 --> 00:29:56,606
 Üçüncü çatışma:
 yazılabilirlik ve güvenilirlik.
 
 452
-00:29:57,021 --> 00:30:01,932
+00:29:56,926 --> 00:30:01,756
 C++'taki işaretçiler çok güçlü
 ve esnektir, ama güvenilir değildir.
 
 453
-00:30:02,252 --> 00:30:05,298
+00:30:02,076 --> 00:30:05,133
 Java bu yüzden işaretçileri
 dilden çıkarmıştır.
 
 454
-00:30:06,500 --> 00:30:09,751
+00:30:06,500 --> 00:30:09,762
 Bölüm 1.7: İmplementasyon yöntemleri.
 
 455
-00:30:10,071 --> 00:30:12,643
+00:30:10,082 --> 00:30:12,645
 Bir bilgisayarın iki temel bileşeni vardır:
 
 456
-00:30:12,683 --> 00:30:16,875
+00:30:12,685 --> 00:30:16,861
 verileri ve programları saklayan bellek
 ve komutları yürüten işlemci.
 
 457
-00:30:17,195 --> 00:30:20,272
+00:30:17,181 --> 00:30:20,094
 İşlemcinin anladığı tek dil makine dilidir.
 
 458
-00:30:21,133 --> 00:30:24,661
+00:30:21,133 --> 00:30:24,547
 Bu yüzden bilgisayarı
 katmanlar halinde düşünebiliriz.
 
 459
-00:30:24,981 --> 00:30:29,642
+00:30:24,867 --> 00:30:29,461
 En altta çıplak makine, üstünde
 makro komut yorumlayıcısı ve işletim sistemi,
 
 460
-00:30:29,682 --> 00:30:32,307
+00:30:29,501 --> 00:30:32,089
 en üstte de derleyiciler ve yorumlayıcılar.
 
 461
-00:30:32,627 --> 00:30:35,727
+00:30:32,409 --> 00:30:35,533
 Her katman kullanıcıya bir sanal
 bilgisayar sunar:
 
 462
-00:30:35,767 --> 00:30:38,176
+00:30:35,573 --> 00:30:38,000
 Örneğin C derleyicisi yüklü bir makine,
 
 463
-00:30:38,216 --> 00:30:41,670
+00:30:38,040 --> 00:30:41,520
 sanki doğrudan C çalıştıran bir
 sanal C bilgisayarıdır.
 
 464
-00:30:42,533 --> 00:30:46,929
+00:30:42,533 --> 00:30:46,811
 Yüksek seviyeli bir dili çalıştırmanın üç
 temel yolu vardır: derleme,
 
 465
-00:30:46,969 --> 00:30:50,440
+00:30:46,851 --> 00:30:50,231
 saf yorumlama ve ikisinin
 arasındaki hibrit sistemler.
 
 466
-00:30:51,667 --> 00:30:53,164
+00:30:51,667 --> 00:30:52,929
 İlk yöntem derleme.
 
 467
-00:30:53,484 --> 00:30:56,573
+00:30:53,249 --> 00:30:56,279
 Derleyici programı
 doğrudan makine diline çevirir.
 
 468
-00:30:56,893 --> 00:31:00,828
+00:30:56,599 --> 00:31:00,419
 Çeviri yavaştır, ama ortaya çıkan
 program çok hızlı çalışır.
 
 469
-00:31:01,148 --> 00:31:03,459
+00:31:00,739 --> 00:31:02,991
 Derleme birkaç aşamadan oluşur.
 
 470
-00:31:04,300 --> 00:31:08,447
+00:31:04,300 --> 00:31:08,410
 Sözcüksel analizci, kaynak
 koddaki karakterleri sözcük birimlerine,
 
 471
-00:31:08,487 --> 00:31:11,696
+00:31:08,450 --> 00:31:11,630
 yani token'lara ayırır:
 tanıtıcılar, özel kelimeler,
 
 472
-00:31:11,736 --> 00:31:13,986
+00:31:11,670 --> 00:31:13,900
 operatörler ve noktalama işaretleri.
 
 473
-00:31:14,833 --> 00:31:17,055
+00:31:14,833 --> 00:31:17,072
 Sözdizim analizcisi bu token'lardan,
 
 474
-00:31:17,095 --> 00:31:21,242
+00:31:17,112 --> 00:31:21,288
 programın sözdizimsel yapısını gösteren
 ayrıştırma ağaçları kurar.
 
 475
-00:31:22,100 --> 00:31:24,290
+00:31:22,100 --> 00:31:24,286
 Anlamsal analizci ve ara kod üreteci,
 
 476
-00:31:24,330 --> 00:31:29,392
+00:31:24,326 --> 00:31:29,380
 tip hataları gibi anlam hatalarını
 yakalar ve makineden bağımsız bir ara kod üretir.
 
 477
-00:31:30,233 --> 00:31:34,819
+00:31:30,233 --> 00:31:34,796
 İsteğe bağlı optimizasyon aşaması,
 programı küçültür ya da hızlandırır.
 
 478
-00:31:35,667 --> 00:31:39,266
+00:31:35,667 --> 00:31:39,173
 Kod üreteci ise ara kodu
 hedef makinenin diline çevirir.
 
 479
-00:31:40,100 --> 00:31:41,656
+00:31:40,100 --> 00:31:41,585
 Bu sırada sembol tablosu,
 
 480
-00:31:41,696 --> 00:31:47,379
+00:31:41,625 --> 00:31:47,054
 programdaki bütün isimlerin tip ve özellik
 bilgilerini tutarak tüm aşamalara hizmet eder.
 
 481
-00:31:47,699 --> 00:31:50,523
+00:31:47,374 --> 00:31:50,114
 Hata yöneticisi de paralel olarak çalışır.
 
 482
-00:31:50,843 --> 00:31:55,689
+00:31:50,434 --> 00:31:55,209
 Altı ana aşama ve bu iki yardımcıyla,
 toplam sekiz bileşenden söz ederiz.
 
 483
-00:31:56,900 --> 00:32:01,016
+00:31:56,900 --> 00:32:00,885
 Somut bir örnekle görelim:
 toplam eşittir a artı b çarpı iki.
 
 484
-00:32:01,867 --> 00:32:07,398
+00:32:01,867 --> 00:32:07,448
 Sözcüksel analiz bu satırı sekiz token'a böler:
 toplam tanıtıcısı, atama operatörü,
 
 485
-00:32:07,438 --> 00:32:10,526
+00:32:07,488 --> 00:32:10,603
 a, artı, b, çarpı, 2 sayısı ve noktalı virgül.
 
 486
-00:32:11,367 --> 00:32:14,478
+00:32:11,367 --> 00:32:14,215
 Sözdizim analizi bir ayrıştırma ağacı kurar.
 
 487
-00:32:14,798 --> 00:32:17,990
+00:32:14,535 --> 00:32:17,638
 Çarpmanın önceliği
 daha yüksek olduğu için b çarpı 2,
 
 488
-00:32:18,030 --> 00:32:21,079
+00:32:17,678 --> 00:32:20,642
 ağacın daha derininde yer alır
 ve önce hesaplanır.
 
 489
-00:32:21,933 --> 00:32:26,491
+00:32:21,933 --> 00:32:26,499
 Anlamsal analizden sonra üretilen ara
 kod, ağacı aşağıdan yukarıya,
 
 490
-00:32:26,531 --> 00:32:28,864
+00:32:26,539 --> 00:32:28,876
 adım adım basit işlemlere çevirir.
 
 491
-00:32:29,700 --> 00:32:33,264
+00:32:29,700 --> 00:32:33,148
 Son olarak kod üreteci
 bunları makine komutlarına çevirir.
 
 492
-00:32:33,584 --> 00:32:38,313
+00:32:33,468 --> 00:32:38,040
 Gördüğünüz gibi, makine düzeyinde her şey
 yükle, işle, sakla düzenindedir.
 
 493
-00:32:39,533 --> 00:32:42,577
+00:32:39,533 --> 00:32:42,496
 Programın çalışabilmesi için bir
 adım daha gerekir.
 
 494
-00:32:42,897 --> 00:32:48,122
+00:32:42,816 --> 00:32:47,947
 Programlar genellikle işletim sisteminin
 ve kütüphanelerin hazır kodlarını kullanır.
 
 495
-00:32:48,442 --> 00:32:53,017
+00:32:48,267 --> 00:32:52,816
 Bu sistem kodlarının toplanıp
 kullanıcı programına bağlanmasına, bağlama,
 
 496
-00:32:53,057 --> 00:32:54,259
+00:32:52,856 --> 00:32:54,050
 yani linking denir.
 
 497
-00:32:55,100 --> 00:32:55,849
+00:32:55,100 --> 00:32:55,841
 Ortaya çıkan,
 
 498
-00:32:55,889 --> 00:33:01,416
+00:32:55,881 --> 00:33:01,346
 kullanıcı ve sistem kodunu birlikte içeren
 çalıştırılabilir görüntüye yükleme modülü denir.
 
 499
-00:33:01,736 --> 00:33:06,809
+00:33:01,666 --> 00:33:06,588
 Yükleyici bu modülü belleğe alır ve
 daha önce gördüğümüz getir yürüt döngüsü başlar.
 
 500
-00:33:08,033 --> 00:33:10,320
+00:33:08,033 --> 00:33:10,170
 İkinci yöntem saf yorumlamadır.
 
 501
-00:33:10,640 --> 00:33:14,155
+00:33:10,490 --> 00:33:13,958
 Burada hiç çeviri yapılmaz:
 yorumlayıcı denen bir program,
 
 502
-00:33:14,195 --> 00:33:16,585
+00:33:13,998 --> 00:33:16,357
 kaynak kodu okuyup doğrudan çalıştırır.
 
 503
-00:33:16,905 --> 00:33:17,587
+00:33:16,677 --> 00:33:17,334
 Yorumlayıcı,
 
 504
-00:33:17,627 --> 00:33:22,199
+00:33:17,374 --> 00:33:21,794
 makine dili yerine yüksek seviyeli
 dili çalıştıran bir sanal makine gibidir.
 
 505
-00:33:23,033 --> 00:33:26,461
+00:33:23,033 --> 00:33:26,540
 Avantajı, uygulamasının
 ve hata ayıklamanın kolay olmasıdır:
 
 506
-00:33:26,501 --> 00:33:30,720
+00:33:26,580 --> 00:33:30,894
 çalışma zamanı hataları kaynak
 koddaki yeriyle birlikte hemen gösterilir.
 
 507
-00:33:31,567 --> 00:33:34,607
+00:33:31,567 --> 00:33:34,557
 Dezavantajı ise hızdır: saf
 yorumlanan programlar,
 
 508
-00:33:34,647 --> 00:33:40,623
+00:33:34,597 --> 00:33:40,477
 derlenmiş programlardan on ile yüz kat daha
 yavaş çalışabilir ve genelde daha fazla bellek ister.
 
 509
-00:33:40,943 --> 00:33:43,672
+00:33:40,797 --> 00:33:43,557
 Bu yüzden yüksek seviyeli dillerde nadirdir;
 
 510
-00:33:43,712 --> 00:33:47,802
+00:33:43,597 --> 00:33:47,732
 ama JavaScript gibi bazı
 web betik dillerinde önemini korumuştur.
 
 511
-00:33:49,033 --> 00:33:54,304
+00:33:49,033 --> 00:33:54,351
 Üçüncü yöntem hibrit sistemlerdir:
 derleme ile saf yorumlama arasında bir uzlaşma.
 
 512
-00:33:54,624 --> 00:33:58,178
+00:33:54,671 --> 00:33:58,139
 Program önce kolayca yorumlanabilen
 bir ara dile çevrilir,
 
 513
-00:33:58,218 --> 00:33:59,953
+00:33:58,179 --> 00:33:59,872
 sonra bu ara dil yorumlanır.
 
 514
-00:34:00,273 --> 00:34:03,002
+00:34:00,192 --> 00:34:02,955
 Sonuç, saf yorumlamadan daha hızlıdır.
 
 515
-00:34:03,867 --> 00:34:05,418
+00:34:03,867 --> 00:34:05,295
 En bilinen örnek Java.
 
 516
-00:34:05,738 --> 00:34:08,977
+00:34:05,615 --> 00:34:08,628
 Java derleyicisi
 kaynak kodu bayt koduna çevirir.
 
 517
-00:34:09,297 --> 00:34:13,246
+00:34:08,948 --> 00:34:13,012
 Bayt kodu, Java Sanal Makinesi olan her
 bilgisayarda çalışabilir;
 
 518
-00:34:13,286 --> 00:34:15,741
+00:34:13,052 --> 00:34:15,578
 Java'nın taşınabilirliğinin sırrı budur.
 
 519
-00:34:16,061 --> 00:34:20,856
+00:34:15,898 --> 00:34:20,481
 Perl programları da çalıştırılmadan
 önce hataları bulmak için kısmen derlenir.
 
 520
-00:34:21,700 --> 00:34:25,578
+00:34:21,700 --> 00:34:25,508
 Tam zamanında, yani JIT
 sistemleri bir adım daha ileri gider.
 
 521
-00:34:25,898 --> 00:34:30,568
+00:34:25,828 --> 00:34:30,562
 Ara koddaki bir alt program ilk çağrıldığında
 makine koduna derlenir ve bu makine
 
 522
-00:34:30,608 --> 00:34:32,701
+00:34:30,602 --> 00:34:32,724
 kodu sonraki çağrılar için saklanır.
 
 523
-00:34:33,021 --> 00:34:37,398
+00:34:33,044 --> 00:34:37,375
 Bugün Java programları ve tüm
 .NET dilleri JIT sistemleriyle çalışır.
 
 524
-00:34:38,600 --> 00:34:40,899
+00:34:38,600 --> 00:34:40,759
 Dört yaklaşımı yan yana koyalım.
 
 525
-00:34:41,733 --> 00:34:45,455
+00:34:41,733 --> 00:34:45,308
 Derleme: tüm program bir
 kez çevrilir; yürütme en hızlıdır.
 
 526
-00:34:45,775 --> 00:34:48,283
+00:34:45,628 --> 00:34:48,067
 C ve C++ buna örnektir.
 
 527
-00:34:49,133 --> 00:34:54,001
+00:34:49,133 --> 00:34:53,996
 Saf yorumlama: çeviri yoktur; yürütme en
 yavaştır ama hata ayıklama kolaydır.
 
 528
-00:34:54,321 --> 00:34:57,696
+00:34:54,316 --> 00:34:57,938
 Kabuk betikleri ve ilk
 dönem JavaScript buna örnektir.
 
 529
-00:34:58,533 --> 00:35:03,193
+00:34:58,533 --> 00:35:03,090
 Hibrit: program ara koda çevrilir,
 hız ortadadır ve taşınabilirlik yüksektir.
 
 530
-00:35:03,513 --> 00:35:05,927
+00:35:03,410 --> 00:35:05,872
 Perl ve ilk Java sürümleri buna örnektir.
 
 531
-00:35:06,767 --> 00:35:06,983
+00:35:06,767 --> 00:35:06,976
 JIT:
 
 532
-00:35:07,023 --> 00:35:12,624
+00:35:07,016 --> 00:35:12,473
 ara kod gerektiğinde makine koduna derlenir ve
 derlenmiş koda yakın bir hız elde edilir;
 
 533
-00:35:12,664 --> 00:35:14,779
+00:35:12,513 --> 00:35:14,574
 bugünkü Java ve C# böyle çalışır.
 
 534
-00:35:15,099 --> 00:35:18,288
+00:35:14,894 --> 00:35:18,024
 Özetle derleyiciyi
 erken hata kontrolü ve hız için,
 
 535
-00:35:18,328 --> 00:35:21,240
+00:35:18,064 --> 00:35:20,924
 yorumlayıcıyı ise esneklik için tercih ederiz.
 
 536
-00:35:22,467 --> 00:35:26,360
+00:35:22,467 --> 00:35:26,338
 Derlemeden hemen önce
 çalışan bir araç daha var: önişlemci.
 
 537
-00:35:26,680 --> 00:35:29,307
+00:35:26,658 --> 00:35:29,301
 Önişlemci, programdaki makroları genişletir,
 
 538
-00:35:29,347 --> 00:35:33,409
+00:35:29,341 --> 00:35:33,427
 başka bir dosyadaki kodu programa dahil
 eder ve yorumları kaldırır.
 
 539
-00:35:34,267 --> 00:35:40,096
+00:35:34,267 --> 00:35:40,025
 Soldaki input.cpp dosyasında iki
 define makrosu ve birkaç yorum satırı var.
 
 540
-00:35:40,933 --> 00:35:46,039
+00:35:40,933 --> 00:35:46,009
 Önişlemciden geçtikten sonra
 sağdaki temp.cpp oluşur: yorumlar silinmiş,
 
 541
-00:35:46,079 --> 00:35:49,009
+00:35:46,049 --> 00:35:48,961
 MAX yerine 50, MIN yerine 10 yazılmıştır.
 
 542
-00:35:49,329 --> 00:35:52,287
+00:35:49,281 --> 00:35:52,277
 Derleyici artık
 bu değiştirilmiş kaynağı görür.
 
 543
-00:35:52,607 --> 00:35:57,208
+00:35:52,597 --> 00:35:57,085
 En bilinen örnek, include ve
 define komutlarını işleyen C önişlemcisidir.
 
 544
-00:35:58,433 --> 00:36:01,574
+00:35:58,433 --> 00:36:01,458
 Bölüm 1.8: Programlama platformları.
 
 545
-00:36:01,894 --> 00:36:06,830
+00:36:01,778 --> 00:36:06,775
 Yazılım geliştirirken kullanılan
 araçların bütününe programlama ortamı denir:
 
 546
-00:36:06,870 --> 00:36:10,619
+00:36:06,815 --> 00:36:10,610
 dosya sistemi, metin editörü,
 bağlayıcı ve derleyici gibi.
 
 547
-00:36:10,939 --> 00:36:16,108
+00:36:10,930 --> 00:36:16,034
 Bir yazılım geliştirme sisteminin
 gücü, yalnızca dilin özellikleriyle ölçülmez.
 
 548
-00:36:16,967 --> 00:36:21,267
+00:36:16,967 --> 00:36:21,216
 UNIX, eski ama güçlü bir
 işletim sistemi ve araç koleksiyonudur.
 
 549
-00:36:21,587 --> 00:36:26,777
+00:36:21,536 --> 00:36:26,633
 İlk sürümlerinde araçlar arasında grafik bir
 arayüz yoktu ve öğrenmesi zordu.
 
 550
-00:36:27,097 --> 00:36:32,809
+00:36:26,953 --> 00:36:32,419
 Bugün GNOME ve KDE gibi grafik arayüzlerle Windows
 ve Mac'e benzer bir görünüm kazandı.
 
 551
-00:36:33,667 --> 00:36:37,276
+00:36:33,667 --> 00:36:37,310
 Borland JBuilder ve NetBeans, Java
 için derleyici, editör,
 
 552
-00:36:37,316 --> 00:36:43,860
+00:36:37,350 --> 00:36:43,955
 hata ayıklayıcı ve dosya sistemini tek bir grafik arayüzde
 birleştiren tümleşik geliştirme ortamlarıdır.
 
 553
-00:36:44,180 --> 00:36:46,885
+00:36:44,275 --> 00:36:46,987
 Microsoft Visual Studio .NET ise C#,
 
 554
-00:36:46,925 --> 00:36:53,940
+00:36:47,027 --> 00:36:54,059
 Visual Basic .NET ve C++ gibi birçok dili destekleyen
 büyük ve karmaşık bir görsel ortamdır.
 
 555
-00:36:54,800 --> 00:36:57,080
+00:36:54,800 --> 00:36:57,100
 Bugün aynı fikri Visual Studio Code,
 
 556
-00:36:57,120 --> 00:37:00,407
+00:36:57,140 --> 00:37:00,456
 IntelliJ IDEA ve Eclipse gibi
 ortamlarda görüyoruz.
 
 557
-00:37:01,633 --> 00:37:02,761
+00:37:01,633 --> 00:37:02,633
 Toparlayalım.
 
 558
-00:37:03,600 --> 00:37:07,274
+00:37:03,600 --> 00:37:07,097
 Programlama dili kavramlarını öğrenmek
 ifade gücümüzü artırır,
 
 559
-00:37:07,314 --> 00:37:11,508
+00:37:07,137 --> 00:37:11,130
 dil seçimimizi bilinçli kılar
 ve yeni dilleri öğrenmeyi kolaylaştırır.
 
 560
-00:37:12,367 --> 00:37:17,339
+00:37:12,367 --> 00:37:17,316
 Dilleri değerlendirirken dört ana
 kriter kullanırız: okunabilirlik, yazılabilirlik,
 
 561
-00:37:17,379 --> 00:37:18,828
+00:37:17,356 --> 00:37:18,799
 güvenilirlik ve maliyet.
 
 562
-00:37:19,667 --> 00:37:22,183
+00:37:19,667 --> 00:37:22,150
 Dil tasarımını en çok etkileyen iki etken,
 
 563
-00:37:22,223 --> 00:37:25,388
+00:37:22,190 --> 00:37:25,313
 makine mimarisi ve
 yazılım geliştirme yöntemleridir.
 
 564
-00:37:26,233 --> 00:37:29,904
+00:37:26,233 --> 00:37:29,853
 Ve programlama dilleri
 üç ana yöntemle uygulanır: derleme,
 
 565
-00:37:29,944 --> 00:37:32,119
+00:37:29,893 --> 00:37:32,038
 saf yorumlama ve hibrit sistemler.
 
 566
@@ -2619,7 +2619,7 @@ saf yorumlama ve hibrit sistemler.
 Şimdi kısa bir mini test yapalım.
 
 567
-00:37:35,964 --> 00:37:39,447
+00:37:35,964 --> 00:37:39,540
 Her sorudan sonra birkaç saniye
 düşünme süreniz var.
 
@@ -2628,12 +2628,12 @@ düşünme süreniz var.
 Soru 1.
 
 569
-00:37:41,481 --> 00:37:45,916
+00:37:41,381 --> 00:37:45,863
 Aynı işi yapmanın birden çok
 yolu olması hangi kriteri olumsuz etkiler?
 
 570
-00:37:50,267 --> 00:37:53,448
+00:37:50,267 --> 00:37:53,213
 Cevap: Okunabilirlik
 , buna özellik çokluğu denir..
 
@@ -2642,42 +2642,42 @@ Cevap: Okunabilirlik
 Soru 2.
 
 572
-00:37:55,784 --> 00:38:00,815
+00:37:55,674 --> 00:38:00,522
 VAX'ın her işlenen türüyle çalışan tek ADDL
 komutu hangi kavrama örnektir?
 
 573
-00:38:05,167 --> 00:38:06,685
+00:38:05,167 --> 00:38:06,603
 Cevap: Ortogonallik.
 
 574
-00:38:09,433 --> 00:38:10,467
+00:38:09,433 --> 00:38:10,433
 Soru 3.
 
 575
-00:38:10,787 --> 00:38:13,977
+00:38:10,717 --> 00:38:13,965
 Java'nın her dizi erişiminde
 indis kontrolü yapması,
 
 576
-00:38:14,017 --> 00:38:16,564
+00:38:14,005 --> 00:38:16,598
 hangi iki kriter arasındaki ödünleşmedir?
 
 577
-00:38:20,900 --> 00:38:23,570
+00:38:20,900 --> 00:38:23,266
 Cevap: Güvenilirlik ve yürütme maliyeti.
 
 578
-00:38:25,167 --> 00:38:26,177
+00:38:25,167 --> 00:38:26,167
 Soru 4.
 
 579
-00:38:26,497 --> 00:38:30,572
+00:38:26,392 --> 00:38:30,292
 Bir dilin toplam maliyetinde genellikle
 en büyük kalem hangisidir?
 
 580
-00:38:34,933 --> 00:38:36,334
+00:38:34,933 --> 00:38:36,321
 Cevap: Bakım maliyeti.
 
 581
@@ -2685,32 +2685,32 @@ Cevap: Bakım maliyeti.
 Soru 5.
 
 582
-00:38:40,432 --> 00:38:45,946
+00:38:40,449 --> 00:38:45,827
 Java bayt kodunun Java Sanal Makinesi'nde
 çalıştırılması hangi implementasyon yöntemidir?
 
 583
-00:38:50,300 --> 00:38:53,243
+00:38:50,300 --> 00:38:53,228
 Cevap: Hibrit implementasyon ,bugün JIT ile,.
 
 584
-00:38:58,567 --> 00:39:00,139
+00:38:58,567 --> 00:39:00,071
 Bölüm 1'i tamamladık!
 
 585
-00:39:00,459 --> 00:39:05,486
+00:39:00,391 --> 00:39:05,234
 Bir sonraki bölümde başlıca programlama
 dillerinin tarihsel evrimini inceleyeceğiz.
 
 586
-00:39:06,333 --> 00:39:08,470
+00:39:06,333 --> 00:39:08,278
 İzlediğiniz için teşekkürler.
 
 587
-00:39:08,790 --> 00:39:14,653
+00:39:08,598 --> 00:39:14,287
 Notlarınızı tekrar etmeyi ve mini testteki
 soruları kendi cümlelerinizle cevaplamayı unutmayın.
 
 588
-00:39:14,973 --> 00:39:15,973
+00:39:14,607 --> 00:39:15,607
 Görüşmek üzere!

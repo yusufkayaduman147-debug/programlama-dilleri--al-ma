@@ -70,7 +70,7 @@ def main():
         for w, t in jobs:
             print(t)
         return
-    import sherpa_onnx, soundfile as sf
+    import sherpa_onnx, soundfile as sf, numpy as np
     onnx = glob.glob(os.path.join(vdir, "*.onnx"))[0]
     cfg = sherpa_onnx.OfflineTtsConfig(model=sherpa_onnx.OfflineTtsModelConfig(
         vits=sherpa_onnx.OfflineTtsVitsModelConfig(model=onnx, tokens=os.path.join(vdir, "tokens.txt"),
@@ -80,9 +80,11 @@ def main():
     tts = sherpa_onnx.OfflineTts(cfg)
     for i, (wav, text) in enumerate(jobs):
         os.makedirs(os.path.dirname(wav), exist_ok=True)
-        # trailing pad keeps the model from clipping the final phoneme
-        a = tts.generate(text + " .", sid=0, speed=1.0)
-        sf.write(wav, a.samples, a.sample_rate)
+        a = tts.generate(text, sid=0, speed=1.0)
+        x = np.asarray(a.samples, dtype=np.float32)
+        fi, fo = int(0.012 * a.sample_rate), int(0.04 * a.sample_rate)
+        x[:fi] *= np.linspace(0, 1, fi); x[-fo:] *= np.linspace(1, 0, fo)
+        sf.write(wav, x, a.sample_rate)
         if i % 40 == 0:
             print(f"{i}/{len(jobs)}", flush=True)
     durs = {}
