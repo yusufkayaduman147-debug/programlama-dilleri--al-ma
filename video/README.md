@@ -1,26 +1,18 @@
-# Programlama Dilleri — Bölüm 1: Giriş (konu anlatım videosu)
+# Programlama Dilleri — Konu Anlatım Videoları
 
-`ProgramlamaDilleri_Bolum1_Giris.mp4` — 1920×1080, ~39 dakika, Türkçe seslendirme,
-gömülü Türkçe altyazı (ayrıca `.tr.srt` dosyası) ve bölüm işaretleri (chapter).
+Ders sunumlarındaki (PD1–PD4) konuları anlatan, animasyonlu, Türkçe seslendirmeli videolar.
+Her videoda gömülü Türkçe altyazı (ayrıca `.tr.srt` dosyası), bölüm işaretleri (chapter) ve sonunda 5 soruluk mini test var.
 
-| Süre  | Bölüm |
-|-------|-------|
-| 00:00 | Giriş ve yol haritası |
-| 00:51 | 1.1 Programlama dili kavramlarını öğrenmenin nedenleri |
-| 04:27 | 1.2 Programlama alanları |
-| 05:38 | 1.3 Dil değerlendirme kriterleri (okunabilirlik, yazılabilirlik, güvenilirlik, maliyet) |
-| 19:10 | 1.4 Dil tasarımını etkileyen faktörler (von Neumann, getir–yürüt, tasarım yöntemleri) |
-| 22:49 | 1.5 Dil kategorileri (imperatif, fonksiyonel, mantıksal, nesne yönelimli; Dexter & Mimi örneği) |
-| 28:55 | 1.6 Dil tasarımında verilen ödünler |
-| 30:06 | 1.7 İmplementasyon yöntemleri (derleme, yorumlama, hibrit, JIT, önişlemci) |
-| 35:58 | 1.8 Programlama platformları |
-| 37:01 | Özet ve mini test (5 soru) |
+| Video | Süre | İçerik |
+|---|---|---|
+| `ProgramlamaDilleri_Bolum1_Giris.mp4` | ~39 dk | Neden dil kavramları, programlama alanları, değerlendirme kriterleri, von Neumann, paradigmalar, ödünleşimler, derleme/yorumlama/JIT, platformlar |
+| `ProgramlamaDilleri_Bolum2_Dillerin_Gelisimi.mp4` | ~32 dk | Plankalkül, sözde kodlar, Fortran, LISP, ALGOL, COBOL, BASIC, PL/I, APL/SNOBOL, SIMULA, Pascal/C, Prolog, Ada, Smalltalk, C++, Java, betik diller, C#, hibrit diller |
+| `ProgramlamaDilleri_Bolum3_Sentaks_ve_Semantik.mp4` | ~31 dk | Lexeme/token, BNF/EBNF, türetme ve ayrıştırma ağacı, belirsizlik, öncelik, birleşirlik, sözdizim grafikleri, özellik gramerleri, işlemsel/aksiyomatik/denotasyonel semantik |
+| `ProgramlamaDilleri_Bolum4_Sozcuksel_ve_Sentaks_Analiz.mp4` | ~22 dk | Sözcüksel analiz ve durum diyagramı, ayrıştırma problemi, özyinelemeli iniş, FIRST/FOLLOW ve LL(1), shift-reduce, LR ayrıştırma |
 
 ## Nasıl üretildi
-- **Sahneler:** HTML/CSS ile tasarlandı (`kaynak/scenes*.js`), Chromium (Playwright) ile kare kare yakalanıp
-  animasyonlar 30 fps olarak kaydedildi (`kaynak/render.js`).
-- **Seslendirme:** Çevrimdışı nöral Türkçe ses (Piper `tr_TR-dfki-medium`, sherpa-onnx) — `kaynak/narrate.py`.
-  Telaffuz Whisper ile kontrol edildi.
+- **Sahneler:** HTML/CSS ile tasarlandı (`kaynak/bolumN/scenes*.js`), Chromium (Playwright) ile kare kare yakalanıp 30 fps kaydedildi (`kaynak/render.js`).
+- **Seslendirme:** Çevrimdışı nöral Türkçe ses (Piper `tr_TR-dfki-medium`, sherpa-onnx) — `kaynak/narrate.py` (terimler için Türkçe telaffuz kuralları içerir). Telaffuz Whisper ile örneklenerek kontrol edildi.
 - **Birleştirme:** ffmpeg ile kare-hassas ses/altyazı/bölüm hizalama — `kaynak/assemble.py`.
 
-Kaynak: R. W. Sebesta, *Concepts of Programming Languages* ve ders sunumu (PD1.pptx).
+Kaynak: R. W. Sebesta, *Concepts of Programming Languages* ve ders sunumları.

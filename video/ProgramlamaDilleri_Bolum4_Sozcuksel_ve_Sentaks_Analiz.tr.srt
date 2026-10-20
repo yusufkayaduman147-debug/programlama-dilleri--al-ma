@@ -1,0 +1,1564 @@
+1
+00:00:00,300 --> 00:00:01,240
+Merhaba!
+
+2
+00:00:01,280 --> 00:00:05,018
+Programlama Dilleri dersinin dördüncü
+bölümüne hoş geldiniz.
+
+3
+00:00:05,867 --> 00:00:10,441
+Önceki bölümde bir dilin sentaksının
+gramerlerle nasıl tanımlandığını gördük.
+
+4
+00:00:10,761 --> 00:00:16,315
+Bu bölümde bir derleyicinin bu gramerleri kullanarak
+kaynak kodu nasıl okuduğunu öğreneceğiz:
+
+5
+00:00:16,355 --> 00:00:19,563
+önce karakterleri token'lara
+ayıran sözcüksel analizi,
+
+6
+00:00:19,603 --> 00:00:23,212
+sonra token'lardan ayrıştırma ağacı
+kuran sentaks analizini.
+
+7
+00:00:24,433 --> 00:00:25,805
+Yol haritamız şöyle.
+
+8
+00:00:26,667 --> 00:00:30,639
+Önce sentaks analizinin neden
+iki parçaya ayrıldığını göreceğiz.
+
+9
+00:00:30,959 --> 00:00:36,277
+Sonra sözcüksel analizi, ardından
+ayrıştırma probleminin kendisini inceleyeceğiz.
+
+10
+00:00:37,133 --> 00:00:40,461
+Son olarak iki büyük ayrıştırma
+ailesini göreceğiz:
+
+11
+00:00:40,501 --> 00:00:45,017
+yukarıdan aşağıya çalışan özyinelemeli
+iniş ve LL(1) ayrıştırıcıları,
+
+12
+00:00:45,057 --> 00:00:49,283
+ve aşağıdan yukarıya çalışan
+shift-reduce ve LR ayrıştırıcıları.
+
+13
+00:00:50,500 --> 00:00:52,321
+Bölüm 4.1: Giriş.
+
+14
+00:00:52,641 --> 00:00:56,044
+İster derleyici, ister
+yorumlayıcı, ister hibrit olsun,
+
+15
+00:00:56,084 --> 00:00:59,839
+her dil gerçekleştirimi
+kaynak kodu analiz etmek zorundadır.
+
+16
+00:01:00,159 --> 00:01:05,024
+Bir dil işlemcisinin sentaks analizi bölümü
+genellikle iki parçadan oluşur.
+
+17
+00:01:05,867 --> 00:01:08,757
+Düşük seviyeli parça sözcüksel analizcidir.
+
+18
+00:01:09,077 --> 00:01:13,212
+Matematiksel olarak, düzenli bir gramere
+dayanan bir sonlu otomattır.
+
+19
+00:01:13,532 --> 00:01:15,947
+Karakterleri okuyup token'lara ayırır.
+
+20
+00:01:16,800 --> 00:01:21,223
+Yüksek seviyeli parça ise
+sentaks analizci, yani ayrıştırıcıdır.
+
+21
+00:01:21,543 --> 00:01:24,891
+Matematiksel olarak,
+içerikten bağımsız bir gramere,
+
+22
+00:01:24,931 --> 00:01:27,927
+yani BNF'e dayanan bir aşağı itmeli otomattır.
+
+23
+00:01:28,247 --> 00:01:30,581
+Token'lardan ayrıştırma ağacı kurar.
+
+24
+00:01:31,433 --> 00:01:35,982
+Sentaksı BNF ile tanımlamanın üç avantajı
+var: tanım net ve özlüdür,
+
+25
+00:01:36,022 --> 00:01:41,690
+ayrıştırıcı doğrudan BNF'ten üretilebilir ve
+böyle ayrıştırıcıların bakımı kolaydır.
+
+26
+00:01:42,533 --> 00:01:44,345
+Peki neden iki ayrı parça?
+
+27
+00:01:44,665 --> 00:01:45,872
+Üç neden var.
+
+28
+00:01:46,192 --> 00:01:46,741
+Basitlik:
+
+29
+00:01:46,781 --> 00:01:53,062
+sözcüksel analiz için daha basit yöntemler
+yeterlidir ve onu ayırmak ayrıştırıcıyı sadeleştirir.
+
+30
+00:01:53,382 --> 00:01:57,502
+Verimlilik: derleme zamanının
+büyük kısmı sözcüksel analizde geçer,
+
+31
+00:01:57,542 --> 00:02:00,585
+bu yüzden yalnızca onu optimize
+etmek yeterlidir.
+
+32
+00:02:00,905 --> 00:02:06,114
+Taşınabilirlik: sözcüksel analizci
+dosya okuma gibi platforma bağlı işler yapabilir,
+
+33
+00:02:06,154 --> 00:02:08,904
+ama ayrıştırıcı her zaman taşınabilir kalır.
+
+34
+00:02:10,133 --> 00:02:12,842
+Bölüm 4.2: Sözcüksel analiz.
+
+35
+00:02:13,162 --> 00:02:17,488
+Sözcüksel analizci, karakter
+dizileri için bir desen eşleştiricidir.
+
+36
+00:02:17,808 --> 00:02:22,062
+Ayrıştırıcının ön ucudur: kaynak programda
+birbirine ait alt dizileri,
+
+37
+00:02:22,102 --> 00:02:26,212
+yani lexeme'leri bulur ve
+her birini bir token kategorisiyle eşler.
+
+38
+00:02:26,532 --> 00:02:30,700
+Örneğin sum bir lexeme'dir
+ve token'ı IDENT, yani tanıtıcı olabilir.
+
+39
+00:02:31,567 --> 00:02:34,334
+Sözcüksel analizci genellikle
+bir fonksiyondur:
+
+40
+00:02:34,374 --> 00:02:38,873
+ayrıştırıcı bir sonraki token'a
+ihtiyaç duyduğunda lex fonksiyonunu çağırır,
+
+41
+00:02:38,913 --> 00:02:43,333
+lex de kaynak dosyadan gerektiği
+kadar karakter okuyup bir token döndürür.
+
+42
+00:02:44,167 --> 00:02:46,603
+Sözcüksel analizci yapmanın üç yolu vardır:
+
+43
+00:02:46,643 --> 00:02:52,073
+token'ları biçimsel olarak tanımlayıp lex
+ya da flex gibi bir aracın tablo üretmesini sağlamak;
+
+44
+00:02:52,113 --> 00:02:55,874
+bir durum diyagramı tasarlayıp
+onu uygulayan programı elle yazmak;
+
+45
+00:02:55,914 --> 00:02:58,678
+ya da durum diyagramını elle
+bir tabloya dökmek.
+
+46
+00:02:58,998 --> 00:03:00,916
+Biz ikinci yolu inceleyeceğiz.
+
+47
+00:03:02,133 --> 00:03:06,352
+Sözcüksel analizciyi tasarlamak için
+bir durum diyagramı çizeriz.
+
+48
+00:03:06,672 --> 00:03:11,285
+Saf bir yaklaşımla, her durumdan
+her karakter için ayrı bir geçiş olurdu;
+
+49
+00:03:11,325 --> 00:03:13,429
+böyle bir diyagram devasa olurdu.
+
+50
+00:03:13,749 --> 00:03:15,953
+Bunun yerine geçişleri birleştiririz.
+
+51
+00:03:16,273 --> 00:03:18,804
+Başlangıç durumundan üç yol çıkıyor.
+
+52
+00:03:19,667 --> 00:03:23,393
+Birinci yol: ilk karakter
+bir harfse tanıtıcı durumuna geçeriz.
+
+53
+00:03:23,713 --> 00:03:27,019
+Harf ya da rakam geldiği sürece
+aynı durumda kalırız.
+
+54
+00:03:27,339 --> 00:03:32,691
+Başka bir karakter gelince dururuz ve
+biriken lexeme için tabloya bakıp token'ı döndürürüz.
+
+55
+00:03:33,533 --> 00:03:37,412
+İkinci yol: ilk karakter
+bir rakamsa tam sayı durumuna geçeriz.
+
+56
+00:03:37,732 --> 00:03:41,683
+Rakam geldikçe devam ederiz;
+bitince INT_LIT token'ını döndürürüz.
+
+57
+00:03:42,533 --> 00:03:46,823
+Üçüncü yol: parantezler ve
+aritmetik operatörler tek karakterdir;
+
+58
+00:03:46,863 --> 00:03:48,861
+hemen ilgili token döndürülür.
+
+59
+00:03:49,700 --> 00:03:52,831
+Bu diyagramı küçük
+tutan fikir karakter sınıflarıdır.
+
+60
+00:03:53,151 --> 00:03:56,379
+Bir tanıtıcıyı tanırken bütün
+harfler aynı işi görür;
+
+61
+00:03:56,419 --> 00:03:59,071
+bu yüzden tek bir LETTER sınıfı kullanılır.
+
+62
+00:03:59,391 --> 00:04:01,730
+Rakamlar için de tek bir DIGIT sınıfı.
+
+63
+00:04:02,567 --> 00:04:05,118
+Ayrılmış kelimeler de ayrı ayrı tanınmaz.
+
+64
+00:04:05,438 --> 00:04:09,105
+while ya da if gibi kelimeler
+önce sıradan bir isim gibi okunur,
+
+65
+00:04:09,145 --> 00:04:13,605
+sonra bir tabloya bakılarak ayrılmış kelime
+olup olmadıklarına karar verilir.
+
+66
+00:04:14,833 --> 00:04:20,383
+Şimdi lex fonksiyonunu sum1 eşittir
+47 noktalı virgül girdisi üzerinde çalıştıralım.
+
+67
+00:04:20,703 --> 00:04:25,343
+Üç yardımcı alt programımız var: getChar sonraki
+karakteri alıp sınıfını belirler,
+
+68
+00:04:25,383 --> 00:04:27,683
+addChar karakteri biriken lexeme'e ekler,
+
+69
+00:04:27,723 --> 00:04:31,090
+lookup ise lexeme'in ayrılmış kelime
+olup olmadığına bakar.
+
+70
+00:04:31,933 --> 00:04:33,564
+İlk karakter s, bir harf.
+
+71
+00:04:33,884 --> 00:04:35,517
+Tanıtıcı durumuna geçiyoruz.
+
+72
+00:04:35,837 --> 00:04:39,122
+u, m ve 1 de harf ya
+da rakam olduğu için ekleniyor.
+
+73
+00:04:39,442 --> 00:04:44,705
+Boşluğa gelince duruyoruz: lexeme
+sum1, lookup ayrılmış kelime olmadığını söylüyor;
+
+74
+00:04:44,745 --> 00:04:45,745
+token IDENT.
+
+75
+00:04:46,367 --> 00:04:47,737
+Boşluk atlanıyor.
+
+76
+00:04:48,057 --> 00:04:52,794
+Sonraki karakter eşittir; tek
+karakterlik bir operatör, token ASSIGN_OP.
+
+77
+00:04:53,633 --> 00:04:58,208
+Sonra 4, bir rakam; tam sayı durumuna
+geçiyoruz, 7 de ekleniyor.
+
+78
+00:04:58,528 --> 00:05:02,545
+Noktalı virgülde duruyoruz:
+lexeme 47, token INT_LIT.
+
+79
+00:05:03,400 --> 00:05:05,872
+Son olarak noktalı virgül, token SEMICOLON.
+
+80
+00:05:06,192 --> 00:05:09,932
+Dört token ürettik; aradaki
+boşlukların hiçbir anlamı yoktu.
+
+81
+00:05:11,133 --> 00:05:13,179
+İşte lex fonksiyonunun C kodu.
+
+82
+00:05:13,499 --> 00:05:17,877
+Gördüğünüz gibi durum diyagramının neredeyse
+birebir koda dökülmüş halidir.
+
+83
+00:05:18,197 --> 00:05:21,494
+Önce bir karakter okunur
+ve sınıfına göre dallanılır.
+
+84
+00:05:22,333 --> 00:05:26,853
+LETTER kolu, diyagramdaki tanıtıcı durumudur:
+karakteri ekle, sonrakini oku;
+
+85
+00:05:26,893 --> 00:05:31,453
+harf ya da rakam geldiği sürece
+devam et; bitince lookup ile token'ı döndür.
+
+86
+00:05:32,300 --> 00:05:37,389
+DIGIT kolu da tam sayı durumudur: rakam geldiği
+sürece ekle, bitince INT_LIT döndür.
+
+87
+00:05:38,233 --> 00:05:43,297
+Sözcüksel analiz sayesinde ayrıştırıcının
+boşluklarla hiç uğraşması gerekmez.
+
+88
+00:05:43,617 --> 00:05:48,277
+Bir Pascal programında while i farklıdır j do
+yazmak ile araya istediğiniz kadar
+
+89
+00:05:48,317 --> 00:05:50,726
+boşluk koymak aynı token dizisini üretir.
+
+90
+00:05:51,933 --> 00:05:54,542
+Bölüm 4.3: Ayrıştırma problemi.
+
+91
+00:05:54,862 --> 00:05:56,793
+Ayrıştırıcının iki görevi vardır:
+
+92
+00:05:56,833 --> 00:06:01,334
+programdaki bütün sentaks hatalarını bulup
+her biri için anlaşılır bir mesaj
+
+93
+00:06:01,374 --> 00:06:03,903
+üretmek ve mümkünse toparlanıp devam etmek;
+
+94
+00:06:03,943 --> 00:06:08,364
+ve programın ayrıştırma ağacını,
+ya da en azından bu ağacın izini üretmek.
+
+95
+00:06:09,200 --> 00:06:11,870
+Ayrıştırıcılar iki kategoriye ayrılır.
+
+96
+00:06:12,190 --> 00:06:17,774
+Yukarıdan aşağıya ayrıştırıcılar ağacı kökten
+başlayarak kurar ve sola dayalı türetmeyi izler.
+
+97
+00:06:18,094 --> 00:06:22,100
+Özyinelemeli iniş ve
+LL ayrıştırıcıları bu ailedendir.
+
+98
+00:06:22,967 --> 00:06:29,677
+Aşağıdan yukarıya ayrıştırıcılar ise ağacı yapraklardan
+başlayarak kurar ve sağa dayalı türetmeyi tersten izler.
+
+99
+00:06:29,997 --> 00:06:33,611
+Shift-reduce ve LR
+ayrıştırıcıları bu ailedendir.
+
+100
+00:06:34,467 --> 00:06:40,224
+İki ailede de ayrıştırıcı kararını verirken
+girdide genellikle yalnızca bir token ileriye bakar.
+
+101
+00:06:40,544 --> 00:06:43,202
+Buna lookahead, yani ileri bakış denir.
+
+102
+00:06:44,433 --> 00:06:49,344
+İki yaklaşımı id artı id çarpı
+id girdisi üzerinde karşılaştıralım.
+
+103
+00:06:50,200 --> 00:06:55,192
+Yukarıdan aşağıya ayrıştırıcı kökten, E'den
+başlar ve onu E artı E olarak açar.
+
+104
+00:06:56,033 --> 00:06:58,692
+Sonra en soldaki E'yi id'ye indirir.
+
+105
+00:06:59,533 --> 00:07:04,433
+Ardından sağdaki E'yi E çarpı E olarak açar
+ve onları da id'lere indirir.
+
+106
+00:07:04,753 --> 00:07:06,736
+Bu, sola dayalı bir türetmedir.
+
+107
+00:07:07,600 --> 00:07:12,750
+Aşağıdan yukarıya ayrıştırıcı ise tam tersinden
+başlar: elinde sadece yapraklar,
+
+108
+00:07:12,790 --> 00:07:14,218
+yani token'lar vardır.
+
+109
+00:07:15,067 --> 00:07:20,797
+Önce çarpmanın iki tarafındaki id'leri E'ye indirger
+ve E çarpı E'yi tek bir E'ye birleştirir.
+
+110
+00:07:21,633 --> 00:07:26,695
+Sonra soldaki id'yi de E'ye indirger ve E artı
+E'yi köke, yani E'ye birleştirir.
+
+111
+00:07:27,015 --> 00:07:30,173
+Bu, sağa dayalı
+türetmenin tersten okunmasıdır.
+
+112
+00:07:31,033 --> 00:07:33,609
+Ortaya çıkan ağaç iki durumda da aynıdır;
+
+113
+00:07:33,649 --> 00:07:36,583
+değişen yalnızca düğümlerin eklenme sırasıdır.
+
+114
+00:07:36,903 --> 00:07:37,677
+Bir not daha:
+
+115
+00:07:37,717 --> 00:07:42,662
+her belirsiz olmayan gramer için çalışan genel
+ayrıştırıcılar n küp zaman alır.
+
+116
+00:07:42,982 --> 00:07:47,252
+Derleyiciler ise gramerlerin
+bir alt kümesiyle sınırlı kalarak doğrusal,
+
+117
+00:07:47,292 --> 00:07:50,285
+yani O(n) zamanda
+çalışan ayrıştırıcılar kullanır.
+
+118
+00:07:51,500 --> 00:07:55,122
+Bölüm 4.4: Özyinelemeli iniş ayrıştırma.
+
+119
+00:07:55,442 --> 00:07:58,565
+En yaygın yukarıdan
+aşağıya ayrıştırma yöntemidir.
+
+120
+00:07:58,885 --> 00:08:01,678
+Bu basit ifade gramerini kullanacağız: ifade,
+
+121
+00:08:01,718 --> 00:08:04,700
+terimlerin artı ya
+da eksiyle birleşmesi; terim,
+
+122
+00:08:04,740 --> 00:08:07,406
+faktörlerin çarpı ya da bölüyle birleşmesi;
+
+123
+00:08:07,446 --> 00:08:10,971
+faktör ise bir tanıtıcı
+ya da parantez içinde bir ifade.
+
+124
+00:08:11,833 --> 00:08:15,222
+Fikir çok basit: gramerdeki her
+terminal olmayan için,
+
+125
+00:08:15,262 --> 00:08:20,341
+o yapıyı ayrıştıran bir alt program
+yazılır: expr, term ve factor fonksiyonları.
+
+126
+00:08:20,661 --> 00:08:25,883
+EBNF bu yöntem için idealdir, çünkü terminal
+olmayan sayısını en aza indirir.
+
+127
+00:08:26,733 --> 00:08:30,291
+Kodlama kuralı da basit:
+sağ taraftaki her terminal için,
+
+128
+00:08:30,331 --> 00:08:34,394
+onu sonraki token'la karşılaştır;
+eşleşirse lex'i çağırıp ilerle,
+
+129
+00:08:34,434 --> 00:08:35,696
+eşleşmezse hata ver.
+
+130
+00:08:36,016 --> 00:08:39,360
+Her terminal olmayan için ise onun
+fonksiyonunu çağır.
+
+131
+00:08:39,680 --> 00:08:42,161
+Bir kural daha: her ayrıştırma fonksiyonu,
+
+132
+00:08:42,201 --> 00:08:45,261
+bir sonraki token'ı
+nextToken değişkeninde bırakır.
+
+133
+00:08:46,467 --> 00:08:48,301
+İşte expr fonksiyonu.
+
+134
+00:08:48,621 --> 00:08:52,580
+Kural, bir terimle başla
+diyor; o yüzden önce term çağrılıyor.
+
+135
+00:08:53,433 --> 00:08:57,350
+Sonra, EBNF'teki süslü parantez bir
+while döngüsüne dönüşüyor:
+
+136
+00:08:57,390 --> 00:09:00,158
+sonraki token artı ya da eksi olduğu sürece,
+
+137
+00:09:00,198 --> 00:09:03,262
+lex ile o işleci
+geç ve bir terim daha ayrıştır.
+
+138
+00:09:04,100 --> 00:09:07,978
+factor fonksiyonu daha ilginç, çünkü
+kuralın iki sağ tarafı var.
+
+139
+00:09:08,298 --> 00:09:12,210
+Hangisinin seçileceğine sonraki token'a
+bakarak karar veriliyor.
+
+140
+00:09:13,067 --> 00:09:16,259
+Token bir tanıtıcıysa, lex ile
+geçip bitiriyoruz.
+
+141
+00:09:17,100 --> 00:09:19,219
+Token sol parantezse, onu geçiyor,
+
+142
+00:09:19,259 --> 00:09:24,848
+içerideki ifadeyi ayrıştırmak için expr'i çağırıyor
+ve ardından sağ parantez bekliyoruz.
+
+143
+00:09:25,168 --> 00:09:26,168
+Gelmezse hata.
+
+144
+00:09:26,468 --> 00:09:31,494
+Dikkat edin: factor, expr'i
+çağırıyor; işte özyineleme buradan geliyor.
+
+145
+00:09:32,333 --> 00:09:37,337
+Token hiçbir sağ tarafın başlangıcıyla
+eşleşmiyorsa bu bir sentaks hatasıdır.
+
+146
+00:09:38,567 --> 00:09:44,221
+Şimdi a artı b çarpı c girdisini ayrıştırırken
+fonksiyonların nasıl çağrıldığını izleyelim.
+
+147
+00:09:44,541 --> 00:09:48,663
+Her şey expr ile başlıyor; expr
+önce term'i çağırıyor.
+
+148
+00:09:49,500 --> 00:09:54,473
+term, factor'ı çağırıyor; factor a
+tanıtıcısını görüyor, lex ile geçiyor ve dönüyor.
+
+149
+00:09:55,333 --> 00:09:58,488
+expr'e geri döndüğümüzde sonraki token artı.
+
+150
+00:09:58,808 --> 00:10:02,581
+Döngü çalışıyor: artıyı
+geçiyor ve yeni bir term çağırıyoruz.
+
+151
+00:10:03,433 --> 00:10:06,115
+Bu term, factor üzerinden b'yi ayrıştırıyor.
+
+152
+00:10:06,967 --> 00:10:12,063
+term'in kendi döngüsü çarpıyı görüyor,
+onu geçiyor ve bir factor daha çağırıyor: c.
+
+153
+00:10:12,900 --> 00:10:17,312
+Girdi bitti; bütün fonksiyonlar sırayla
+dönüyor ve ayrıştırma başarılı.
+
+154
+00:10:17,632 --> 00:10:21,061
+Dikkat ederseniz fonksiyon
+çağrılarının oluşturduğu ağaç,
+
+155
+00:10:21,101 --> 00:10:22,989
+ayrıştırma ağacının ta kendisi.
+
+156
+00:10:23,309 --> 00:10:23,696
+Çarpma,
+
+157
+00:10:23,736 --> 00:10:29,288
+ayrı bir term çağrısının içinde kaldığı
+için işlem önceliği de kendiliğinden doğru çıkıyor.
+
+158
+00:10:30,500 --> 00:10:34,134
+Her gramer yukarıdan
+aşağıya ayrıştırmaya uygun değildir.
+
+159
+00:10:34,454 --> 00:10:38,645
+Uygun olanlara LL gramerleri denir ve
+iki önemli şartları vardır.
+
+160
+00:10:39,500 --> 00:10:41,776
+Birincisi: sol özyineleme olmamalı.
+
+161
+00:10:42,096 --> 00:10:44,303
+A ok A artı B gibi bir kural düşünün.
+
+162
+00:10:44,623 --> 00:10:48,175
+A fonksiyonu ilk iş olarak yine A'yı
+çağırır, o da yine A'yı...
+
+163
+00:10:48,495 --> 00:10:51,851
+Hiç token tüketmeden sonsuz bir
+özyinelemeye girer.
+
+164
+00:10:52,700 --> 00:10:55,208
+Neyse ki sol özyineleme kaldırılabilir.
+
+165
+00:10:55,528 --> 00:10:57,025
+A ok A x ya da y kuralı,
+
+166
+00:10:57,065 --> 00:11:01,611
+A ok y A üssü ve A üssü ok x
+A üssü ya da boş kurallarına dönüştürülür.
+
+167
+00:11:01,931 --> 00:11:05,206
+Aynı dili üretir,
+ama artık sağa özyinelemelidir.
+
+168
+00:11:06,067 --> 00:11:07,886
+İkincisi: çiftli ayrıklık.
+
+169
+00:11:08,206 --> 00:11:13,327
+Ayrıştırıcı tek bir token'a bakarak
+hangi sağ tarafı seçeceğine karar verebilmelidir.
+
+170
+00:11:13,647 --> 00:11:17,640
+Bunun için bir terminal olmayanın sağ
+taraflarının FIRST kümeleri,
+
+171
+00:11:17,680 --> 00:11:20,981
+yani üretebilecekleri
+ilk terminaller, kesişmemelidir.
+
+172
+00:11:21,301 --> 00:11:26,874
+a, bB, cAb uygundur; ama a ve aB
+ikisi de a ile başladığı için uygun değildir.
+
+173
+00:11:27,733 --> 00:11:30,566
+Bu sorun sol çarpanlara ayırma
+ile çözülebilir.
+
+174
+00:11:30,886 --> 00:11:36,183
+Değişken ya bir tanıtıcı ya da tanıtıcı ve köşeli
+parantez içinde bir ifadedir kuralını,
+
+175
+00:11:36,223 --> 00:11:41,256
+tanıtıcı ve ardından isteğe bağlı
+bir köşeli parantez kısmı olarak yeniden yazarız.
+
+176
+00:11:41,576 --> 00:11:44,154
+Artık ortak başlangıç tek bir yerde.
+
+177
+00:11:45,367 --> 00:11:48,838
+Özyinelemeli iniş, ayrıştırıcıyı
+kod olarak yazar.
+
+178
+00:11:49,158 --> 00:11:54,548
+Aynı fikir bir tabloyla da gerçekleştirilebilir:
+tablo güdümlü LL(1) ayrıştırıcı.
+
+179
+00:11:54,868 --> 00:11:58,606
+Soldaki gramer, sol özyinelemesi
+kaldırılmış ifade grameri.
+
+180
+00:11:58,926 --> 00:12:01,910
+Tabloyu kurmak için iki kümeye
+ihtiyacımız var.
+
+181
+00:12:02,767 --> 00:12:07,248
+FIRST kümesi: bir sembolden türetilebilecek
+cümlelerin ilk terminalleri.
+
+182
+00:12:07,568 --> 00:12:11,201
+Örneğin bir faktör ya sol
+parantezle ya da bir sayıyla başlar;
+
+183
+00:12:11,241 --> 00:12:15,624
+terim ve ifade de faktörle başladığı için
+onların FIRST kümesi de aynıdır.
+
+184
+00:12:16,467 --> 00:12:21,436
+FOLLOW kümesi ise bir terminal olmayanın hemen
+ardından gelebilecek terminallerdir;
+
+185
+00:12:21,476 --> 00:12:23,830
+dolar işareti girdinin sonunu gösterir.
+
+186
+00:12:24,150 --> 00:12:28,864
+Örneğin bir ifadeden sonra ya girdi biter
+ya da bir sağ parantez gelir.
+
+187
+00:12:29,700 --> 00:12:32,567
+Bir kural boş dizi,
+yani epsilon üretebiliyorsa,
+
+188
+00:12:32,607 --> 00:12:36,968
+o kuralın ne zaman seçileceğine
+FOLLOW kümesine bakılarak karar verilir.
+
+189
+00:12:37,288 --> 00:12:42,072
+Örneğin exp üssü, sonraki token dolar ya
+da sağ parantezse boşa iner.
+
+190
+00:12:43,300 --> 00:12:48,956
+Tablo güdümlü bir LL(1) ayrıştırıcının
+n artı n girdisini nasıl ayrıştırdığını izleyelim.
+
+191
+00:12:49,276 --> 00:12:54,401
+Algoritma şöyle: yığının tepesinde
+bir terminal varsa ve girdideki token'la aynıysa,
+
+192
+00:12:54,441 --> 00:12:55,548
+ikisini de atarız.
+
+193
+00:12:55,868 --> 00:12:57,765
+Tepede bir terminal olmayan varsa,
+
+194
+00:12:57,805 --> 00:13:01,299
+tablodan o terminal olmayan ve sonraki
+token için kuralı alır,
+
+195
+00:13:01,339 --> 00:13:05,386
+terminal olmayanı yığından çıkarıp kuralın
+sağ tarafını yığına koyarız.
+
+196
+00:13:06,233 --> 00:13:08,834
+Başlangıçta yığında exp var, girdi n.
+
+197
+00:13:09,154 --> 00:13:12,784
+Tablo exp için term
+exp üssü diyor; sonra term faktöre,
+
+198
+00:13:12,824 --> 00:13:14,959
+faktör de num kuralına açılıyor.
+
+199
+00:13:15,800 --> 00:13:20,548
+Yığının tepesinde artık n var
+ve girdide de n var: eşleştir, ikisini de at.
+
+200
+00:13:20,868 --> 00:13:24,311
+Sonraki token artı;
+term üssü için tablo epsilon diyor,
+
+201
+00:13:24,351 --> 00:13:26,946
+çünkü artı term üssünün FOLLOW kümesinde.
+
+202
+00:13:27,800 --> 00:13:32,485
+exp üssü için ise artı geldiğinde addop
+term exp üssü kuralı seçiliyor;
+
+203
+00:13:32,525 --> 00:13:35,254
+addop da artıya iniyor ve artı eşleşiyor.
+
+204
+00:13:36,100 --> 00:13:40,105
+Kalan term yine faktör ve
+num üzerinden ikinci n ile eşleşiyor.
+
+205
+00:13:40,967 --> 00:13:43,358
+Girdi bitti, sonraki token dolar.
+
+206
+00:13:43,678 --> 00:13:48,148
+term üssü ve exp üssü epsilona
+iniyor; yığında da sadece dolar kalıyor.
+
+207
+00:13:48,468 --> 00:13:51,324
+Dolar dolarla eşleşti: girdi kabul edildi.
+
+208
+00:13:51,644 --> 00:13:55,177
+Bu yöntemin çalışması için gramerin
+LL(1) olması gerekir:
+
+209
+00:13:55,217 --> 00:13:58,727
+tablonun her hücresinde
+en fazla bir kural bulunmalıdır.
+
+210
+00:13:59,933 --> 00:14:03,165
+Bölüm 4.5: Aşağıdan yukarıya ayrıştırma.
+
+211
+00:14:03,485 --> 00:14:05,825
+Bu ayrıştırıcılar sağa dayalı türetmeyi,
+
+212
+00:14:05,865 --> 00:14:08,780
+girdiyi soldan sağa
+okuyarak tersten taklit eder.
+
+213
+00:14:09,100 --> 00:14:14,508
+Soldan sağa okuma ve sağa dayalı türetme
+kelimelerinin baş harfleri ona adını verir:
+
+214
+00:14:14,548 --> 00:14:15,023
+LR.
+
+215
+00:14:15,063 --> 00:14:16,641
+Açık bir yığın kullanırlar,
+
+216
+00:14:16,681 --> 00:14:22,493
+yukarıdan aşağıya ayrıştırıcılardan daha
+güçlüdürler ve sol özyineleme onlar için sorun değildir.
+
+217
+00:14:23,333 --> 00:14:26,824
+Gösterim şöyle: diziyi
+dikey bir çizgiyle ikiye ayırırız.
+
+218
+00:14:27,144 --> 00:14:30,886
+Solu yığındır ve terminaller ile
+terminal olmayanlar içerir;
+
+219
+00:14:30,926 --> 00:14:33,069
+sağı ise henüz okunmamış girdidir.
+
+220
+00:14:33,933 --> 00:14:36,761
+Ayrıştırıcının yalnızca iki hareketi vardır.
+
+221
+00:14:37,081 --> 00:14:41,298
+Shift, çizgiyi bir sağa kaydırır; yani
+sonraki token yığına alınır.
+
+222
+00:14:42,133 --> 00:14:46,350
+Reduce ise yığının tepesindeki
+dizi bir kuralın sağ tarafıyla eşleşiyorsa,
+
+223
+00:14:46,390 --> 00:14:48,518
+onu kuralın sol tarafıyla değiştirir.
+
+224
+00:14:48,838 --> 00:14:53,030
+Örneğin A ok x y kuralı
+varsa, yığının tepesindeki x y, A olur.
+
+225
+00:14:54,233 --> 00:14:55,568
+Bir örnekle görelim.
+
+226
+00:14:55,888 --> 00:15:00,962
+Gramer: E, T artı E ya da T; T
+ise int çarpı T, int ya da parantez içinde E.
+
+227
+00:15:01,282 --> 00:15:03,558
+Girdi: int çarpı int artı int.
+
+228
+00:15:04,400 --> 00:15:05,654
+Başta yığın boş.
+
+229
+00:15:05,974 --> 00:15:09,808
+int'i shift ediyoruz; çarpıyı
+da, ikinci int'i de shift ediyoruz.
+
+230
+00:15:10,667 --> 00:15:14,088
+Şimdi yığının tepesinde int var ve
+sonraki token artı.
+
+231
+00:15:14,408 --> 00:15:18,585
+int'i T'ye indirgiyoruz; ardından int çarpı
+T de bir kuralın sağ tarafı,
+
+232
+00:15:18,625 --> 00:15:20,089
+onu da T'ye indirgiyoruz.
+
+233
+00:15:20,933 --> 00:15:23,371
+Artıyı ve son int'i shift ediyoruz.
+
+234
+00:15:24,233 --> 00:15:25,233
+Girdi bitti.
+
+235
+00:15:25,485 --> 00:15:29,049
+Son int'i T'ye, o T'yi E'ye, ve T artı
+E'yi de E'ye indirgiyoruz.
+
+236
+00:15:29,900 --> 00:15:34,103
+Yığında yalnızca başlangıç
+sembolü E kaldı ve girdi bitti: kabul.
+
+237
+00:15:34,423 --> 00:15:38,259
+Her reduce hareketi ayrıştırma
+ağacında bir iç düğüm oluşturdu;
+
+238
+00:15:38,299 --> 00:15:40,576
+ağaç yapraklardan köke doğru kuruldu.
+
+239
+00:15:41,800 --> 00:15:44,914
+Aşağıdan yukarıya
+ayrıştırmanın asıl sorusu şudur:
+
+240
+00:15:44,954 --> 00:15:48,234
+yığının tepesindeki
+hangi alt diziyi indirgemeliyim?
+
+241
+00:15:48,554 --> 00:15:53,371
+İndirgenmesi gereken doğru alt
+diziye tutamaç, İngilizcesiyle handle denir.
+
+242
+00:15:53,691 --> 00:15:58,119
+Bu açıdan ayrıştırma, adım adım
+tutamaçları budamak gibi düşünülebilir.
+
+243
+00:15:58,967 --> 00:16:03,723
+Bazen ayrıştırıcı hem shift hem
+reduce yapabileceği bir durumla karşılaşır:
+
+244
+00:16:03,763 --> 00:16:05,937
+buna shift-reduce çatışması denir.
+
+245
+00:16:06,257 --> 00:16:08,869
+Klasik örnek askıda else problemidir.
+
+246
+00:16:09,189 --> 00:16:13,241
+İç içe iki if ve tek bir else varsa,
+else hangi if'e aittir?
+
+247
+00:16:13,561 --> 00:16:17,696
+Çoğu LR ayrıştırıcı üreteci
+bu durumda varsayılan olarak shift yapar;
+
+248
+00:16:17,736 --> 00:16:21,972
+böylece else en yakın if'e bağlanır, ki C
+ve Java'nın kuralı da budur.
+
+249
+00:16:22,833 --> 00:16:26,459
+Belirsiz bir ifade gramerinde de
+benzer bir çatışma çıkar:
+
+250
+00:16:26,499 --> 00:16:28,733
+x çarpı y artı z'de artı geldiğinde,
+
+251
+00:16:28,773 --> 00:16:32,249
+E çarpı E indirgenmeli
+mi yoksa artı shift mi edilmeli?
+
+252
+00:16:32,569 --> 00:16:35,489
+Çarpma daha öncelikli olduğu
+için indirgenmeli.
+
+253
+00:16:35,809 --> 00:16:39,487
+Ayrıştırıcı üreteçlerine
+bu yüzden öncelik bildirimleri verilir.
+
+254
+00:16:40,333 --> 00:16:45,567
+Daha ciddi olanı reduce-reduce çatışmasıdır: iki
+farklı kuralla indirgeme mümkündür.
+
+255
+00:16:45,887 --> 00:16:46,809
+Örneğin S boş,
+
+256
+00:16:46,849 --> 00:16:51,727
+id ya da id S kuralıyla tek
+bir id iki farklı şekilde ayrıştırılabilir.
+
+257
+00:16:52,047 --> 00:16:56,785
+Bu genellikle gramerde ciddi bir
+belirsizliktir ve gramer düzeltilmelidir;
+
+258
+00:16:56,825 --> 00:16:59,343
+burada S boş ya da id S yazmak yeterli.
+
+259
+00:17:00,567 --> 00:17:04,614
+Peki LR ayrıştırıcı hangi
+tutamacı indirgeyeceğini nasıl bilir?
+
+260
+00:17:04,934 --> 00:17:07,895
+Girdi, token'lar halinde soldan sağa okunur.
+
+261
+00:17:08,733 --> 00:17:13,588
+Donald Knuth'un 1965'teki fikri şuydu: bir
+aşağıdan yukarıya ayrıştırıcı,
+
+262
+00:17:13,628 --> 00:17:18,858
+kararlarını verirken ayrıştırmanın
+o ana kadarki bütün geçmişini kullanabilir.
+
+263
+00:17:19,178 --> 00:17:23,636
+Üstelik bu geçmişin sonlu ve nispeten az
+sayıda farklı durumu vardır.
+
+264
+00:17:23,956 --> 00:17:27,985
+Bu yüzden yığında her sembolün yanında
+bir durum numarası saklanır.
+
+265
+00:17:28,833 --> 00:17:32,642
+Ayrıştırıcı tablo güdümlüdür
+ve tablonun iki parçası vardır.
+
+266
+00:17:32,962 --> 00:17:37,983
+ACTION tablosu, mevcut durum ve sonraki token
+için ne yapılacağını söyler: shift,
+
+267
+00:17:38,023 --> 00:17:39,585
+reduce, kabul ya da hata.
+
+268
+00:17:39,905 --> 00:17:42,947
+Satırlar durumlar, sütunlar terminallerdir.
+
+269
+00:17:43,800 --> 00:17:49,048
+GOTO tablosu ise bir reduce hareketinden sonra
+yığına hangi durumun konacağını söyler.
+
+270
+00:17:49,368 --> 00:17:52,839
+Satırlar durumlar,
+sütunlar terminal olmayanlardır.
+
+271
+00:17:54,067 --> 00:17:59,268
+Bir LR ayrıştırıcının num artı num
+çarpı num girdisini nasıl işlediğine bakalım.
+
+272
+00:17:59,588 --> 00:18:04,719
+Gramer, öncelik seviyeleri içeren klasik ifade
+grameri: E, E artı T ya da T; T,
+
+273
+00:18:04,759 --> 00:18:08,163
+T çarpı F ya da F;
+F ise parantezli ifade ya da num.
+
+274
+00:18:09,000 --> 00:18:12,622
+İlk num shift ediliyor ve hemen F'ye,
+T'ye, E'ye indirgeniyor.
+
+275
+00:18:13,467 --> 00:18:18,169
+Artı ve ikinci num shift ediliyor; num önce
+F'ye, sonra T'ye indirgeniyor.
+
+276
+00:18:19,033 --> 00:18:22,942
+Şimdi kritik an: yığında E artı T var
+ve sonraki token çarpı.
+
+277
+00:18:23,262 --> 00:18:27,105
+Ayrıştırıcı E artı T'yi
+indirgemiyor, çarpıyı shift ediyor!
+
+278
+00:18:27,425 --> 00:18:29,305
+Çünkü çarpma daha öncelikli.
+
+279
+00:18:29,625 --> 00:18:32,829
+Bu bilgi, gramerden
+üretilen tablonun içine gömülü.
+
+280
+00:18:33,149 --> 00:18:35,598
+Ardından son num da shift ediliyor.
+
+281
+00:18:36,433 --> 00:18:41,620
+Girdi bitti: num F'ye indirgeniyor,
+T çarpı F, T'ye; E artı T de E'ye indirgeniyor.
+
+282
+00:18:42,467 --> 00:18:44,607
+Yığında yalnızca E kaldı: kabul.
+
+283
+00:18:44,927 --> 00:18:47,248
+Her adımda kararı ACTION tablosu verdi;
+
+284
+00:18:47,288 --> 00:18:50,859
+her reduce'tan sonra da GOTO tablosu
+yeni durumu belirledi.
+
+285
+00:18:52,067 --> 00:18:58,662
+LR bir ailedir: en basitinden
+en güçlüsüne LR(0), SLR(1), LALR(1) ve LR(1).
+
+286
+00:18:58,982 --> 00:18:59,993
+Aralarındaki fark,
+
+287
+00:19:00,033 --> 00:19:04,062
+durumların ve ileri bakış bilgisinin ne
+kadar ayrıntılı tutulduğudur.
+
+288
+00:19:04,382 --> 00:19:04,878
+LALR(1),
+
+289
+00:19:04,918 --> 00:19:10,555
+güç ve tablo boyutu arasında pratik
+bir denge sunduğu için en yaygın kullanılanıdır.
+
+290
+00:19:11,400 --> 00:19:13,786
+LR ayrıştırıcıların avantajları büyüktür:
+
+291
+00:19:13,826 --> 00:19:18,401
+programlama dillerini tanımlayan
+gramerlerin neredeyse tamamı için çalışırlar;
+
+292
+00:19:18,441 --> 00:19:21,597
+diğer aşağıdan yukarıya yöntemler
+kadar verimlidirler;
+
+293
+00:19:21,637 --> 00:19:24,832
+sentaks hatalarını mümkün olan en
+erken anda bulurlar.
+
+294
+00:19:25,152 --> 00:19:27,947
+Ayrıca LR ile ayrıştırılabilen gramerler,
+
+295
+00:19:27,987 --> 00:19:30,961
+LL ile ayrıştırılabilenlerin üst kümesidir.
+
+296
+00:19:31,800 --> 00:19:36,165
+Tek dezavantajı, tabloların
+elle kurulamayacak kadar büyük olmasıdır.
+
+297
+00:19:36,485 --> 00:19:40,240
+Bu yüzden gramerden tabloyu
+bir ayrıştırıcı üreteci çıkarır:
+
+298
+00:19:40,280 --> 00:19:43,315
+yacc ve onun GNU
+sürümü bison en bilinenleridir.
+
+299
+00:19:43,635 --> 00:19:46,886
+LL tarafında ise ANTLR gibi araçlar vardır.
+
+300
+00:19:48,100 --> 00:19:49,150
+Toparlayalım.
+
+301
+00:19:50,000 --> 00:19:51,110
+Sözcüksel analizci,
+
+302
+00:19:51,150 --> 00:19:57,988
+programın küçük ölçekli parçalarını ayıran bir desen
+eşleştiricidir ve bir durum diyagramıyla kolayca tasarlanır.
+
+303
+00:19:58,833 --> 00:20:00,684
+Ayrıştırıcının iki işi vardır:
+
+304
+00:20:00,724 --> 00:20:04,254
+sentaks hatalarını bulmak
+ve ayrıştırma ağacını üretmek.
+
+305
+00:20:05,100 --> 00:20:07,241
+Özyinelemeli iniş ayrıştırıcı,
+
+306
+00:20:07,281 --> 00:20:11,787
+elle yazılmış bir LL ayrıştırıcıdır ve
+EBNF ile çok uyumludur.
+
+307
+00:20:12,107 --> 00:20:17,208
+Gramerinde sol özyineleme olmamalı
+ve sağ tarafların FIRST kümeleri ayrık olmalıdır.
+
+308
+00:20:18,067 --> 00:20:24,409
+Aşağıdan yukarıya ayrıştırıcıların problemi ise
+mevcut cümlesel biçimde indirgenecek tutamacı bulmaktır.
+
+309
+00:20:24,729 --> 00:20:27,640
+Shift-reduce yaklaşımını kullanan LR ailesi,
+
+310
+00:20:27,680 --> 00:20:31,033
+en yaygın aşağıdan
+yukarıya ayrıştırma yöntemidir.
+
+311
+00:20:32,267 --> 00:20:34,600
+Şimdi kısa bir mini test yapalım.
+
+312
+00:20:34,920 --> 00:20:38,345
+Her sorudan sonra birkaç saniye
+düşünme süreniz var.
+
+313
+00:20:39,200 --> 00:20:40,200
+Soru 1.
+
+314
+00:20:40,291 --> 00:20:44,034
+Sözcüksel ve sentaks
+analizini ayırmanın üç nedeni nedir?
+
+315
+00:20:48,400 --> 00:20:51,317
+Cevap: Basitlik, verimlilik ve taşınabilirlik.
+
+316
+00:20:52,667 --> 00:20:53,645
+Soru 2.
+
+317
+00:20:53,685 --> 00:20:58,190
+Özyinelemeli iniş ayrıştırıcıda
+her terminal olmayan neye karşılık gelir?
+
+318
+00:21:02,533 --> 00:21:06,005
+Cevap: Kendi alt programına, yani
+kendi fonksiyonuna.
+
+319
+00:21:06,867 --> 00:21:07,867
+Soru 3.
+
+320
+00:21:08,127 --> 00:21:12,921
+A ok A artı B gibi bir kural neden
+yukarıdan aşağıya ayrıştırıcıda sorun çıkarır?
+
+321
+00:21:17,267 --> 00:21:19,249
+Cevap: Çünkü sol özyinelemelidir;
+
+322
+00:21:19,289 --> 00:21:23,455
+A'nın fonksiyonu hiç token
+tüketmeden kendini sonsuza kadar çağırır.
+
+323
+00:21:24,300 --> 00:21:25,300
+Soru 4.
+
+324
+00:21:25,502 --> 00:21:28,843
+Shift-reduce ayrıştırıcının iki
+temel hareketi nedir?
+
+325
+00:21:33,200 --> 00:21:36,091
+Cevap: Shift, sonraki token'ı yığına atar.
+
+326
+00:21:36,411 --> 00:21:40,436
+Reduce, yığının tepesindeki
+tutamacı kuralın sol tarafıyla değiştirir.
+
+327
+00:21:41,300 --> 00:21:42,300
+Soru 5.
+
+328
+00:21:42,526 --> 00:21:45,465
+LR ayrıştırma tablosunun iki bileşeni nedir?
+
+329
+00:21:49,800 --> 00:21:52,342
+Cevap: ACTION tablosu ve GOTO tablosu.
+
+330
+00:21:58,067 --> 00:21:59,971
+Bölüm 4'ü de tamamladık!
+
+331
+00:22:00,291 --> 00:22:04,258
+Böylece dört bölümü bitirmiş
+olduk: programlama dillerine giriş,
+
+332
+00:22:04,298 --> 00:22:05,949
+dillerin tarihsel gelişimi,
+
+333
+00:22:05,989 --> 00:22:10,810
+sentaks ve semantiğin tanımlanması
+ve son olarak sözcüksel ve sentaks analiz.
+
+334
+00:22:11,667 --> 00:22:12,343
+Pratik için,
+
+335
+00:22:12,383 --> 00:22:18,195
+kendi küçük ifade dilinizin lex fonksiyonunu
+ve özyinelemeli iniş ayrıştırıcısını yazmayı deneyin;
+
+336
+00:22:18,235 --> 00:22:21,758
+ya da yacc veya bison
+ile bir gramerden ayrıştırıcı üretin.
+
+337
+00:22:22,078 --> 00:22:24,662
+İzlediğiniz için teşekkürler, başarılar!
