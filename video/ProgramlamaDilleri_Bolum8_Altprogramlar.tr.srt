@@ -1,0 +1,2597 @@
+1
+00:00:00,300 --> 00:00:01,226
+Merhaba!
+
+2
+00:00:01,266 --> 00:00:04,946
+Programlama Dilleri dersinin
+sekizinci bölümüne hoş geldiniz.
+
+3
+00:00:05,266 --> 00:00:09,306
+Bu bölümün konusu altprogramlar, yani
+yordamlar ve fonksiyonlar.
+
+4
+00:00:10,167 --> 00:00:13,790
+Bir programın başka bir
+program parçasını nasıl çağırdığını,
+
+5
+00:00:13,830 --> 00:00:18,349
+bilgiyi ona nasıl aktardığını
+ve sonucu nasıl geri aldığını inceleyeceğiz.
+
+6
+00:00:18,669 --> 00:00:23,404
+Ekranda göreceğiniz kod örnekleri
+yalnızca kavramları somutlaştırmak için var;
+
+7
+00:00:23,444 --> 00:00:25,402
+kod yazmayı bilmeniz gerekmiyor.
+
+8
+00:00:25,722 --> 00:00:29,682
+Her örneği adım adım, kutular
+ve tablolarla birlikte izleyeceğiz.
+
+9
+00:00:30,900 --> 00:00:32,514
+Yol haritamıza bakalım.
+
+10
+00:00:33,367 --> 00:00:38,155
+Önce altprogramların neden var olduğunu ve
+temel kavramlarını göreceğiz: başlık,
+
+11
+00:00:38,195 --> 00:00:39,704
+parametre, protokol gibi.
+
+12
+00:00:40,024 --> 00:00:43,124
+Sonra yerel değişkenlerin
+bellekte nasıl tutulduğuna,
+
+13
+00:00:43,164 --> 00:00:47,903
+yordam ile fonksiyon farkına ve parametrelerin
+nasıl eşleştirildiğine bakacağız.
+
+14
+00:00:48,767 --> 00:00:53,070
+Bölümün kalbi parametre aktarım
+yöntemleri: değer, sonuç, değer-sonuç,
+
+15
+00:00:53,110 --> 00:00:54,847
+başvuru ve isim ile çağırma.
+
+16
+00:00:55,167 --> 00:00:59,716
+Ardından altprogramların parametre olarak
+geçirilmesini, aşırı yüklemeyi,
+
+17
+00:00:59,756 --> 00:01:03,488
+jenerikleri, kapatmaları
+ve son olarak etkinlik kayıtlarını,
+
+18
+00:01:03,528 --> 00:01:06,231
+özyinelemeyi ve eşyordamları inceleyeceğiz.
+
+19
+00:01:07,433 --> 00:01:11,845
+Bölüm 8.1: Yazılım mühendisliği
+açısından altprogramlar.
+
+20
+00:01:12,165 --> 00:01:18,996
+Bir programda birçok kez kullanılacak bir dizi deyimi tek bir
+isim altında toplarsak bir altprogram elde ederiz.
+
+21
+00:01:19,316 --> 00:01:24,029
+Böylece tek bir isim, bir dizi deyimi temsil
+eder; buna işlev soyutlaması denir.
+
+22
+00:01:24,349 --> 00:01:28,587
+Dillerin bir de veri soyutlaması vardır,
+ama o sonraki bölümlerin konusu.
+
+23
+00:01:28,907 --> 00:01:32,808
+Altprogramların yazılım
+geliştirmeye beş önemli katkısı vardır.
+
+24
+00:01:33,667 --> 00:01:35,258
+Birincisi kaynak tasarrufu:
+
+25
+00:01:35,298 --> 00:01:40,455
+sık kullanılan bir işlemi her seferinde yeniden
+yazmak yerine bir kez yazıp çağırırız;
+
+26
+00:01:40,495 --> 00:01:42,308
+bu bellek ve zaman kazandırır.
+
+27
+00:01:43,167 --> 00:01:44,305
+İkincisi soyutlama:
+
+28
+00:01:44,345 --> 00:01:48,995
+altprogramı kullanan kod onunla
+yalnızca parametreler aracılığıyla konuşur.
+
+29
+00:01:49,315 --> 00:01:53,365
+Örneğin bir sıralama altprogramının
+algoritmasını değiştirdiğinizde,
+
+30
+00:01:53,405 --> 00:01:55,450
+onu çağıran kodlar hiç etkilenmez.
+
+31
+00:01:56,300 --> 00:01:58,040
+Üçüncüsü modüler geliştirme:
+
+32
+00:01:58,080 --> 00:02:04,626
+büyük bir iş alt işlere bölünür ve böylece aynı yazılım
+üzerinde birden çok kişi aynı anda çalışabilir.
+
+33
+00:02:05,467 --> 00:02:07,085
+Dördüncüsü anlaşılabilirlik:
+
+34
+00:02:07,125 --> 00:02:11,684
+küçük parçalara bölünmüş bir program daha
+kolay okunur ve daha kolay sınanır.
+
+35
+00:02:12,533 --> 00:02:17,259
+Beşincisi kütüphaneler: altprogramlar birçok
+uygulama arasında paylaşılabilir;
+
+36
+00:02:17,299 --> 00:02:21,210
+bugün kullandığımız hazır
+kütüphanelerin hepsi bu fikre dayanır.
+
+37
+00:02:22,433 --> 00:02:26,915
+Altprogramlarla ilgili temel kavramları tek
+bir örnek üzerinden tanıyalım.
+
+38
+00:02:27,767 --> 00:02:30,634
+Bu, ortalama adlı bir altprogramın tanımıdır.
+
+39
+00:02:30,954 --> 00:02:31,276
+Tanım,
+
+40
+00:02:31,316 --> 00:02:36,141
+altprogram soyutlamasının betimlenmesidir ve
+bir başlık ile bir gövdeden oluşur.
+
+41
+00:02:37,000 --> 00:02:39,363
+İlk satır başlıktır: altprogramın adını,
+
+42
+00:02:39,403 --> 00:02:43,208
+parametrelerini ve fonksiyonsa
+döndürdüğü değerin tipini söyler;
+
+43
+00:02:43,248 --> 00:02:46,132
+yani altprogramın
+dış dünyaya açılan arayüzüdür.
+
+44
+00:02:46,967 --> 00:02:49,949
+Başlıkta yazan c ve d'ye resmi
+parametre denir.
+
+45
+00:02:50,269 --> 00:02:54,680
+Parametrelerin sayısı, sırası
+ve tipleri parametre profilini oluşturur.
+
+46
+00:02:55,000 --> 00:02:58,399
+Profile dönüş tipini
+de eklersek protokolü elde ederiz.
+
+47
+00:02:58,719 --> 00:03:02,815
+Yalnızca protokolü veren, gövdesi olmayan
+tanıma ise bildirim denir;
+
+48
+00:03:02,855 --> 00:03:05,531
+C'deki fonksiyon prototipleri buna örnektir.
+
+49
+00:03:06,367 --> 00:03:09,641
+Altprogramın çalıştırılmasını
+istemeye çağrı denir.
+
+50
+00:03:09,961 --> 00:03:12,814
+Çağrıda yazılan a
+ve b'ye gerçek parametre denir:
+
+51
+00:03:12,854 --> 00:03:16,811
+bunlar altprograma gerçekten gönderilen
+değerler ya da adreslerdir.
+
+52
+00:03:17,667 --> 00:03:21,462
+Bu bölümde incelediğimiz altprogramların
+üç genel özelliği vardır:
+
+53
+00:03:21,502 --> 00:03:24,135
+her altprogramın tek bir giriş noktası vardır;
+
+54
+00:03:24,175 --> 00:03:26,867
+altprogram çalışırken onu
+çağıran birim bekler;
+
+55
+00:03:26,907 --> 00:03:30,394
+ve altprogram bitince denetim her
+zaman çağırana geri döner.
+
+56
+00:03:31,600 --> 00:03:36,755
+Bir dil tasarımcısı altprogramlar konusunda yedi
+önemli soruyu cevaplamak zorundadır.
+
+57
+00:03:37,600 --> 00:03:40,392
+Hangi parametre aktarım yöntemleri sunulacak?
+
+58
+00:03:40,712 --> 00:03:43,359
+Parametrelerin tipleri kontrol edilecek mi?
+
+59
+00:03:43,679 --> 00:03:48,596
+Yerel değişkenler statik mi olacak, yoksa her
+çağrıda yeniden mi oluşturulacak?
+
+60
+00:03:49,433 --> 00:03:53,771
+Altprogram tanımları başka
+altprogramların içinde yer alabilecek mi;
+
+61
+00:03:53,811 --> 00:03:56,450
+örneğin Pascal buna izin verir, C vermez.
+
+62
+00:03:56,770 --> 00:04:02,171
+Ve eğer altprogramlar hem iç içe tanımlanabiliyor hem
+de parametre olarak geçirilebiliyorsa,
+
+63
+00:04:02,211 --> 00:04:05,306
+parametre olarak geçen
+altprogramın referans çevresi,
+
+64
+00:04:05,346 --> 00:04:07,416
+yani görebildiği isimler ne olacak?
+
+65
+00:04:08,267 --> 00:04:11,099
+Son olarak, aynı isimde birden çok altprogram,
+
+66
+00:04:11,139 --> 00:04:14,199
+yani aşırı yüklenmiş
+altprogramlar olabilecek mi?
+
+67
+00:04:14,519 --> 00:04:20,359
+Ve farklı çağrılarda farklı veri tipleriyle çalışabilen
+jenerik altprogramlara izin verilecek mi?
+
+68
+00:04:20,679 --> 00:04:23,651
+Bölüm boyunca bu
+soruların cevaplarını göreceğiz.
+
+69
+00:04:24,867 --> 00:04:28,559
+Bir altprogramın yerel
+değişkenleri bellekte nasıl tutulur?
+
+70
+00:04:28,879 --> 00:04:31,644
+İki seçenek var: yığıt-dinamik ya da statik.
+
+71
+00:04:32,500 --> 00:04:36,250
+Bu C örneğinde main, test
+fonksiyonunu on bir kez çağırıyor.
+
+72
+00:04:36,570 --> 00:04:40,599
+test'in içinde bir i ve static olarak
+tanımlanmış bir count var.
+
+73
+00:04:41,433 --> 00:04:42,560
+Tabloya bakalım.
+
+74
+00:04:42,880 --> 00:04:47,291
+Bütün değişkenlerin tipi derleme zamanında,
+yani statik olarak bağlanır.
+
+75
+00:04:47,611 --> 00:04:49,430
+Ama bellek bağlaması farklıdır:
+
+76
+00:04:49,470 --> 00:04:55,525
+global count ve test içindeki static count
+program başında bir kez yer alır ve program boyunca yaşar.
+
+77
+00:04:55,845 --> 00:05:01,476
+main'in ve test'in i değişkenleri ise her
+çağrıda yığıtta oluşturulur ve çağrı bitince silinir.
+
+78
+00:05:01,796 --> 00:05:07,462
+Bu yüzden test'teki static count çağrılar
+arasında değerini korur ve döngü bittiğinde on bir olur.
+
+79
+00:05:08,300 --> 00:05:11,078
+Yığıt-dinamik yerel değişkenlerin avantajları:
+
+80
+00:05:11,118 --> 00:05:17,244
+özyinelemeyi mümkün kılarlar ve ayrılan alan
+farklı altprogramlar tarafından sırayla paylaşılabilir.
+
+81
+00:05:17,564 --> 00:05:21,402
+Dezavantajları: her çağrıda yer ayırma
+ve geri verme zaman alır,
+
+82
+00:05:21,442 --> 00:05:24,613
+erişim dolaylıdır ve
+altprogram geçmişini hatırlamaz;
+
+83
+00:05:24,653 --> 00:05:26,956
+bitince bütün yerel değerler unutulur.
+
+84
+00:05:27,800 --> 00:05:32,103
+Statik yerel değişkenlerde avantajlar ve
+dezavantajlar yer değiştirir:
+
+85
+00:05:32,143 --> 00:05:36,074
+erişim hızlı ve doğrudandır,
+değer çağrılar arasında hatırlanır;
+
+86
+00:05:36,114 --> 00:05:37,913
+ama özyineleme desteklenemez.
+
+87
+00:05:38,767 --> 00:05:43,296
+Dillere bakalım: FORTRAN'da yerel
+değişkenler varsayılan olarak statiktir,
+
+88
+00:05:43,336 --> 00:05:46,486
+özyineleme için recursive
+anahtar kelimesi gerekir.
+
+89
+00:05:46,806 --> 00:05:50,826
+C ikisini de sunar: varsayılan
+yığıt-dinamik, static ile statik.
+
+90
+00:05:51,146 --> 00:05:55,581
+Pascal, Java ve Ada'da ise
+yerel değişkenler yalnızca dinamiktir.
+
+91
+00:05:56,800 --> 00:06:00,724
+Bölüm 8.2.2: Yordamlar ve fonksiyonlar.
+
+92
+00:06:01,044 --> 00:06:04,295
+Bir altprogram ya bir yordam ya
+da bir fonksiyondur.
+
+93
+00:06:05,133 --> 00:06:06,997
+Yordam bir değer döndürmez.
+
+94
+00:06:07,317 --> 00:06:11,148
+Dilin hazır deyimlerine benzer: yeni bir
+deyim tanımlamak gibidir.
+
+95
+00:06:11,468 --> 00:06:16,433
+Etkisini parametreleri ya da görebildiği global
+değişkenleri değiştirerek gösterir.
+
+96
+00:06:17,300 --> 00:06:21,921
+Fonksiyon ise çağıran birime mutlaka bir
+sonuç değeri döndürmek zorundadır.
+
+97
+00:06:22,241 --> 00:06:25,985
+Dilin hazır işlemcilerine,
+örneğin toplama işlemcisine benzer;
+
+98
+00:06:26,025 --> 00:06:29,504
+bu yüzden fonksiyon çağrısı bir
+ifadenin içinde yer alır.
+
+99
+00:06:30,367 --> 00:06:33,651
+Dillere bakalım: Pascal ve Ada'da
+yordamlar procedure,
+
+100
+00:06:33,691 --> 00:06:36,462
+fonksiyonlar function kelimesiyle tanımlanır.
+
+101
+00:06:36,782 --> 00:06:39,197
+FORTRAN'da yordamlara SUBROUTINE denir.
+
+102
+00:06:39,517 --> 00:06:41,986
+C ve C++'ta yalnızca fonksiyon vardır,
+
+103
+00:06:42,026 --> 00:06:46,912
+ama void tipli bir fonksiyon değer
+döndürmediği için yordam gibi davranır.
+
+104
+00:06:47,232 --> 00:06:52,097
+C'de özel bir çağrı deyimi de yoktur; adı ve
+parametreleri yazmak yeterlidir.
+
+105
+00:06:52,933 --> 00:06:55,745
+Bir fonksiyon çağrısının
+yolculuğunu izleyelim.
+
+106
+00:06:56,065 --> 00:06:58,283
+main çalışırken kare beş çağrılır.
+
+107
+00:06:58,603 --> 00:07:03,270
+Bu anda main durur ve bekler; denetim kare'ye
+geçer ve onun gövdesi çalışır.
+
+108
+00:07:04,133 --> 00:07:08,464
+kare yirmi beş değerini üretir ve bu değer,
+ifadede çağrının yerini alır.
+
+109
+00:07:08,784 --> 00:07:13,172
+Denetim main'e döner ve main
+kaldığı yerden devam eder: x elli olur.
+
+110
+00:07:14,400 --> 00:07:19,325
+Bölüm 8.2.3: Gerçek
+ve resmi parametrelerin eşleşmesi.
+
+111
+00:07:19,645 --> 00:07:22,213
+Bir çağrıda yazdığımız gerçek parametreler,
+
+112
+00:07:22,253 --> 00:07:25,165
+başlıktaki hangi
+resmi parametrelere bağlanacak?
+
+113
+00:07:25,485 --> 00:07:27,098
+İki temel yöntem var.
+
+114
+00:07:27,933 --> 00:07:31,927
+Birincisi konumsal parametrelerdir:
+eşleşme sıraya göre yapılır.
+
+115
+00:07:32,247 --> 00:07:37,462
+ortalama a, b çağrısında birinci
+gerçek parametre a birinci resmi parametre c'ye,
+
+116
+00:07:37,502 --> 00:07:39,643
+ikinci b de ikinci d'ye bağlanır.
+
+117
+00:07:39,963 --> 00:07:42,366
+Neredeyse bütün diller bunu kullanır.
+
+118
+00:07:42,686 --> 00:07:44,915
+Parametre sayısı azken çok pratiktir,
+
+119
+00:07:44,955 --> 00:07:49,431
+ama sayı arttıkça hangi değerin
+hangi sırada yazılacağı karıştırılabilir.
+
+120
+00:07:50,267 --> 00:07:55,413
+İkincisi anahtar kelime parametreleridir: çağrıda
+resmi parametrenin adı da yazılır.
+
+121
+00:07:55,733 --> 00:07:59,105
+Ada örneğinde LIST
+ok A ve LENGTH ok N yazıyoruz.
+
+122
+00:07:59,425 --> 00:08:01,586
+Avantajı sıranın önemli olmamasıdır;
+
+123
+00:08:01,626 --> 00:08:06,762
+dezavantajı ise kullanıcının resmi
+parametrelerin adlarını bilmek zorunda olmasıdır.
+
+124
+00:08:07,082 --> 00:08:11,239
+Ada ve Fortran 90 iki yöntemi
+birlikte kullanmaya izin verir.
+
+125
+00:08:12,100 --> 00:08:15,931
+Bazı dillerde resmi parametrelerin
+varsayılan değeri olabilir.
+
+126
+00:08:16,251 --> 00:08:19,342
+Bu örnekte LENGTH için
+yüz varsayılan değeri verilmiş;
+
+127
+00:08:19,382 --> 00:08:21,876
+çağrıda LENGTH yazılmazsa yüz kabul edilir.
+
+128
+00:08:22,196 --> 00:08:26,851
+C++, Fortran 95, Ada ve PHP bunu destekler.
+
+129
+00:08:27,700 --> 00:08:31,752
+Son olarak bazı diller değişken sayıda
+parametreye izin verir.
+
+130
+00:08:32,072 --> 00:08:36,779
+C#'ta params ile tanımlanan bir dizi, çağrıda
+istenen sayıda değer alabilir;
+
+131
+00:08:36,819 --> 00:08:39,693
+Python ve Ruby de benzer özelliklere sahiptir.
+
+132
+00:08:40,013 --> 00:08:40,434
+C, C++,
+
+133
+00:08:40,474 --> 00:08:45,508
+Java ve Perl'de ise bazı durumlarda gerçek ve
+resmi parametrelerin uyuşmasını
+
+134
+00:08:45,548 --> 00:08:48,473
+kontrol etmek programcının sorumluluğundadır;
+
+135
+00:08:48,513 --> 00:08:51,083
+C'deki printf fonksiyonu buna örnektir.
+
+136
+00:08:52,300 --> 00:08:56,203
+Bölüm 8.2.4: Parametre aktarım yöntemleri.
+
+137
+00:08:56,523 --> 00:08:58,312
+Bu, bölümün en önemli konusu.
+
+138
+00:08:58,632 --> 00:09:02,961
+Önce verinin hangi yönde aktığını düşünelim;
+buna veri akışı modeli diyoruz.
+
+139
+00:09:03,281 --> 00:09:06,760
+Gerçek parametreler değişken, sabit
+ya da ifade olabilir;
+
+140
+00:09:06,800 --> 00:09:11,740
+resmi parametreler ise değerleri
+tutacak bellek yerleri olduğu için değişkendir.
+
+141
+00:09:12,600 --> 00:09:16,169
+İçeri modelinde veri yalnızca
+çağırandan altprograma gider:
+
+142
+00:09:16,209 --> 00:09:18,533
+a'nın değeri çağrı anında x'e verilir.
+
+143
+00:09:19,367 --> 00:09:22,740
+Dışarı modelinde veri yalnızca
+altprogramdan çağırana gider:
+
+144
+00:09:22,780 --> 00:09:25,339
+altprogram bitince y'nin değeri b'ye yazılır.
+
+145
+00:09:26,200 --> 00:09:30,631
+İçeri-dışarı modelinde ise veri iki yönde de
+akar: c'nin değeri z'ye gider,
+
+146
+00:09:30,671 --> 00:09:33,712
+altprogram onu değiştirir ve
+sonuç c'ye geri döner.
+
+147
+00:09:34,567 --> 00:09:37,562
+Bu modelleri gerçekleştirmenin
+iki yolu vardır.
+
+148
+00:09:37,882 --> 00:09:42,096
+Değer, sonuç ve değer-sonuç ile
+çağırmada veri fiziksel olarak kopyalanır.
+
+149
+00:09:42,416 --> 00:09:46,197
+Başvuru ile çağırmada ise
+verinin kendisi değil, ona giden yol,
+
+150
+00:09:46,237 --> 00:09:47,572
+yani adresi aktarılır.
+
+151
+00:09:47,892 --> 00:09:50,423
+Şimdi bunları tek tek, örneklerle görelim.
+
+152
+00:09:51,633 --> 00:09:55,581
+Bölüm 8.2.4.1: Değer ile çağırma.
+
+153
+00:09:55,901 --> 00:10:00,266
+Bu yöntem içeri modelinin
+gerçekleştirimidir ve en yaygın yöntemdir.
+
+154
+00:10:00,586 --> 00:10:04,568
+Örneğimizde main, a'ya altı, b'ye dört
+verip Cswap'ı çağırıyor.
+
+155
+00:10:04,888 --> 00:10:07,423
+Cswap'ın amacı iki değeri takas etmek.
+
+156
+00:10:08,267 --> 00:10:12,506
+Çağrı anında Cswap için yeni bir
+bellek alanı açılır ve a'nın değeri c'ye,
+
+157
+00:10:12,546 --> 00:10:14,223
+b'nin değeri d'ye kopyalanır.
+
+158
+00:10:14,543 --> 00:10:17,793
+Artık c ve d, Cswap'a ait
+yerel değişkenlerdir.
+
+159
+00:10:18,633 --> 00:10:22,674
+Gövde çalışır: temp altı olur, c
+dört olur, d altı olur.
+
+160
+00:10:22,994 --> 00:10:26,831
+Yani takas gerçekten yapıldı, ama
+yalnızca kopyalar üzerinde.
+
+161
+00:10:27,667 --> 00:10:32,196
+main'deki a ve b'ye hiç dokunulmadı, çünkü
+Cswap onların adreslerini bilmiyor;
+
+162
+00:10:32,236 --> 00:10:34,638
+yalnızca değerlerinin bir kopyasını aldı.
+
+163
+00:10:35,500 --> 00:10:39,670
+Çağrı bitince Cswap'ın alanı silinir ve a
+hâlâ altı, b hâlâ dörttür.
+
+164
+00:10:39,990 --> 00:10:41,708
+Takas başarısız oldu.
+
+165
+00:10:42,567 --> 00:10:44,759
+Değer ile çağırmada resmi parametre,
+
+166
+00:10:44,799 --> 00:10:48,581
+gerçek parametrenin değeriyle
+başlayan yerel bir değişkendir.
+
+167
+00:10:48,901 --> 00:10:52,811
+Gerçek parametre bir sabit, değişken
+ya da ifade olabilir.
+
+168
+00:10:53,131 --> 00:10:56,560
+Veri yalnızca içeri
+aktığı için en güvenilir yöntemdir;
+
+169
+00:10:56,600 --> 00:11:00,573
+dezavantajı ise kopyalama
+için ek bellek ve zaman gerekmesidir.
+
+170
+00:11:00,893 --> 00:11:03,942
+Büyük bir diziyi değerle
+geçirmek pahalı olabilir.
+
+171
+00:11:05,167 --> 00:11:09,288
+Bölüm 8.2.4.2: Sonuç ile çağırma.
+
+172
+00:11:09,608 --> 00:11:12,419
+Bu yöntem dışarı modelinin gerçekleştirimidir.
+
+173
+00:11:12,739 --> 00:11:17,209
+Örnekteki plus altprogramında
+a ve b değerle, c ise sonuçla aktarılıyor.
+
+174
+00:11:18,067 --> 00:11:21,387
+Çağrı anında x ve y'nin değerleri
+a ve b'ye kopyalanır.
+
+175
+00:11:21,707 --> 00:11:23,922
+Ama c'ye hiçbir değer gönderilmez; c,
+
+176
+00:11:23,962 --> 00:11:28,046
+plus'ın içinde başlangıç değeri olmayan
+yerel bir değişken gibidir.
+
+177
+00:11:28,900 --> 00:11:32,196
+Gövde çalışır ve
+c, üç artı dört, yani yedi olur.
+
+178
+00:11:33,033 --> 00:11:36,723
+Altprogram biterken, denetim
+çağırana dönmeden hemen önce,
+
+179
+00:11:36,763 --> 00:11:39,721
+c'nin değeri gerçek parametre z'ye kopyalanır.
+
+180
+00:11:40,041 --> 00:11:42,560
+Böylece f, z'yi yazdırdığında yedi görür.
+
+181
+00:11:43,400 --> 00:11:47,705
+Sonuç ile çağırmada gerçek parametrenin
+bir değişken olması zorunludur,
+
+182
+00:11:47,745 --> 00:11:49,643
+çünkü değer oraya yazılacaktır.
+
+183
+00:11:49,963 --> 00:11:54,131
+Altprogram içinde resmi parametre yerel
+bir değişken gibi davranır.
+
+184
+00:11:54,967 --> 00:11:57,045
+Bu yöntemin bazı sorunları vardır.
+
+185
+00:11:57,365 --> 00:11:59,806
+Resmi parametre başlangıçta tanımsızdır;
+
+186
+00:11:59,846 --> 00:12:04,995
+Pascal benzeri bir örnekte başlatılmamış bir
+parametreyi kullanmak hataya yol açar.
+
+187
+00:12:05,315 --> 00:12:08,745
+Aynı değişken iki kez
+gerçek parametre olarak verilirse,
+
+188
+00:12:08,785 --> 00:12:11,759
+hangi kopyanın en son yazıldığı
+sonucu belirler.
+
+189
+00:12:12,079 --> 00:12:17,576
+Ayrıca dönüş adresinin çağrı anında mı yoksa dönüşte
+mi hesaplanacağı da bir tasarım kararıdır.
+
+190
+00:12:18,800 --> 00:12:23,351
+Bölüm 8.2.4.3: Değer ve sonuç ile çağırma.
+
+191
+00:12:23,671 --> 00:12:28,903
+Bu yöntem içeri-dışarı modelinin gerçekleştirimidir
+ve önceki iki yöntemin birleşimidir:
+
+192
+00:12:28,943 --> 00:12:32,297
+çağrıda değer kopyalanır, dönüşte
+sonuç geri kopyalanır.
+
+193
+00:12:32,617 --> 00:12:36,081
+Örnekte global bir x var
+ve f'ye değer-sonuç ile veriliyor.
+
+194
+00:12:36,933 --> 00:12:40,080
+Çağrıda x'in değeri olan sıfır,
+a'ya kopyalanır.
+
+195
+00:12:40,933 --> 00:12:44,383
+Gövdenin ilk satırı global x'i
+doğrudan üç yapar.
+
+196
+00:12:44,703 --> 00:12:49,323
+Dikkat: a bundan etkilenmez,
+çünkü a ayrı bir kopyadır ve hâlâ sıfırdır.
+
+197
+00:12:50,167 --> 00:12:53,034
+İkinci satır a'yı bir artırır; a bir olur.
+
+198
+00:12:53,900 --> 00:12:59,487
+Altprogram biterken a'nın değeri gerçek parametre x'e
+geri kopyalanır ve üçün üzerine yazar.
+
+199
+00:12:59,807 --> 00:13:01,548
+Sonuçta x bir olur.
+
+200
+00:13:01,868 --> 00:13:06,697
+Eğer bu parametre başvuru ile geçirilseydi, a
+ile x aynı bellek yeri olurdu:
+
+201
+00:13:06,737 --> 00:13:08,595
+x önce üç, sonra dört olurdu.
+
+202
+00:13:09,433 --> 00:13:13,775
+Değer-sonuç ile çağırma
+Ada'nın skaler in out parametrelerinde,
+
+203
+00:13:13,815 --> 00:13:16,527
+Fortran 77'de ve ALGOL W'da kullanılır.
+
+204
+00:13:16,847 --> 00:13:19,807
+Gerçek parametrenin değişken olması gerekir.
+
+205
+00:13:20,127 --> 00:13:20,813
+Dezavantajı,
+
+206
+00:13:20,853 --> 00:13:26,536
+her parametre için birden çok bellek yeri gerekmesi ve
+iki yönlü kopyalamanın zaman almasıdır.
+
+207
+00:13:27,767 --> 00:13:31,853
+Bölüm 8.2.4.4: Başvuru ile çağırma.
+
+208
+00:13:32,173 --> 00:13:36,717
+Bu yöntem de iki yönlü veri
+aktarımı sağlar, ama en önemli farkı şudur:
+
+209
+00:13:36,757 --> 00:13:40,115
+altprograma verinin
+kendisi değil, adresi aktarılır.
+
+210
+00:13:40,435 --> 00:13:44,857
+Örneğimizde a üç, b bir
+ve swap'a ikisinin adresi gönderiliyor.
+
+211
+00:13:45,700 --> 00:13:49,031
+swap'ın c parametresi a'nın
+adresi olan iki bini,
+
+212
+00:13:49,071 --> 00:13:52,097
+d ise b'nin adresi olan iki bin dördü tutar.
+
+213
+00:13:52,417 --> 00:13:55,723
+Yani c ve d, doğrudan
+main'in değişkenlerini gösterir.
+
+214
+00:13:56,567 --> 00:14:01,204
+Gövde çalışırken yıldızlı ifadeler, gösterilen
+yerdeki değerlere erişir: temp,
+
+215
+00:14:01,244 --> 00:14:06,280
+a'nın değeri olan üç olur; a'ya b'nin değeri olan
+bir yazılır; b'ye de temp yazılır.
+
+216
+00:14:07,133 --> 00:14:09,640
+Çağrı bittiğinde a bir, b üç olmuştur.
+
+217
+00:14:09,960 --> 00:14:15,138
+Bu kez takas başarılı, çünkü swap
+kopyalarla değil, asıl bellek yerleriyle çalıştı.
+
+218
+00:14:16,000 --> 00:14:19,471
+C'de başvuru ile çağırma
+işaretçilerle taklit edilir.
+
+219
+00:14:19,791 --> 00:14:23,743
+C++ ise ve işaretiyle tanımlanan
+referans parametreleri sunar:
+
+220
+00:14:23,783 --> 00:14:29,062
+kod normal değişken kullanıyormuş
+gibi görünür ama arka planda adresler aktarılır.
+
+221
+00:14:29,382 --> 00:14:32,528
+Pascal'da da var kelimesiyle
+aynı etki elde edilir.
+
+222
+00:14:33,367 --> 00:14:35,302
+En büyük avantajı verimliliktir:
+
+223
+00:14:35,342 --> 00:14:39,437
+kopyalama olmadığı için hem
+bellekten hem zamandan tasarruf edilir;
+
+224
+00:14:39,477 --> 00:14:41,205
+büyük diziler için idealdir.
+
+225
+00:14:41,525 --> 00:14:45,927
+Dezavantajları ise her erişimde
+fazladan bir dolaylı adresleme gerekmesi,
+
+226
+00:14:45,967 --> 00:14:50,673
+yalnızca değer aktarmak istediğimiz durumlarda
+gerçek parametrenin yanlışlıkla
+
+227
+00:14:50,713 --> 00:14:56,858
+değiştirilebilmesi ve aynı bellek yerine iki
+isimle erişilen takma ad durumlarının ortaya çıkmasıdır.
+
+228
+00:14:58,067 --> 00:15:03,550
+Başvuru ile çağırma ile değer-sonuç ile
+çağırma ilk bakışta aynı sonucu veriyor gibi görünür,
+
+229
+00:15:03,590 --> 00:15:05,253
+çünkü ikisi de iki yönlüdür.
+
+230
+00:15:05,573 --> 00:15:08,244
+Ama bu örnekte farklı sonuçlar verirler.
+
+231
+00:15:08,564 --> 00:15:11,798
+y global bir değişken
+ve iki; p'ye y'yi gönderiyoruz.
+
+232
+00:15:12,118 --> 00:15:15,085
+p'nin içinde hem x'i
+hem de global y'yi kullanıyoruz.
+
+233
+00:15:15,933 --> 00:15:16,933
+Çağrı anı.
+
+234
+00:15:17,013 --> 00:15:20,946
+Başvuru ile çağırmada x
+ve y aynı bellek yeridir; ikisi de iki.
+
+235
+00:15:21,266 --> 00:15:26,242
+Değer-sonuçta ise x, y'nin bir kopyasıdır: x
+iki, y iki ama ayrı yerlerde.
+
+236
+00:15:27,100 --> 00:15:29,004
+x eşittir x artı bir.
+
+237
+00:15:29,324 --> 00:15:33,062
+Başvuruda bu aynı zamanda
+y'yi değiştirir: ikisi de üç olur.
+
+238
+00:15:33,382 --> 00:15:37,298
+Değer-sonuçta yalnızca
+kopya değişir: x üç, y hâlâ iki.
+
+239
+00:15:38,133 --> 00:15:39,867
+x eşittir x artı y.
+
+240
+00:15:40,187 --> 00:15:45,330
+Başvuruda y de üç olduğu için x, üç artı üç,
+yani altı olur ve y de altıdır.
+
+241
+00:15:45,650 --> 00:15:50,457
+Değer-sonuçta ise y hâlâ iki
+olduğu için x, üç artı iki, yani beş olur.
+
+242
+00:15:51,300 --> 00:15:54,899
+Dönüşte değer-sonuç yönteminde x'in
+değeri y'ye kopyalanır.
+
+243
+00:15:55,219 --> 00:16:00,061
+Sonuç olarak başvuru ile çağırmada
+altı, değer-sonuç ile çağırmada beş yazdırılır.
+
+244
+00:16:00,900 --> 00:16:04,727
+Farkın kaynağı, x ile y'nin
+aynı bellek yeri olup olmamasıdır.
+
+245
+00:16:05,047 --> 00:16:10,200
+Başvuru ile çağırmada altprogram içindeki x ve
+global y aynı yerin iki ismidir;
+
+246
+00:16:10,240 --> 00:16:11,884
+yani bir takma ad oluşur.
+
+247
+00:16:12,204 --> 00:16:15,279
+Bu tür sorular sınavlarda çok
+sık karşınıza çıkar:
+
+248
+00:16:15,319 --> 00:16:18,185
+tabloyu adım adım doldurmak en güvenli yoldur.
+
+249
+00:16:19,400 --> 00:16:23,371
+Bölüm 8.2.4.5: İsim ile çağırma.
+
+250
+00:16:23,691 --> 00:16:26,759
+Bu da iki yönlü bir yöntemdir ama
+çok farklı çalışır:
+
+251
+00:16:26,799 --> 00:16:30,278
+altprogramın gövdesinde
+resmi parametrenin geçtiği her yere,
+
+252
+00:16:30,318 --> 00:16:32,898
+gerçek parametre metin olarak yerleştirilir.
+
+253
+00:16:33,733 --> 00:16:36,935
+Örneğimizde i bir, a dizisi sıfır, bir, iki.
+
+254
+00:16:37,255 --> 00:16:40,014
+p'yi a köşeli parantez i ve i ile çağırıyoruz.
+
+255
+00:16:40,334 --> 00:16:44,282
+İsim ile çağırmada gövdedeki her f
+yerine a köşeli parantez i,
+
+256
+00:16:44,322 --> 00:16:47,884
+her g yerine de i yazılır; ve bu
+ifadeler önceden değil,
+
+257
+00:16:47,924 --> 00:16:50,304
+kullanıldıkları anda değerlendirilir.
+
+258
+00:16:51,167 --> 00:16:55,520
+İlk satır g artı artı,
+aslında i artı artı olur: i iki olur.
+
+259
+00:16:56,367 --> 00:16:58,691
+İkinci satır f eşittir beş çarpı i,
+
+260
+00:16:58,731 --> 00:17:02,311
+aslında a köşeli parantez i
+eşittir beş çarpı i olur.
+
+261
+00:17:02,631 --> 00:17:05,812
+Ama artık i iki olduğu için a iki, on olur!
+
+262
+00:17:06,132 --> 00:17:07,889
+a köşeli parantez i ifadesi,
+
+263
+00:17:07,929 --> 00:17:11,971
+ihtiyaç duyulana kadar
+değerlendirilmedi ve bu arada i değişti.
+
+264
+00:17:12,833 --> 00:17:15,514
+Aynı programı üç yöntemle karşılaştıralım.
+
+265
+00:17:15,834 --> 00:17:20,309
+Değer ile çağırmada hiçbir
+şey değişmez: i bir, dizi sıfır, bir, iki.
+
+266
+00:17:20,629 --> 00:17:25,591
+Başvuru ile çağırmada f, çağrı anındaki a
+bir'i gösterir: i iki olur ve a bir,
+
+267
+00:17:25,631 --> 00:17:27,427
+beş çarpı iki, yani on olur.
+
+268
+00:17:27,747 --> 00:17:31,248
+İsim ile çağırmada ise i iki olur ve
+on, a iki'ye yazılır.
+
+269
+00:17:32,100 --> 00:17:34,917
+İsim ile çağırma ALGOL 60 ile tanıtıldı.
+
+270
+00:17:35,237 --> 00:17:37,596
+Gerçek parametre bir sabitse değer ile,
+
+271
+00:17:37,636 --> 00:17:41,019
+basit bir değişkense
+başvuru ile çağırma gibi davranır.
+
+272
+00:17:41,339 --> 00:17:46,452
+Ancak gerçekleştirmesi zordur ve programları
+okumayı da yazmayı da karmaşıklaştırır;
+
+273
+00:17:46,492 --> 00:17:49,252
+bu yüzden bugün popüler dillerde kullanılmaz.
+
+274
+00:17:49,572 --> 00:17:52,146
+Yine de Haskell'deki tembel değerlendirme,
+
+275
+00:17:52,186 --> 00:17:55,444
+yani bir ifadenin yalnızca
+gerektiğinde hesaplanması,
+
+276
+00:17:55,484 --> 00:17:57,476
+bu fikrin yakın bir akrabasıdır.
+
+277
+00:17:58,700 --> 00:18:03,983
+Bölüm 8.2.4.6: Çağırma
+yöntemlerinin karşılaştırılması.
+
+278
+00:18:04,833 --> 00:18:08,476
+Tabloda dillerin hangi
+yöntemleri kullandığını görüyorsunuz.
+
+279
+00:18:08,796 --> 00:18:12,720
+FORTRAN dört başvuru,
+Fortran 77 değer-sonuç kullanır.
+
+280
+00:18:13,040 --> 00:18:17,481
+ALGOL 60 isim ile çağırmayı
+tanıttı, değer ile çağırma isteğe bağlıydı.
+
+281
+00:18:17,801 --> 00:18:22,062
+Pascal ve Modula-2 varsayılan
+olarak değer, var ile başvuru kullanır.
+
+282
+00:18:22,382 --> 00:18:26,933
+C yalnızca değer ile çağırır;
+başvuru etkisi işaretçilerle sağlanır.
+
+283
+00:18:27,253 --> 00:18:30,515
+C++ ayrıca referans parametreleri sunar.
+
+284
+00:18:30,835 --> 00:18:32,867
+Ada üç modeli de destekler.
+
+285
+00:18:33,187 --> 00:18:35,445
+Java'da ilkel tipler değerle aktarılır;
+
+286
+00:18:35,485 --> 00:18:38,313
+nesneler ise referansları
+aracılığıyla erişilir.
+
+287
+00:18:39,167 --> 00:18:41,150
+Genel bir değerlendirme yaparsak:
+
+288
+00:18:41,190 --> 00:18:44,707
+değer ile çağırma güvenlidir ama
+çoğu durumda yetersizdir,
+
+289
+00:18:44,747 --> 00:18:47,567
+çünkü altprogramdan çağırana sonuç döndüremez.
+
+290
+00:18:48,433 --> 00:18:53,546
+Değer-sonuç ve başvuru ile çağırma
+ise gereklidir, ama aynı ölçüde güvenli değildir;
+
+291
+00:18:53,586 --> 00:18:56,163
+yan etkilere ve takma adlara kapı açarlar.
+
+292
+00:18:57,000 --> 00:19:01,200
+Ada'nın yaklaşımı dikkat çekicidir:
+programcı her parametre için in,
+
+293
+00:19:01,240 --> 00:19:05,169
+out ya da in out yazarak
+veri akışı modelini doğrudan belirtir.
+
+294
+00:19:05,489 --> 00:19:08,028
+Böylece niyet açıkça görülür ve derleyici,
+
+295
+00:19:08,068 --> 00:19:11,508
+örneğin bir in parametresine
+yazılmasını engelleyebilir.
+
+296
+00:19:12,733 --> 00:19:14,742
+Bir alıştırmayla pekiştirelim.
+
+297
+00:19:15,062 --> 00:19:20,220
+Bu Pascal programı üç değer yazdırıyor: A'nın
+içinde önce x'i, sonra y artı x'i;
+
+298
+00:19:20,260 --> 00:19:21,950
+A döndükten sonra da y'yi.
+
+299
+00:19:22,270 --> 00:19:23,948
+y beş ve A'ya y veriliyor.
+
+300
+00:19:24,268 --> 00:19:26,486
+Her yöntem için çıktıyı birlikte bulalım.
+
+301
+00:19:27,333 --> 00:19:30,880
+Değer ile çağırma: x,
+y'nin kopyasıdır; önce beş yazılır.
+
+302
+00:19:31,200 --> 00:19:36,570
+x bir yapılır ama bu yalnızca kopyayı
+değiştirir; y artı x, beş artı bir, altı.
+
+303
+00:19:36,890 --> 00:19:38,736
+A bitince y hâlâ beştir.
+
+304
+00:19:39,056 --> 00:19:40,714
+Çıktı: beş, altı, beş.
+
+305
+00:19:41,567 --> 00:19:46,211
+Başvuru ile çağırma, yani Pascal'da var
+parametresi: x ile y aynı yerdir.
+
+306
+00:19:46,531 --> 00:19:47,755
+Önce beş yazılır.
+
+307
+00:19:48,075 --> 00:19:51,953
+x bir yapılınca y de bir
+olur; y artı x, bir artı bir, iki.
+
+308
+00:19:52,273 --> 00:19:53,515
+Sonunda y bir.
+
+309
+00:19:53,835 --> 00:19:55,465
+Çıktı: beş, iki, bir.
+
+310
+00:19:56,300 --> 00:20:00,451
+Değer-sonuç ile çağırma:
+x, y'nin kopyasıyla başlar; beş yazılır.
+
+311
+00:20:00,771 --> 00:20:03,911
+x bir olur ama y hâlâ beş; y artı x altı.
+
+312
+00:20:04,231 --> 00:20:07,285
+Dönüşte x'in değeri
+y'ye kopyalanır ve y bir olur.
+
+313
+00:20:07,605 --> 00:20:09,390
+Çıktı: beş, altı, bir.
+
+314
+00:20:10,233 --> 00:20:13,554
+Sonuç ile çağırma:
+x'e başlangıçta değer gönderilmez,
+
+315
+00:20:13,594 --> 00:20:16,131
+bu yüzden ilk yazılan değer tanımsızdır.
+
+316
+00:20:16,451 --> 00:20:19,289
+x bir olur; y hâlâ beş, y artı x altı.
+
+317
+00:20:19,609 --> 00:20:21,130
+Dönüşte y bir olur.
+
+318
+00:20:21,450 --> 00:20:23,598
+Çıktı: tanımsız, altı, bir.
+
+319
+00:20:23,918 --> 00:20:26,810
+Bu tür sorularda her
+adımda hangi değişkenin kopya,
+
+320
+00:20:26,850 --> 00:20:29,552
+hangisinin aynı
+yer olduğunu sormak yeterlidir.
+
+321
+00:20:30,767 --> 00:20:34,586
+Bölüm 8.2.5: C'de parametre aktarımı.
+
+322
+00:20:34,906 --> 00:20:38,698
+Önce C'nin yapısını hatırlayalım: bir C
+programı fonksiyonlardan,
+
+323
+00:20:38,738 --> 00:20:40,762
+tiplerden ve değişkenlerden oluşur;
+
+324
+00:20:40,802 --> 00:20:44,103
+bir fonksiyon başka bir fonksiyonun
+içinde tanımlanamaz.
+
+325
+00:20:44,967 --> 00:20:48,577
+C'de fonksiyonlara yalnızca değer
+ile çağırma uygulanır.
+
+326
+00:20:48,897 --> 00:20:52,510
+Çağıranın bir değişkenini
+değiştirmek istiyorsak, onun adresini,
+
+327
+00:20:52,550 --> 00:20:56,488
+yani işaretçisini değerle göndeririz;
+swap örneğinde gördüğümüz gibi.
+
+328
+00:20:56,808 --> 00:20:59,839
+Böylece başvuru ile
+çağırma taklit edilmiş olur.
+
+329
+00:21:00,700 --> 00:21:04,949
+Çok boyutlu dizileri parametre
+olarak geçirirken ilginç bir kısıt var.
+
+330
+00:21:05,269 --> 00:21:09,672
+Üç boyutlu bir diziyi alan fonksiyonda
+boyutların hiçbirini ya da yalnızca
+
+331
+00:21:09,712 --> 00:21:12,234
+sonuncusunu yazarsak derleyici hata verir.
+
+332
+00:21:13,100 --> 00:21:17,314
+Ancak ilk boyut dışındaki
+bütün boyutları yazdığımızda kabul eder.
+
+333
+00:21:17,634 --> 00:21:21,095
+Nedeni, önceki bölümde gördüğümüz
+erişim fonksiyonudur:
+
+334
+00:21:21,135 --> 00:21:26,378
+derleyicinin a üç dört beş elemanının adresini
+hesaplayabilmesi için her satırın ve
+
+335
+00:21:26,418 --> 00:21:29,664
+her düzlemin kaç eleman
+içerdiğini bilmesi gerekir.
+
+336
+00:21:30,500 --> 00:21:31,806
+Bunun esnek bir çözümü,
+
+337
+00:21:31,846 --> 00:21:36,311
+diziyi bir işaretçi olarak ve boyutlarını
+ayrı parametreler olarak göndermek,
+
+338
+00:21:36,351 --> 00:21:38,048
+adresi de elle hesaplamaktır.
+
+339
+00:21:38,900 --> 00:21:41,164
+Diğer diller bu sorunu farklı çözer.
+
+340
+00:21:41,484 --> 00:21:45,500
+Pascal'da dizinin boyutu tipin
+parçasıdır, bu yüzden sorun yoktur.
+
+341
+00:21:45,820 --> 00:21:49,384
+Ada, Java ve C#'ta boyutlar dizi
+nesnesinin parçasıdır;
+
+342
+00:21:49,424 --> 00:21:51,979
+örneğin Java'da length ile sorulabilir.
+
+343
+00:21:52,299 --> 00:21:57,702
+1990 öncesi Fortran'da ise boyutlar da ayrı
+parametreler olarak geçirilir.
+
+344
+00:21:58,567 --> 00:22:02,828
+Pascal'da ise C'den farklı
+olarak yordamlar iç içe tanımlanabilir.
+
+345
+00:22:03,148 --> 00:22:07,636
+Dıştaki programda tanımlı bir
+değişken içteki bütün yordamlarda görünür;
+
+346
+00:22:07,676 --> 00:22:10,947
+içte tanımlanan bir
+değişken ise dışarıdan görünmez.
+
+347
+00:22:11,267 --> 00:22:14,157
+Bu, beşinci bölümde gördüğümüz
+statik kapsamdır.
+
+348
+00:22:15,367 --> 00:22:20,754
+Bazı diller bir altprogramı başka bir
+altprograma parametre olarak geçirmeye izin verir.
+
+349
+00:22:21,074 --> 00:22:23,397
+Bu durumda iki yeni soru ortaya çıkar.
+
+350
+00:22:24,233 --> 00:22:27,024
+C'de bunu fonksiyon işaretçileriyle yaparız.
+
+351
+00:22:27,344 --> 00:22:32,162
+Execute fonksiyonu bir sayı ve bir
+fonksiyon alır ve o fonksiyonu sayıya uygular.
+
+352
+00:22:32,482 --> 00:22:36,987
+Execute üç, Plus altı;
+Execute üç, Square ise dokuz döndürür.
+
+353
+00:22:37,833 --> 00:22:38,588
+Birinci soru:
+
+354
+00:22:38,628 --> 00:22:43,151
+parametre olarak geçen altprogramın
+parametre tipleri kontrol edilecek mi?
+
+355
+00:22:43,471 --> 00:22:46,610
+Erken Pascal ve FORTRAN 77 kontrol etmezdi;
+
+356
+00:22:46,650 --> 00:22:49,903
+sonraki Pascal sürümleri ve FORTRAN 90 eder.
+
+357
+00:22:50,223 --> 00:22:54,716
+C ve C++'ta fonksiyon işaretçilerinin
+tipi kontrol edilebilir.
+
+358
+00:22:55,036 --> 00:23:00,316
+Ada ve Java ise altprogramların doğrudan
+parametre olarak geçirilmesine izin vermez.
+
+359
+00:23:01,167 --> 00:23:02,589
+İkinci soru daha ilginç:
+
+360
+00:23:02,629 --> 00:23:07,685
+parametre olarak geçen altprogram
+çalıştığında hangi referans çevresini kullanacak?
+
+361
+00:23:08,005 --> 00:23:13,635
+Bu JavaScript örneğinde sub1
+içinde üç farklı x var: sub1'in x'i bir,
+
+362
+00:23:13,675 --> 00:23:16,387
+sub3'ün x'i üç, sub4'ün x'i dört.
+
+363
+00:23:16,707 --> 00:23:21,966
+sub3, sub2'yi sub4'e parametre
+olarak veriyor ve sub4 onu çağırıyor.
+
+364
+00:23:22,286 --> 00:23:24,386
+sub2 hangi x'i yazdıracak?
+
+365
+00:23:25,233 --> 00:23:30,095
+Yüzeysel bağlamada, altprogramı
+çalıştıran çağrı deyiminin çevresi kullanılır;
+
+366
+00:23:30,135 --> 00:23:32,397
+yani sub4'ün çevresi ve x dört olur.
+
+367
+00:23:32,717 --> 00:23:36,270
+Dinamik kapsamlı diller için en
+doğal seçenek budur.
+
+368
+00:23:37,133 --> 00:23:42,716
+Derin bağlamada, geçirilen altprogramın
+tanımlandığı yerin çevresi kullanılır; sub2,
+
+369
+00:23:42,756 --> 00:23:45,701
+sub1'in içinde tanımlandığı için x bir olur.
+
+370
+00:23:46,021 --> 00:23:50,679
+Statik kapsamlı diller için,
+JavaScript dahil, en doğal seçenek budur.
+
+371
+00:23:51,533 --> 00:23:55,986
+Özel bağlamada ise altprogramı parametre
+olarak veren çağrının çevresi,
+
+372
+00:23:56,026 --> 00:23:58,494
+yani sub3'ünki kullanılır ve x üç olur.
+
+373
+00:23:58,814 --> 00:24:02,077
+Bu seçenek pratikte hiçbir dilde
+kullanılmamıştır.
+
+374
+00:24:03,300 --> 00:24:08,826
+Bölüm 8.3 ve 8.4: Aşırı yüklenmiş ve
+jenerik altprogramlar.
+
+375
+00:24:09,667 --> 00:24:11,186
+Aynı referans çevresinde,
+
+376
+00:24:11,226 --> 00:24:16,842
+aynı isme sahip başka bir altprogram bulunan
+altprograma aşırı yüklenmiş altprogram denir.
+
+377
+00:24:17,162 --> 00:24:17,837
+C++, Java,
+
+378
+00:24:17,877 --> 00:24:25,892
+C# ve Ada hem hazır aşırı yüklenmiş altprogramlar
+sunar hem de programcının kendisininkini yazmasına izin verir.
+
+379
+00:24:26,212 --> 00:24:31,289
+Hangisinin çağrılacağına parametrelerin sayısı ve
+tiplerine bakılarak karar verilir:
+
+380
+00:24:31,329 --> 00:24:36,324
+topla iki ve üç, int sürümünü; topla iki buçuk
+ve bir ise double sürümünü çağırır.
+
+381
+00:24:37,167 --> 00:24:40,040
+Ada'da dönüş tipi de seçimde rol oynayabilir.
+
+382
+00:24:40,360 --> 00:24:43,538
+Ada karışık tipli
+ifadelere izin vermediği için,
+
+383
+00:24:43,578 --> 00:24:49,613
+A integer ise A eşittir B artı Fun yedi
+ifadesinde derleyici integer döndüren Fun'ı seçer.
+
+384
+00:24:50,467 --> 00:24:56,176
+Jenerik altprogram ise farklı çağrılarda farklı tiplerde
+parametre alabilen tek bir altprogramdır;
+
+385
+00:24:56,216 --> 00:24:58,386
+buna parametrik çok biçimlilik denir.
+
+386
+00:24:58,706 --> 00:25:02,404
+Motivasyon basittir: bir
+sıralama algoritmasını tam sayılar,
+
+387
+00:25:02,444 --> 00:25:05,621
+gerçel sayılar ve
+dizgiler için ayrı ayrı yazmamak.
+
+388
+00:25:06,467 --> 00:25:11,785
+Ada'da generic anahtar kelimesiyle eleman
+tipi parametre olan bir sıralama yordamı yazılır.
+
+389
+00:25:12,105 --> 00:25:15,997
+Bu tanım için kod üretilmez; ancak new
+ile örneklendirildiğinde,
+
+390
+00:25:16,037 --> 00:25:18,271
+örneğin Integer_Sort tanımlandığında,
+
+391
+00:25:18,311 --> 00:25:21,383
+derleyici tam sayıları sıralayan
+bir sürüm üretir.
+
+392
+00:25:21,703 --> 00:25:25,674
+Java ve C#'ta açılı ayraç
+içindeki T ile jenerik metotlar yazılır;
+
+393
+00:25:25,714 --> 00:25:28,327
+extends Comparable gibi sınırlar konabilir.
+
+394
+00:25:29,167 --> 00:25:33,427
+Ada ve C++'ta derleyici her tip için
+ayrı bir kopya üretir.
+
+395
+00:25:33,747 --> 00:25:37,643
+Java 5.0 ve C# 2005
+de jenerik metotları destekler;
+
+396
+00:25:37,683 --> 00:25:42,005
+Java ayrıca soru işaretiyle yazılan
+joker tipleri sunar.
+
+397
+00:25:42,325 --> 00:25:46,675
+F# ise tipi belirlenemeyen
+parametreleri kesme işaretiyle yazılan tip
+
+398
+00:25:46,715 --> 00:25:49,641
+değişkenleriyle otomatik olarak genelleştirir.
+
+399
+00:25:50,867 --> 00:25:53,773
+Fonksiyonlarla ilgili
+iki tasarım sorusu daha var:
+
+400
+00:25:53,813 --> 00:25:57,937
+hangi tipte değerler döndürülebilir ve yan
+etkilere izin verilecek mi?
+
+401
+00:25:58,800 --> 00:26:00,379
+Dönüş tiplerine bakalım.
+
+402
+00:26:00,699 --> 00:26:04,101
+FORTRAN ve Pascal
+yalnızca basit tipler döndürür.
+
+403
+00:26:04,421 --> 00:26:07,869
+C, diziler ve fonksiyonlar hariç
+her tipi döndürebilir;
+
+404
+00:26:07,909 --> 00:26:10,002
+onlar işaretçi olarak döndürülür.
+
+405
+00:26:10,322 --> 00:26:14,200
+C++ buna kullanıcı tanımlı tipleri
+ve sınıfları ekler.
+
+406
+00:26:15,067 --> 00:26:16,703
+Ada her tipi döndürebilir;
+
+407
+00:26:16,743 --> 00:26:21,707
+altprogramlar tip olmadığı için
+döndürülemez ama işaretçileri döndürülebilir.
+
+408
+00:26:22,027 --> 00:26:27,343
+Java ve C#'ta fonksiyon değil metot vardır ve
+her tip ile sınıf döndürülebilir.
+
+409
+00:26:27,663 --> 00:26:32,846
+JavaScript'te ve birçok fonksiyonel dilde
+ise fonksiyonlar sıradan veri nesneleri gibidir:
+
+410
+00:26:32,886 --> 00:26:36,484
+parametre olarak geçirilebilir ve
+değer olarak döndürülebilir.
+
+411
+00:26:36,804 --> 00:26:39,812
+Bu, birazdan göreceğimiz
+kapatmaların temelidir.
+
+412
+00:26:40,667 --> 00:26:41,932
+Yan etkiler konusunda:
+
+413
+00:26:41,972 --> 00:26:47,092
+eğer iki yönlü parametrelere ya da yerel olmayan
+değişkenlere erişime izin veriliyorsa,
+
+414
+00:26:47,132 --> 00:26:49,624
+fonksiyonların yan etkileri kaçınılmazdır.
+
+415
+00:26:49,944 --> 00:26:54,048
+Ada bu yüzden fonksiyonlarda iki yönlü
+parametrelere izin vermez.
+
+416
+00:26:54,900 --> 00:26:59,101
+Bölüm 8.5: Kullanıcı tanımlı aşırı
+yüklenmiş işleçler.
+
+417
+00:26:59,421 --> 00:27:02,260
+İşleçler zaten bütün dillerde aşırı yüklüdür;
+
+418
+00:27:02,300 --> 00:27:05,946
+örneğin artı hem tam
+sayıları hem gerçel sayıları toplar.
+
+419
+00:27:06,266 --> 00:27:10,748
+C++ ve Ada'da programcı kendi tipleri
+için de işleç tanımlayabilir:
+
+420
+00:27:10,788 --> 00:27:13,150
+iki vektörü artı ile toplamak gibi.
+
+421
+00:27:13,470 --> 00:27:17,350
+Okunabilirliği artırabilir,
+ama anlamsız kullanılırsa azaltır.
+
+422
+00:27:17,670 --> 00:27:19,551
+Bu özellik Java'ya taşınmadı.
+
+423
+00:27:20,767 --> 00:27:23,065
+Bölüm 8.6: Kapatmalar.
+
+424
+00:27:23,385 --> 00:27:28,265
+Fonksiyonların değer olarak döndürülebildiği
+dillerde ilginç bir durum ortaya çıkar.
+
+425
+00:27:29,100 --> 00:27:33,716
+makeAdder fonksiyonu bir x alır
+ve geriye isimsiz yeni bir fonksiyon döndürür;
+
+426
+00:27:33,756 --> 00:27:36,801
+bu yeni fonksiyon
+kendisine verilen y'ye x'i ekler.
+
+427
+00:27:37,667 --> 00:27:42,624
+makeAdder on ile çağrıldığında
+add10, beş ile çağrıldığında add5 elde edilir.
+
+428
+00:27:42,944 --> 00:27:45,519
+Dikkat edin: makeAdder'ın çalışması bitti,
+
+429
+00:27:45,559 --> 00:27:49,233
+normalde yerel değişkeni
+x'in yığıttan silinmesi gerekirdi.
+
+430
+00:27:49,553 --> 00:27:54,069
+Ama dönen fonksiyonlar x'i hâlâ kullanıyor;
+her biri kendi x'ini taşıyor.
+
+431
+00:27:54,933 --> 00:27:58,289
+add10 yirmi otuz,
+add5 yirmi ise yirmi beş verir.
+
+432
+00:27:59,133 --> 00:28:00,225
+İşte kapatma budur:
+
+433
+00:28:00,265 --> 00:28:04,792
+bir altprogram ile onun tanımlandığı referans
+çevresinin birlikte tutulması.
+
+434
+00:28:05,112 --> 00:28:09,694
+Kapatmaya yalnızca altprogram iç
+içe kapsamdaki değişkenlere erişebiliyorsa ve
+
+435
+00:28:09,734 --> 00:28:13,587
+programın herhangi bir yerinden
+çağrılabiliyorsa ihtiyaç duyulur.
+
+436
+00:28:13,907 --> 00:28:16,597
+Bunu desteklemek için bazı değişkenlerin ömrü,
+
+437
+00:28:16,637 --> 00:28:20,099
+onları tanımlayan altprogram
+bittikten sonra da sürmelidir;
+
+438
+00:28:20,139 --> 00:28:22,928
+yani yığıtta değil
+heap'te tutulmaları gerekir.
+
+439
+00:28:23,767 --> 00:28:26,381
+Kapatmalar özel bir durum da saklayabilir.
+
+440
+00:28:26,701 --> 00:28:29,233
+mk_counter bir sayaç fonksiyonu döndürür;
+
+441
+00:28:29,273 --> 00:28:32,912
+count yalnızca bu fonksiyonun
+görebildiği bir değişkendir.
+
+442
+00:28:33,232 --> 00:28:38,201
+c iki ilk çağrıda count'u üçe, ikinci çağrıda
+beşe çıkarır; toplam sekiz olur.
+
+443
+00:28:38,521 --> 00:28:41,534
+C#'ta da aynı fikir
+delegate'lerle yazılabilir;
+
+444
+00:28:41,574 --> 00:28:45,406
+ML ve diğer fonksiyonel dillerde ise
+bu yapı çok yaygındır.
+
+445
+00:28:46,633 --> 00:28:49,414
+Bölüm 8.7: Etkinlik kayıtları.
+
+446
+00:28:49,734 --> 00:28:53,544
+Bir altprogramın yerel değişkenleri ve
+parametreleri için bellek,
+
+447
+00:28:53,584 --> 00:28:55,539
+altprogram çağrıldığında ayrılır.
+
+448
+00:28:55,859 --> 00:28:58,039
+ALGOL 60 ve sonraki dillerde bu iş,
+
+449
+00:28:58,079 --> 00:29:01,250
+çalışma zamanı belleğinin yığıt
+bölümünde yapılır.
+
+450
+00:29:01,570 --> 00:29:04,613
+Yığıt en son giren
+ilk çıkar mantığıyla çalışır;
+
+451
+00:29:04,653 --> 00:29:08,762
+altprogramlar da tam böyle davranır: en
+son çağrılan, ilk biter.
+
+452
+00:29:09,600 --> 00:29:13,605
+Her etkin altprogram için
+yığıtta bir etkinlik kaydı oluşturulur.
+
+453
+00:29:13,925 --> 00:29:17,383
+Bu kayıtta altprogramın
+yerel değişkenleri, parametreleri,
+
+454
+00:29:17,423 --> 00:29:21,906
+çağıranın kaydını gösteren dinamik bağ ve
+altprogram bitince dönülecek yer,
+
+455
+00:29:21,946 --> 00:29:23,514
+yani dönüş adresi bulunur.
+
+456
+00:29:24,367 --> 00:29:29,170
+Bir çağrı gerçekleştiğinde sırasıyla
+şunlar olur: çağıran birimin durumu saklanır,
+
+457
+00:29:29,210 --> 00:29:32,596
+parametreler hesaplanıp
+aktarılır, dönüş adresi aktarılır,
+
+458
+00:29:32,636 --> 00:29:37,833
+denetim altprograma verilir ve altprogramın yerel
+değişkenleri için yığıtta yer ayrılır.
+
+459
+00:29:38,667 --> 00:29:40,143
+Altprogram bittiğinde ise:
+
+460
+00:29:40,183 --> 00:29:44,985
+dışarı ya da içeri-dışarı parametrelerin
+değerleri gerçek parametrelere kopyalanır,
+
+461
+00:29:45,025 --> 00:29:49,768
+fonksiyonsa dönüş değeri hazırlanır,
+yığıt işaretçisi geri alınarak kayıt silinir,
+
+462
+00:29:49,808 --> 00:29:53,133
+çağıranın durumu geri
+yüklenir ve dönüş adresine atlanır.
+
+463
+00:29:54,333 --> 00:29:58,722
+Bölüm 8.8: Özyinelemeli
+bir altprogramın çoklu çağrımı.
+
+464
+00:29:59,042 --> 00:30:04,353
+Kendi deyimleri içinden yeniden çağrılabilen
+altprograma özyinelemeli altprogram denir.
+
+465
+00:30:04,673 --> 00:30:07,756
+Faktöriyel bunun
+klasik örneğidir: n faktöriyel,
+
+466
+00:30:07,796 --> 00:30:11,570
+n çarpı n eksi bir faktöriyeldir ve
+bir faktöriyel birdir.
+
+467
+00:30:11,890 --> 00:30:13,655
+main, fakt üçü çağırıyor.
+
+468
+00:30:14,500 --> 00:30:18,134
+fakt üç için bir etkinlik kaydı
+oluşturulur; n üç.
+
+469
+00:30:18,454 --> 00:30:22,808
+Sonucu hesaplamak için fakt
+ikiyi çağırması gerekir ve kendisi bekler.
+
+470
+00:30:23,667 --> 00:30:27,933
+fakt iki için yığıtta yeni,
+ayrı bir kayıt açılır; bu kaydın n'i iki.
+
+471
+00:30:28,253 --> 00:30:29,652
+O da fakt biri çağırır.
+
+472
+00:30:30,500 --> 00:30:33,008
+fakt bir için üçüncü bir kayıt açılır.
+
+473
+00:30:33,328 --> 00:30:37,356
+n bir olduğu için özyineleme burada
+durur ve bir döndürülür.
+
+474
+00:30:38,200 --> 00:30:41,364
+fakt birin kaydı silinir; fakt
+iki, iki çarpı bir,
+
+475
+00:30:41,404 --> 00:30:44,159
+yani iki döndürür ve onun kaydı da silinir.
+
+476
+00:30:45,000 --> 00:30:49,544
+fakt üç, üç çarpı iki, yani
+altı döndürür; main'deki x altı olur.
+
+477
+00:30:49,864 --> 00:30:55,704
+Gördüğünüz gibi aynı fonksiyonun aynı anda
+üç etkin kopyası vardı ve her birinin kendi n'i vardı.
+
+478
+00:30:56,024 --> 00:30:58,648
+Bu yüzden özyinelemeyi destekleyen bir dil,
+
+479
+00:30:58,688 --> 00:31:01,806
+yerel değişkenleri yığıt-dinamik
+tutmak zorundadır;
+
+480
+00:31:01,846 --> 00:31:04,634
+statik yerel değişkenlerle bu mümkün olmazdı.
+
+481
+00:31:05,500 --> 00:31:08,774
+Aynı fonksiyon farklı
+paradigmalarda farklı görünür.
+
+482
+00:31:09,094 --> 00:31:12,567
+LISP ve Scheme'de döngülerin yerini
+zaten özyineleme alır;
+
+483
+00:31:12,607 --> 00:31:15,514
+Prolog'da ise faktöriyel iki
+kuralla tanımlanır.
+
+484
+00:31:15,834 --> 00:31:20,409
+Mantık hep aynıdır: bir durma koşulu
+ve problemi küçülterek kendini çağırma.
+
+485
+00:31:21,633 --> 00:31:25,035
+Bölüm 8.9: Parametrelerin tip kontrolü.
+
+486
+00:31:25,355 --> 00:31:27,391
+Güvenilirlik için çok önemlidir.
+
+487
+00:31:27,711 --> 00:31:30,369
+FORTRAN 77 ve ilk C bunu yapmazdı.
+
+488
+00:31:30,689 --> 00:31:34,404
+Pascal, FORTRAN 90, Java ve Ada
+her zaman yapar.
+
+489
+00:31:34,724 --> 00:31:39,494
+ANSI C ve C++'ta prototipler aracılığıyla
+programcıya bırakılmıştır.
+
+490
+00:31:39,814 --> 00:31:43,162
+Perl, JavaScript
+ve PHP tip kontrolü gerektirmez.
+
+491
+00:31:43,482 --> 00:31:48,378
+Python ve Ruby'de ise değişkenlerin
+değil nesnelerin tipi olduğu için parametre tip
+
+492
+00:31:48,418 --> 00:31:50,261
+kontrolü zaten mümkün değildir.
+
+493
+00:31:51,100 --> 00:31:53,701
+Bölüm 8.10: Eşyordamlar.
+
+494
+00:31:54,021 --> 00:31:58,680
+Şimdiye kadar gördüğümüz altprogramların tek
+bir giriş noktası vardı ve çağıran,
+
+495
+00:31:58,720 --> 00:32:00,776
+çağrılan üzerinde üstün durumdaydı.
+
+496
+00:32:01,096 --> 00:32:03,608
+Eşyordam ise birden çok giriş noktası olan,
+
+497
+00:32:03,648 --> 00:32:08,515
+kaldığı yeri hatırlayan ve onu çağıranla eşit
+yetkiye sahip bir program birimidir.
+
+498
+00:32:08,835 --> 00:32:12,476
+Bu yüzden buna simetrik
+denetim denir ve çağırma yerine resume,
+
+499
+00:32:12,516 --> 00:32:14,268
+yani sürdür işlemi kullanılır.
+
+500
+00:32:14,588 --> 00:32:20,372
+Eşyordamları kullanan ilk dil, sistem
+benzetimleri için geliştirilen SIMULA 67'dir.
+
+501
+00:32:21,233 --> 00:32:23,010
+Nasıl çalıştığına bakalım.
+
+502
+00:32:23,330 --> 00:32:25,303
+Ana program A'yı başlatır.
+
+503
+00:32:25,623 --> 00:32:28,410
+A bir süre çalışır, sonra resume B der.
+
+504
+00:32:28,730 --> 00:32:31,981
+B baştan başlar, bir
+süre çalışır ve resume A der.
+
+505
+00:32:32,833 --> 00:32:36,328
+Ama A bu kez baştan
+değil, kaldığı yerden devam eder.
+
+506
+00:32:36,648 --> 00:32:40,305
+Sonra tekrar B'ye geçer
+ve B de kaldığı yerden devam eder.
+
+507
+00:32:40,625 --> 00:32:44,053
+Eşyordama ilk giriş
+başından olur; sonraki her giriş,
+
+508
+00:32:44,093 --> 00:32:46,384
+en son bırakılan yerden devam eder.
+
+509
+00:32:46,704 --> 00:32:50,221
+Tipik olarak eşyordamlar birbirini
+defalarca sürdürür.
+
+510
+00:32:51,067 --> 00:32:54,494
+Eşyordamlar tek işlemcili bir
+makinede bile yarı koşut,
+
+511
+00:32:54,534 --> 00:32:57,812
+yani aynı anda çalışıyormuş gibi
+bir yürütme sağlar.
+
+512
+00:32:58,132 --> 00:33:04,018
+Python'daki yield ile yazılan üreteçler ve
+bugünkü async yapıları bu fikrin modern torunlarıdır.
+
+513
+00:33:05,233 --> 00:33:06,385
+Toparlayalım.
+
+514
+00:33:07,233 --> 00:33:09,915
+Altprogramlar işlev soyutlaması sağlar.
+
+515
+00:33:10,235 --> 00:33:13,670
+Başlık, arayüzü tanımlar; parametre
+profili ve protokol,
+
+516
+00:33:13,710 --> 00:33:16,316
+altprogramın nasıl çağrılacağını belirler.
+
+517
+00:33:16,636 --> 00:33:20,990
+Başlıktaki parametreler resmi,
+çağrıdakiler gerçek parametrelerdir.
+
+518
+00:33:21,310 --> 00:33:24,700
+Yordamlar değer döndürmez,
+fonksiyonlar döndürür.
+
+519
+00:33:25,567 --> 00:33:28,734
+Parametre aktarımında
+değer ile çağırma kopya gönderir;
+
+520
+00:33:28,774 --> 00:33:32,700
+sonuç ile çağırma dönüşte kopyalar;
+değer-sonuç ikisini birleştirir;
+
+521
+00:33:32,740 --> 00:33:37,173
+başvuru ile çağırma adres gönderir; isim ile
+çağırma ise metni yerine koyar.
+
+522
+00:33:37,493 --> 00:33:41,385
+Takma ad oluştuğunda başvuru
+ve değer-sonuç farklı sonuç verir.
+
+523
+00:33:42,233 --> 00:33:48,348
+Altprogramlar parametre olarak geçirildiğinde
+referans çevresi derin ya da yüzeysel bağlamayla belirlenir.
+
+524
+00:33:48,668 --> 00:33:51,405
+Aşırı yükleme aynı isme farklı altprogramlar,
+
+525
+00:33:51,445 --> 00:33:54,345
+jenerikler tek altprograma
+farklı tipler sunar.
+
+526
+00:33:54,665 --> 00:33:58,407
+Kapatmalar bir fonksiyonu tanımlandığı
+çevreyle birlikte taşır.
+
+527
+00:33:59,267 --> 00:34:03,311
+Çalışma zamanında her çağrı için yığıtta
+bir etkinlik kaydı açılır;
+
+528
+00:34:03,351 --> 00:34:06,094
+özyinelemede her çağrının kendi kaydı vardır.
+
+529
+00:34:06,414 --> 00:34:10,616
+Eşyordamlar ise birbirini
+resume ile, kaldıkları yerden sürdürür.
+
+530
+00:34:11,833 --> 00:34:13,960
+Şimdi kısa bir mini test yapalım.
+
+531
+00:34:14,280 --> 00:34:17,740
+Her sorudan sonra birkaç saniye
+düşünme süreniz var.
+
+532
+00:34:18,600 --> 00:34:19,577
+Soru 1.
+
+533
+00:34:19,617 --> 00:34:23,283
+Resmi parametre ile gerçek parametre
+arasındaki fark nedir?
+
+534
+00:34:27,633 --> 00:34:31,690
+Cevap: Resmi parametre altprogramın
+başlığında yazılan parametredir;
+
+535
+00:34:31,730 --> 00:34:35,586
+gerçek parametre ise çağrıda gönderilen
+değer ya da değişkendir.
+
+536
+00:34:36,433 --> 00:34:37,433
+Soru 2.
+
+537
+00:34:37,493 --> 00:34:42,555
+a altı, b dört iken değer ile çağrılan Cswap
+a, b bittiğinde a ve b kaç olur?
+
+538
+00:34:46,900 --> 00:34:48,595
+Cevap: a altı, b dört.
+
+539
+00:34:48,915 --> 00:34:51,909
+Cswap yalnızca kendi kopyalarını takas etti.
+
+540
+00:34:52,767 --> 00:34:53,767
+Soru 3.
+
+541
+00:34:54,015 --> 00:34:54,840
+y iki.
+
+542
+00:34:54,880 --> 00:34:59,408
+p y'nin içinde x eşittir
+x artı bir, sonra x eşittir x artı y.
+
+543
+00:34:59,728 --> 00:35:01,934
+Başvuru ile çağırmada y kaç olur?
+
+544
+00:35:02,254 --> 00:35:03,301
+Değer-sonuç ile?
+
+545
+00:35:07,667 --> 00:35:10,426
+Cevap: Başvuru ile altı, değer-sonuç ile beş.
+
+546
+00:35:11,933 --> 00:35:12,933
+Soru 4.
+
+547
+00:35:13,252 --> 00:35:16,717
+Derin bağlama ile yüzeysel bağlama
+arasındaki fark nedir?
+
+548
+00:35:21,067 --> 00:35:21,381
+Cevap:
+
+549
+00:35:21,421 --> 00:35:26,050
+Derin bağlamada parametre olarak
+geçen altprogramın tanımlandığı yerin çevresi,
+
+550
+00:35:26,090 --> 00:35:29,754
+yüzeysel bağlamada ise onu
+çağıran deyimin çevresi kullanılır.
+
+551
+00:35:30,600 --> 00:35:31,600
+Soru 5.
+
+552
+00:35:31,849 --> 00:35:35,471
+Özyineleme neden yığıt-dinamik yerel
+değişkenler gerektirir?
+
+553
+00:35:39,833 --> 00:35:40,157
+Cevap:
+
+554
+00:35:40,197 --> 00:35:45,002
+Çünkü aynı anda aynı altprogramın
+birden çok etkin çağrısı vardır ve her birinin
+
+555
+00:35:45,042 --> 00:35:47,647
+kendi yerel değişkenlerine ihtiyacı vardır.
+
+556
+00:35:52,500 --> 00:35:54,246
+Bölüm 8'i tamamladık!
+
+557
+00:35:54,566 --> 00:35:59,274
+Bir sonraki bölümde altprogramların arka
+planda nasıl gerçekleştirildiğini,
+
+558
+00:35:59,314 --> 00:36:04,504
+yani etkinlik kayıtlarını, statik
+ve dinamik bağları daha ayrıntılı inceleyeceğiz.
+
+559
+00:36:05,367 --> 00:36:09,842
+Pratik için, dört çıktı örneğini kâğıt
+üzerinde kendiniz yeniden çözün;
+
+560
+00:36:09,882 --> 00:36:12,426
+bu tür sorular sınavlarda çok sık çıkar.
+
+561
+00:36:12,746 --> 00:36:15,554
+İzlediğiniz için teşekkürler, görüşmek üzere!

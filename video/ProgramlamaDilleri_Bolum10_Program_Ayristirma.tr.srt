@@ -1,0 +1,1026 @@
+1
+00:00:00,300 --> 00:00:01,237
+Merhaba!
+
+2
+00:00:01,277 --> 00:00:04,876
+Programlama Dilleri dersinin onuncu
+bölümüne hoş geldiniz.
+
+3
+00:00:05,196 --> 00:00:07,476
+Bu bölümün konusu program ayrıştırma.
+
+4
+00:00:08,333 --> 00:00:12,802
+Büyük bir yazılımın küçük, bağımsız
+parçalara nasıl bölündüğünü; soyutlama,
+
+5
+00:00:12,842 --> 00:00:16,991
+modülerlik, bilgi saklama ve ayrı derleme
+kavramlarını inceleyeceğiz.
+
+6
+00:00:17,311 --> 00:00:19,255
+Bu bölüm büyük ölçüde kavramsal;
+
+7
+00:00:19,295 --> 00:00:22,767
+kod örnekleri çok kısa ve yalnızca
+fikri göstermek için.
+
+8
+00:00:24,000 --> 00:00:25,683
+Yol haritamıza bakalım.
+
+9
+00:00:26,533 --> 00:00:29,784
+Önce büyük programları
+neden ayrıştırmamız gerektiğini,
+
+10
+00:00:29,824 --> 00:00:34,312
+ardından soyutlama ve modülerlik
+kavramlarını ve bilgi saklamayı göreceğiz.
+
+11
+00:00:35,167 --> 00:00:37,960
+Sonra modüllerin
+ayrı ve bağımsız derlenmesini,
+
+12
+00:00:38,000 --> 00:00:42,723
+Pascal ve C dillerinin bu konudaki
+yaklaşımlarını ve son olarak nesneye yönelik
+
+13
+00:00:42,763 --> 00:00:46,380
+programlamanın temeli olan
+veri soyutlamasını inceleyeceğiz.
+
+14
+00:00:47,600 --> 00:00:49,329
+Bölüm 10.1: Giriş.
+
+15
+00:00:49,649 --> 00:00:54,630
+Binlerce satırlık bir programı tek
+parça olarak geliştirmek imkânsıza yakındır.
+
+16
+00:00:54,950 --> 00:01:00,116
+Programın büyüklüğü arttıkça birimleri
+ve aralarındaki bağlantıları tanımlamak karmaşıklaşır.
+
+17
+00:01:00,967 --> 00:01:04,380
+Yazılım mühendisliği
+ilkelerine göre bir yazılım sistemi,
+
+18
+00:01:04,420 --> 00:01:07,833
+birbirleriyle tanımlı
+ve denetimli bir şekilde etkileşen,
+
+19
+00:01:07,873 --> 00:01:10,862
+ama birbirlerinden
+bağımsız olarak tasarlanabilen,
+
+20
+00:01:10,902 --> 00:01:14,537
+gerçekleştirilebilen ve
+sınanabilen birimlerden oluşmalıdır.
+
+21
+00:01:15,400 --> 00:01:18,176
+Büyük projelerde
+birçok geliştirici ya da ekip,
+
+22
+00:01:18,216 --> 00:01:20,632
+yazılımın farklı bölümlerinin tasarımını,
+
+23
+00:01:20,672 --> 00:01:23,368
+kodlamasını ve sınanmasını aynı anda yürütür.
+
+24
+00:01:23,688 --> 00:01:25,836
+Bu yüzden kullanılan programlama dili,
+
+25
+00:01:25,876 --> 00:01:28,483
+altprogramların ve diğer program birimlerinin,
+
+26
+00:01:28,523 --> 00:01:33,646
+diğer bölümlere ihtiyaç duymadan ayrı ayrı derlenip
+çalıştırılabilmesini desteklemelidir.
+
+27
+00:01:34,500 --> 00:01:37,598
+Şekilde böyle bir proje
+görüyorsunuz: sistem arayüz,
+
+28
+00:01:37,638 --> 00:01:42,527
+iş mantığı ve veritabanı gibi parçalara, onlar
+da daha küçük birimlere ayrılıyor.
+
+29
+00:01:42,847 --> 00:01:45,853
+Her ekip kendi birimini bağımsız
+olarak geliştiriyor.
+
+30
+00:01:46,173 --> 00:01:50,300
+Bu düzenleme, özellikle çok
+sayıda programcının çalıştığı projelerde,
+
+31
+00:01:50,340 --> 00:01:53,360
+tüm sistemin anlaşılabilirliğini
+doğrudan etkiler.
+
+32
+00:01:54,200 --> 00:01:59,885
+Dillerin ayrıştırmayı desteklemek için
+sunduğu bütün yaklaşımların temelinde iki ilke vardır:
+
+33
+00:01:59,925 --> 00:02:01,403
+soyutlama ve modülerlik.
+
+34
+00:02:01,723 --> 00:02:06,435
+Bu konu yazılım mühendisliğinde hem teknik hem
+de yönetimsel boyutuyla incelenir.
+
+35
+00:02:07,667 --> 00:02:11,809
+Bölüm 10.2: Yazılım geliştirmede
+soyutlama ve modülerlik.
+
+36
+00:02:12,667 --> 00:02:13,235
+Soyutlama,
+
+37
+00:02:13,275 --> 00:02:18,566
+bir problemin önemsiz ayrıntılarını
+göz ardı ederek önemli özelliklerine odaklanmaktır.
+
+38
+00:02:18,886 --> 00:02:21,855
+Bir harita düşünün: bir şehrin
+her ağacını değil,
+
+39
+00:02:21,895 --> 00:02:24,843
+yalnızca yolculuk
+için gereken yolları gösterir.
+
+40
+00:02:25,163 --> 00:02:29,517
+Soyutlama ile bir amaç için gerekli
+özellikler, gerekmeyenlerden ayrılır.
+
+41
+00:02:30,367 --> 00:02:34,187
+Programlama dillerinde soyutlama
+araçları altprogramlar, modüller,
+
+42
+00:02:34,227 --> 00:02:36,566
+kullanıcı tanımlı tipler ve nesnelerdir.
+
+43
+00:02:37,433 --> 00:02:39,168
+Modülerlik ise bir programın,
+
+44
+00:02:39,208 --> 00:02:42,878
+modül adı verilen küçük
+parçalara bölünerek tasarlanmasıdır.
+
+45
+00:02:43,198 --> 00:02:47,631
+Modül, ilişkili tanımlamaların
+bir topluluğudur; tipik bir modül yordamlar,
+
+46
+00:02:47,671 --> 00:02:50,712
+ilişkili değişkenler, sabitler
+ve tiplerden oluşur.
+
+47
+00:02:51,567 --> 00:02:55,803
+İyi bir modülün üç özelliği vardır: yararlı
+bir soyutlamayı temsil eder;
+
+48
+00:02:55,843 --> 00:02:59,248
+diğer modüllerle önceden tanımlanmış
+biçimlerde etkileşir;
+
+49
+00:02:59,288 --> 00:03:01,505
+ve diğer modüllerin yalnızca tanımına,
+
+50
+00:03:01,545 --> 00:03:05,603
+yani spesifikasyonuna bakılarak
+tasarlanabilir, gerçekleştirilebilir,
+
+51
+00:03:05,643 --> 00:03:07,603
+derlenebilir ve değiştirilebilir.
+
+52
+00:03:07,923 --> 00:03:12,171
+Yani bir modülü yazarken diğerlerinin içini
+bilmek zorunda kalmamalıyız.
+
+53
+00:03:13,400 --> 00:03:17,666
+Bölüm 10.2.1: Yordam
+ve fonksiyonların modülerliği.
+
+54
+00:03:18,500 --> 00:03:23,025
+Yordamlar ve fonksiyonlar programlamada
+kullanılan ilk soyutlama mekanizmalarıdır
+
+55
+00:03:23,065 --> 00:03:26,108
+ve küçük programları yapılandırmak
+için yararlıdırlar.
+
+56
+00:03:26,967 --> 00:03:30,960
+Ancak büyük programların
+geliştirilmesi için yeterli değildirler.
+
+57
+00:03:31,280 --> 00:03:37,371
+Çünkü yalnızca yordam ve fonksiyonlarla bir programı
+ayrıştırdığımızda yeterince bilgi saklama yapılamaz:
+
+58
+00:03:37,411 --> 00:03:40,915
+fonksiyonlar arasında paylaşılan
+veriler herkese açık kalır.
+
+59
+00:03:41,767 --> 00:03:46,829
+Bu yüzden yazılım mühendisliğinin gelişimi içinde
+modülerlik aracı olarak önce modüller,
+
+60
+00:03:46,869 --> 00:03:50,696
+sonra soyut veri tipleri ve
+nesneye yönelik programlama öne çıktı.
+
+61
+00:03:51,016 --> 00:03:55,568
+Bugün Java, C++, C#, Ada ve
+Fortran 90 gibi diller altprogramların,
+
+62
+00:03:55,608 --> 00:04:00,915
+tip tanımlarının ve verilerin ayrı
+olarak derlenmesini ve bir birimin içindeki
+
+63
+00:04:00,955 --> 00:04:04,930
+elemanlara erişimin denetlenmesini
+sağlayan yapılar sunar.
+
+64
+00:04:06,133 --> 00:04:09,144
+Bölüm 10.2.2: Bilgi saklama.
+
+65
+00:04:10,000 --> 00:04:12,515
+Bir yazılım sistemini ayrıştırırken amaç,
+
+66
+00:04:12,555 --> 00:04:16,233
+birbirinden olabildiğince bağımsız
+modüller geliştirmektir.
+
+67
+00:04:16,553 --> 00:04:19,837
+Çünkü her modül belirli bir tasarım
+kararını temsil eder;
+
+68
+00:04:19,877 --> 00:04:24,718
+o karar değişirse yalnızca o modülü değiştirmek
+ve diğerlerini etkilememek isteriz.
+
+69
+00:04:25,567 --> 00:04:30,803
+Bu amaca yönelik yaklaşıma bilgi saklama denir ve
+temelindeki fikir erişim denetimidir.
+
+70
+00:04:31,123 --> 00:04:34,149
+Programların okunmasını
+ve bakımını kolaylaştırır.
+
+71
+00:04:35,000 --> 00:04:38,134
+Modülerlik yaklaşımına
+göre bir modül, istemcilerinin,
+
+72
+00:04:38,174 --> 00:04:42,601
+yani onu kullanan program birimlerinin
+kullanabileceği hizmetler sunar ve bu
+
+73
+00:04:42,641 --> 00:04:45,344
+hizmetlerin nasıl yapıldığını dışarıdan korur.
+
+74
+00:04:45,664 --> 00:04:47,983
+Böylece bir modül iki bölümden oluşur:
+
+75
+00:04:48,023 --> 00:04:53,670
+hizmetlere nasıl erişileceğini anlatan
+arayüz ve hizmetleri gerçekten yapan gerçekleştirim.
+
+76
+00:04:53,990 --> 00:04:57,831
+İstemci arayüze erişebilir, ama
+gerçekleştirime erişemez.
+
+77
+00:04:58,667 --> 00:05:03,523
+Koruma kuralı gereği modülün gerçekleştirimi
+istemciler tarafından görünmemelidir.
+
+78
+00:05:03,843 --> 00:05:06,625
+Arayüzün gerçekleştirimden açıkça ayrılması,
+
+79
+00:05:06,665 --> 00:05:10,449
+istemci ile sunucunun
+birbirinden bağımsız olmasını sağlar.
+
+80
+00:05:10,769 --> 00:05:15,583
+Bir arabanın direksiyonu ve pedalları arayüz,
+motoru ise gerçekleştirim gibidir:
+
+81
+00:05:15,623 --> 00:05:20,416
+sürücü motoru bilmeden arabayı kullanabilir,
+motor değişse de sürüş aynı kalır.
+
+82
+00:05:21,633 --> 00:05:22,638
+Koruma yöntemleri,
+
+83
+00:05:22,678 --> 00:05:27,729
+bilgi saklamayı destekleyen dil yapılarıdır ve
+diller bu konuda farklı olanaklar sunar.
+
+84
+00:05:28,567 --> 00:05:30,773
+C'de koruma birimi fonksiyondur.
+
+85
+00:05:31,093 --> 00:05:35,461
+Bir fonksiyon prototipi basit
+bir arayüz örneğidir: fonksiyonun adını,
+
+86
+00:05:35,501 --> 00:05:40,035
+ne aldığını ve ne döndürdüğünü söyler, ama
+işi nasıl yaptığını söylemez.
+
+87
+00:05:40,355 --> 00:05:43,685
+İşin nasıl yapıldığı gövdede, yani
+gerçekleştirimdedir.
+
+88
+00:05:44,533 --> 00:05:47,215
+C++'ta koruma birimi sınıftır.
+
+89
+00:05:47,535 --> 00:05:52,504
+Bir sınıfın arayüzü, istemcilerin
+erişebildiği bütün fonksiyonlardan oluşur.
+
+90
+00:05:52,824 --> 00:05:54,519
+Zaman sınıfı örneğinde...
+
+91
+00:05:55,367 --> 00:05:59,625
+public bölümündeki ayarla ve
+yazdir fonksiyonları arayüzü oluşturur;
+
+92
+00:05:59,665 --> 00:06:01,624
+istemciler bunları çağırabilir.
+
+93
+00:06:02,467 --> 00:06:05,489
+private bölümündeki
+saat ve dakika ise gizlidir.
+
+94
+00:06:05,809 --> 00:06:09,072
+Bir istemci z nokta
+ayarla dokuz otuz yazabilir,
+
+95
+00:06:09,112 --> 00:06:13,999
+ama z nokta saat eşittir yirmi
+beş yazamaz; derleyici buna izin vermez.
+
+96
+00:06:14,319 --> 00:06:17,732
+Böylece geçersiz bir saat değeri
+dışarıdan atanamaz.
+
+97
+00:06:18,052 --> 00:06:22,733
+Üstelik ileride zamanı yalnızca
+dakika cinsinden saklamaya karar verirsek,
+
+98
+00:06:22,773 --> 00:06:27,622
+yalnızca sınıfın içini değiştiririz; onu
+kullanan istemciler hiç etkilenmez.
+
+99
+00:06:27,942 --> 00:06:30,961
+Bilgi saklamanın kazancı tam olarak budur.
+
+100
+00:06:32,167 --> 00:06:35,162
+Bölüm 10.3: Ayrı ve bağımsız derleme.
+
+101
+00:06:35,482 --> 00:06:36,581
+Modülerliğin amacı,
+
+102
+00:06:36,621 --> 00:06:41,416
+büyük programları bağımsız olarak geliştirilmiş
+küçük parçalardan oluşturmaktır.
+
+103
+00:06:41,736 --> 00:06:45,832
+Bunun doğal sonucu, program
+birimlerinin ayrı ayrı derlenebilmesidir.
+
+104
+00:06:46,667 --> 00:06:51,071
+Bir değişiklik yaptığımızda bütün
+programı yeniden derlemekten kaçınmak için,
+
+105
+00:06:51,111 --> 00:06:51,533
+program,
+
+106
+00:06:51,573 --> 00:06:57,056
+diğer bölümlerine ihtiyaç duymadan derlenebilen
+altprogram ve veri topluluklarına ayrılmalıdır.
+
+107
+00:06:57,376 --> 00:06:59,745
+Böyle bir birime derleme birimi denir.
+
+108
+00:07:00,600 --> 00:07:02,881
+Ancak bir birim derlenirken derleyici,
+
+109
+00:07:02,921 --> 00:07:06,547
+çağrılan bir altprogramın beklediği
+parametrelerin sayısını,
+
+110
+00:07:06,587 --> 00:07:11,169
+sırasını ve tiplerini ya da paylaşılan veri
+nesnelerini bilmek isteyebilir.
+
+111
+00:07:11,489 --> 00:07:15,540
+Bu bilgiyi sağlamak için dil, belirli bir
+derleme sırası isteyebilir:
+
+112
+00:07:15,580 --> 00:07:16,903
+bir altprogramdan önce,
+
+113
+00:07:16,943 --> 00:07:21,627
+onun çağırdığı altprogramların ve
+paylaşılan veri tanımlarının derlenmesi gibi.
+
+114
+00:07:22,467 --> 00:07:24,100
+Burada iki kavram ayrılır.
+
+115
+00:07:24,420 --> 00:07:28,485
+Ayrı derlemede modüller tek
+tek, ama belirli bir sıraya göre derlenir;
+
+116
+00:07:28,525 --> 00:07:34,742
+derleyici diğer modüllerin arayüz bilgilerini
+kullanabildiği için modüller arası tip denetimi yapılabilir.
+
+117
+00:07:35,600 --> 00:07:37,522
+Bağımsız derlemede ise bir modül,
+
+118
+00:07:37,562 --> 00:07:41,962
+programın diğer bölümlerinden
+tamamen bağımsız olarak derlenir ve sınanır.
+
+119
+00:07:42,282 --> 00:07:43,410
+Bunun bedeli şudur:
+
+120
+00:07:43,450 --> 00:07:48,452
+modülün başvurduğu ama kendisinde
+bulunmayan elemanlar statik olarak denetlenemez;
+
+121
+00:07:48,492 --> 00:07:51,442
+yani modüller arası tutarlılık
+kontrol edilemez.
+
+122
+00:07:51,762 --> 00:07:54,456
+İlk C derleyicileri bu şekilde çalışıyordu.
+
+123
+00:07:55,300 --> 00:07:56,859
+Pratikte süreç şöyle işler:
+
+124
+00:07:56,899 --> 00:08:01,182
+her kaynak dosya derleyici tarafından ayrı
+ayrı nesne dosyasına çevrilir,
+
+125
+00:08:01,222 --> 00:08:06,374
+sonra bağlayıcı bu nesne dosyalarını birleştirerek
+çalıştırılabilir programı oluşturur.
+
+126
+00:08:06,694 --> 00:08:10,525
+Bir dosya değiştiğinde
+yalnızca o dosya yeniden derlenir.
+
+127
+00:08:11,733 --> 00:08:17,480
+Bölüm 10.3.1 ve 10.3.2: Pascal ve
+C'de ayrı derleme.
+
+128
+00:08:18,333 --> 00:08:23,189
+Bir Pascal programı tek bir metindir: program
+başlığı, ardından tip, değişken,
+
+129
+00:08:23,229 --> 00:08:28,062
+yordam ve fonksiyon tanımları,
+en sonda da begin ile end arasındaki deyimler.
+
+130
+00:08:28,900 --> 00:08:33,720
+Pascal'ın ilk sürümünde yalnızca
+fonksiyonlar ve yordamlar olduğu için modülerlik
+
+131
+00:08:33,760 --> 00:08:37,120
+kısıtlıydı ve modüllerin
+ayrı derlenmesi mümkün değildi.
+
+132
+00:08:37,440 --> 00:08:41,252
+Program yordamların iç içe
+yerleştirilmesiyle düzenlendiği için,
+
+133
+00:08:41,292 --> 00:08:44,963
+birçok değişkenin birimler arasında
+paylaşılması gerekiyordu.
+
+134
+00:08:45,283 --> 00:08:47,931
+Ayrıca tüm program tek bir metin olduğundan,
+
+135
+00:08:47,971 --> 00:08:51,393
+program büyüdükçe modül sınırlarını
+görmek zorlaşıyordu.
+
+136
+00:08:51,713 --> 00:08:54,801
+Sonraki yıllarda Turbo Pascal
+gibi ticari sürümler,
+
+137
+00:08:54,841 --> 00:08:59,809
+bir modül çeşidi olan unit'leri ekledi; ama bu
+özellik standart Pascal'da yoktur.
+
+138
+00:09:00,667 --> 00:09:04,393
+C'de ise fonksiyonlar
+ayrı dosyalara yerleştirilebilir.
+
+139
+00:09:04,713 --> 00:09:08,115
+Bir mantıksal modül
+iki fiziksel parçadan oluşur.
+
+140
+00:09:08,435 --> 00:09:10,689
+Arayüz, başlık yani header dosyasıdır;
+
+141
+00:09:10,729 --> 00:09:14,191
+uzantısı nokta h'dir ve
+modülün dışarıya sunduğu sabitler,
+
+142
+00:09:14,231 --> 00:09:17,189
+tipler ve fonksiyon
+bildirimleri burada yer alır.
+
+143
+00:09:17,509 --> 00:09:24,159
+Gerçekleştirim dosyası ise nokta c uzantılıdır ve modülün
+dışarıdan erişilemeyen özel bölümünü içerir.
+
+144
+00:09:25,000 --> 00:09:28,538
+Başka bir modülün hizmetlerini
+kullanmak isteyen istemci,
+
+145
+00:09:28,578 --> 00:09:31,780
+o modülün başlık dosyasını
+include komutuyla ekler.
+
+146
+00:09:32,100 --> 00:09:34,247
+Başlık dosyası sayesinde istemci,
+
+147
+00:09:34,287 --> 00:09:37,998
+gerçekleştirim dosyasından bağımsız
+olarak derlenebilir.
+
+148
+00:09:38,318 --> 00:09:42,732
+Yine de C'de arayüzü gerçekleştirimden tam
+olarak ayırmak mümkün değildir;
+
+149
+00:09:42,772 --> 00:09:45,180
+bu ayrım programcının disiplinine kalır.
+
+150
+00:09:46,033 --> 00:09:48,506
+C'de iki anahtar kelime önemlidir.
+
+151
+00:09:48,826 --> 00:09:50,907
+extern ile tanımlanan bir değişken,
+
+152
+00:09:50,947 --> 00:09:55,332
+bu dosyada kullanılacağını ama
+başka bir dosyada tanımlandığını belirtir;
+
+153
+00:09:55,372 --> 00:09:57,251
+yani başka bir modülden alınır.
+
+154
+00:09:57,571 --> 00:10:03,130
+static ile dosya düzeyinde tanımlanan bir
+değişken ise diğer modüller tarafından erişilemez;
+
+155
+00:10:03,170 --> 00:10:04,170
+yani gizlenir.
+
+156
+00:10:05,233 --> 00:10:07,478
+Bölüm 10.4: Veri soyutlama.
+
+157
+00:10:08,333 --> 00:10:12,606
+Bilgi saklamanın ana gereksinimi,
+verilerin paylaşımını azaltmaktır.
+
+158
+00:10:12,926 --> 00:10:17,197
+Veri soyutlamasının temeli de
+modülleri programdaki işlemlere göre değil,
+
+159
+00:10:17,237 --> 00:10:18,890
+verilere göre tasarlamaktır.
+
+160
+00:10:19,210 --> 00:10:23,398
+Bu yaklaşım karmaşıklığı azaltarak büyük
+programları yönetilebilir kılar.
+
+161
+00:10:23,718 --> 00:10:27,289
+1990'larda yaygınlaşan nesneye
+yönelik programlama,
+
+162
+00:10:27,329 --> 00:10:30,091
+tam olarak bu fikrin üzerine kuruludur.
+
+163
+00:10:30,933 --> 00:10:35,040
+Aslında bir dilin hazır veri
+tiplerinin hepsi soyut veri tipleridir.
+
+164
+00:10:35,360 --> 00:10:40,186
+Örneğin kayan noktalı tipte bir değerin
+bellekteki gerçek bit düzenini kullanıcı
+
+165
+00:10:40,226 --> 00:10:43,410
+görmez ve bu tip için
+tanımlı işlemleri değiştiremez;
+
+166
+00:10:43,450 --> 00:10:46,248
+yalnızca dilin sunduğu işlemleri kullanabilir.
+
+167
+00:10:47,100 --> 00:10:50,852
+Kullanıcı tanımlı bir soyut veri tipi
+üç koşulu sağlamalıdır.
+
+168
+00:10:51,172 --> 00:10:56,211
+Birincisi, tipin tanımı ve tip üzerindeki
+işlemler tek bir birimde bulunmalıdır.
+
+169
+00:10:56,531 --> 00:11:00,981
+İkincisi, diğer program birimleri bu tipten
+nesneler oluşturabilmelidir.
+
+170
+00:11:01,301 --> 00:11:06,050
+Üçüncüsü, nesnelerin iç gösterimi
+o tipi kullanan birimlerden gizlenmelidir;
+
+171
+00:11:06,090 --> 00:11:11,383
+böylece nesneler üzerinde yalnızca
+tipin tanımında sağlanan işlemler kullanılabilir.
+
+172
+00:11:12,233 --> 00:11:13,818
+Bir yığıt örneğini düşünelim.
+
+173
+00:11:14,138 --> 00:11:18,990
+İstemcinin bildiği tek şey arayüzdür: push,
+pop, top ve boş mu işlemleri.
+
+174
+00:11:19,310 --> 00:11:24,075
+Yığıtın içeride bir diziyle mi,
+yoksa bir bağlı listeyle mi tutulduğu gizlidir.
+
+175
+00:11:24,395 --> 00:11:26,699
+Gösterimi değiştirmeye karar verirsek,
+
+176
+00:11:26,739 --> 00:11:30,071
+yığıtı kullanan programların tek
+satırı bile değişmez.
+
+177
+00:11:30,391 --> 00:11:35,604
+Kullanıcı tanımlı soyut veri tipleri bugün nesneye
+yönelik dillerde sınıflarla desteklenir.
+
+178
+00:11:36,833 --> 00:11:37,833
+Toparlayalım.
+
+179
+00:11:38,633 --> 00:11:43,151
+Büyük yazılımlar, bağımsız olarak
+geliştirilebilen birimlere ayrıştırılmalıdır.
+
+180
+00:11:43,471 --> 00:11:46,431
+Bunun iki temel ilkesi soyutlama
+ve modülerliktir:
+
+181
+00:11:46,471 --> 00:11:51,332
+önemli olana odaklanmak ve programı
+ilişkili tanımlardan oluşan modüllere bölmek.
+
+182
+00:11:52,167 --> 00:11:57,391
+Bilgi saklamada bir modül, görünür
+bir arayüz ve gizli bir gerçekleştirimden oluşur.
+
+183
+00:11:57,711 --> 00:12:03,428
+C'de koruma birimi fonksiyon, C++'ta ise public
+ve private bölümleri olan sınıftır.
+
+184
+00:12:04,267 --> 00:12:07,317
+Derleme birimleri
+ayrı ya da bağımsız derlenebilir:
+
+185
+00:12:07,357 --> 00:12:12,204
+ayrı derlemede modüller arası denetim
+yapılabilir, bağımsız derlemede yapılamaz.
+
+186
+00:12:12,524 --> 00:12:16,326
+C'de modüller başlık ve
+gerçekleştirim dosyalarına ayrılır;
+
+187
+00:12:16,366 --> 00:12:18,840
+extern ve static görünürlüğü belirler.
+
+188
+00:12:19,700 --> 00:12:21,245
+Son olarak veri soyutlama,
+
+189
+00:12:21,285 --> 00:12:26,527
+modülleri verilere göre tasarlar ve
+nesneye yönelik programlamanın temelini oluşturur.
+
+190
+00:12:27,733 --> 00:12:30,137
+Şimdi kısa bir mini test yapalım.
+
+191
+00:12:30,457 --> 00:12:33,870
+Her sorudan sonra birkaç saniye
+düşünme süreniz var.
+
+192
+00:12:34,733 --> 00:12:35,733
+Soru 1.
+
+193
+00:12:35,994 --> 00:12:37,866
+Bir modülün iki bölümü nedir?
+
+194
+00:12:42,200 --> 00:12:45,809
+Cevap: Dışarıya görünen
+arayüz ve gizli tutulan gerçekleştirim.
+
+195
+00:12:46,667 --> 00:12:47,667
+Soru 2.
+
+196
+00:12:47,734 --> 00:12:51,147
+Ayrı derleme ile bağımsız derleme
+arasındaki fark nedir?
+
+197
+00:12:55,500 --> 00:12:55,808
+Cevap:
+
+198
+00:12:55,848 --> 00:13:01,132
+Ayrı derlemede modüller belirli bir sırayla derlenir
+ve modüller arası denetim yapılabilir.
+
+199
+00:13:01,452 --> 00:13:05,874
+Bağımsız derlemede modül tamamen
+ayrı derlenir ve bu denetim yapılamaz.
+
+200
+00:13:06,733 --> 00:13:07,733
+Soru 3.
+
+201
+00:13:07,878 --> 00:13:11,419
+C'de extern ve static
+anahtar kelimeleri ne işe yarar?
+
+202
+00:13:15,767 --> 00:13:16,575
+Cevap: extern,
+
+203
+00:13:16,615 --> 00:13:21,218
+değişkenin başka bir dosyada tanımlı olduğunu
+ve oradan alındığını belirtir.
+
+204
+00:13:21,538 --> 00:13:24,754
+static ise değişkeni diğer modüllerden gizler.
+
+205
+00:13:25,600 --> 00:13:26,600
+Soru 4.
+
+206
+00:13:26,826 --> 00:13:30,156
+Kullanıcı tanımlı bir
+soyut veri tipinin üç koşulu nedir?
+
+207
+00:13:34,500 --> 00:13:37,731
+Cevap: Tip tanımı ve işlemleri tek
+bir birimde olmalı;
+
+208
+00:13:37,771 --> 00:13:40,578
+diğer birimler bu tipten nesne
+oluşturabilmeli;
+
+209
+00:13:40,618 --> 00:13:43,041
+ve nesnelerin iç gösterimi gizli olmalı.
+
+210
+00:13:43,900 --> 00:13:44,900
+Soru 5.
+
+211
+00:13:45,137 --> 00:13:49,085
+Yordam ve fonksiyonlar büyük
+programlar için neden yetersizdir?
+
+212
+00:13:53,433 --> 00:13:56,674
+Cevap: Çünkü onlarla
+yeterince bilgi saklama yapılamaz;
+
+213
+00:13:56,714 --> 00:13:59,696
+veriler birimler arasında
+paylaşılmaya devam eder.
+
+214
+00:14:04,533 --> 00:14:08,055
+Bölüm 10'u, ve böylece
+bu konu anlatım serisini tamamladık!
+
+215
+00:14:08,375 --> 00:14:10,299
+Dillerin tarihinden sözdizimine,
+
+216
+00:14:10,339 --> 00:14:15,434
+veri tiplerinden altprogramlara ve
+program ayrıştırmaya kadar uzun bir yol yürüdük.
+
+217
+00:14:16,300 --> 00:14:21,201
+Sınavlara hazırlanırken her bölümün sonundaki
+mini testleri tekrar çözmenizi ve
+
+218
+00:14:21,241 --> 00:14:24,055
+özet ekranlarını gözden geçirmenizi öneririm.
+
+219
+00:14:24,375 --> 00:14:27,092
+İzlediğiniz için teşekkürler, başarılar!
