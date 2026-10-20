@@ -9,9 +9,11 @@ const KW = {
   fortran: "INDEX|INTEGER|DIMENSION",
   pascal: "function|var|integer|string|begin|end|for|to|do|if|then|Exit|Length|Copy",
   asm: "A|AR|ADDL|MOV|ADD",
+  ada: "type|is|record|end|range|subtype|array|of|declare|begin|Integer|Float|String|case|when|others|null|access",
+  python: "for|in|if|range|del|def|return|let|val|type|print",
   text: "",
 };
-const CM = { c: /\/\/.*|\/\*.*?\*\//, java: /\/\/.*/, scheme: /;.*/, prolog: /%.*/, fortran: /!.*/, pascal: /\{.*?\}/, asm: /;.*/, text: /(?!)/ };
+const CM = { c: /\/\/.*|\/\*.*?\*\//, java: /\/\/.*/, scheme: /;.*/, prolog: /%.*/, fortran: /!.*/, pascal: /\{.*?\}/, asm: /;.*/, ada: /--.*/, python: /#.*|\/\/.*/, text: /(?!)/ };
 
 function hi(line, lang) {
   if (lang === "plain") return esc(line);

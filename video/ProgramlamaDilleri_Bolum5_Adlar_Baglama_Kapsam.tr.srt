@@ -1,0 +1,2074 @@
+1
+00:00:00,300 --> 00:00:01,300
+Merhaba!
+
+2
+00:00:01,409 --> 00:00:04,926
+Programlama Dilleri dersinin beşinci
+bölümüne hoş geldiniz.
+
+3
+00:00:05,767 --> 00:00:10,733
+Bu bölümde programların temel yapı
+taşlarını inceleyeceğiz: değişkenler ve isimleri,
+
+4
+00:00:10,773 --> 00:00:14,071
+tipleri, değerleri ve
+adresleri; işlemciler ve ifadeler;
+
+5
+00:00:14,111 --> 00:00:16,991
+bu özelliklerin değişkenlere ne
+zaman bağlandığı;
+
+6
+00:00:17,031 --> 00:00:21,025
+ve bir ismin programın hangi bölümünde
+geçerli olduğu, yani kapsam.
+
+7
+00:00:22,233 --> 00:00:23,824
+Yol haritamıza bakalım.
+
+8
+00:00:24,667 --> 00:00:29,973
+Önce von Neumann mimarisi ve atama
+ile başlayıp değişkenlere, isimlere, sabitlere,
+
+9
+00:00:30,013 --> 00:00:32,622
+veri tiplerine ve işlemcilere geçeceğiz.
+
+10
+00:00:33,467 --> 00:00:38,101
+Sonra ifadeler ve deyimleri, ardından
+bölümün kalbi olan bağlama kavramını,
+
+11
+00:00:38,141 --> 00:00:41,693
+isim kapsamlarını ve
+son olarak tip kontrolünü göreceğiz.
+
+12
+00:00:42,900 --> 00:00:44,668
+Bölüm 5.1: Giriş.
+
+13
+00:00:44,988 --> 00:00:45,650
+Hatırlayın,
+
+14
+00:00:45,690 --> 00:00:52,707
+von Neumann mimarisinde veri ve komutlar aynı bellekte durur
+ve her bellek hücresinin özgün bir adresi vardır.
+
+15
+00:00:53,027 --> 00:00:54,324
+İmperatif programlama,
+
+16
+00:00:54,364 --> 00:00:58,252
+işlem deyimleriyle bellekteki
+bu değerleri değiştirmeye dayanır.
+
+17
+00:00:58,572 --> 00:01:03,402
+Bu yüzden en temel işlem atamadır:
+sağdaki değer, soldaki değişkene aktarılır.
+
+18
+00:01:04,267 --> 00:01:06,443
+Atama sembolü dillere göre değişir.
+
+19
+00:01:06,763 --> 00:01:10,505
+C, C++, Java ve Fortran eşittir
+işaretini; Pascal,
+
+20
+00:01:10,545 --> 00:01:13,949
+ALGOL ve Ada ise iki nokta eşittiri kullanır.
+
+21
+00:01:14,269 --> 00:01:16,289
+Ama anlam her yerde aynıdır.
+
+22
+00:01:17,133 --> 00:01:20,113
+Bazı diller daha
+karmaşık atamalara izin verir:
+
+23
+00:01:20,153 --> 00:01:23,581
+PL/I'da aynı değeri
+birden çok hedefe atayabilirsiniz;
+
+24
+00:01:23,621 --> 00:01:25,894
+C tabanlı dillerde koşullu hedefler,
+
+25
+00:01:25,934 --> 00:01:30,816
+artı eşittir gibi birleşik atamalar ve artı
+artı gibi tekli atamalar vardır.
+
+26
+00:01:31,136 --> 00:01:34,164
+Hatta C'de atamanın kendisi
+bir değer döndürür,
+
+27
+00:01:34,204 --> 00:01:37,141
+bu yüzden bir ifadenin içinde kullanılabilir.
+
+28
+00:01:38,000 --> 00:01:39,517
+Bunun bir tehlikesi var:
+
+29
+00:01:39,557 --> 00:01:44,811
+if parantez x eşittir y ile if parantez x
+eşittir eşittir y çok farklı şeylerdir.
+
+30
+00:01:45,131 --> 00:01:48,521
+Birincisi y'yi x'e atar ve sonucu
+koşul olarak kullanır.
+
+31
+00:01:48,841 --> 00:01:54,601
+Bu klasik yazım hatasını önlemek için Java ve
+C#, if koşulunda atamaya izin vermez.
+
+32
+00:01:55,833 --> 00:01:58,125
+Bölüm 5.2: Değişkenler.
+
+33
+00:01:58,445 --> 00:02:02,567
+Bir değişken, bir ya da daha fazla bellek
+hücresinin soyutlamasıdır.
+
+34
+00:02:02,887 --> 00:02:05,384
+int counter eşittir 100 tanımına bakalım.
+
+35
+00:02:06,233 --> 00:02:10,891
+Bu değişken bellekte bir hücreye
+karşılık gelir ve onu altı özellikle tanımlarız.
+
+36
+00:02:11,733 --> 00:02:15,541
+İsmi counter: programın
+diğer deyimleri ona bu isimle başvurur.
+
+37
+00:02:15,861 --> 00:02:18,818
+Adresi, yani l-value'su, bellekteki yeridir.
+
+38
+00:02:19,138 --> 00:02:23,569
+Aynı isim programın farklı yerlerinde farklı
+adreslere karşılık gelebilir;
+
+39
+00:02:23,609 --> 00:02:29,168
+örneğin iki ayrı alt programdaki toplam
+adlı yerel değişkenler aslında iki ayrı değişkendir.
+
+40
+00:02:30,033 --> 00:02:34,723
+Değeri, yani r-value'su, o adreste kodlanmış
+olarak saklanan içeriktir: 100.
+
+41
+00:02:35,043 --> 00:02:40,234
+Tipi ise değişkenin alabileceği değerleri ve ona
+uygulanabilecek işlemleri belirler:
+
+42
+00:02:40,274 --> 00:02:41,274
+int.
+
+43
+00:02:41,367 --> 00:02:43,874
+Son iki özellik biraz daha soyuttur.
+
+44
+00:02:44,194 --> 00:02:48,211
+Yaşam süresi, değişkenin bir
+bellek adresine bağlı kaldığı süredir.
+
+45
+00:02:48,531 --> 00:02:52,254
+Kapsam ise değişkenin isminin tanımlı
+olduğu program deyimleridir.
+
+46
+00:02:52,574 --> 00:02:55,639
+Bu ikisini bölümün
+sonlarında ayrıntılı göreceğiz.
+
+47
+00:02:56,867 --> 00:02:59,965
+Adresle ilgili önemli bir kavram takma addır.
+
+48
+00:03:00,285 --> 00:03:04,545
+İki farklı isim aynı bellek
+hücresine erişmek için kullanılabiliyorsa,
+
+49
+00:03:04,585 --> 00:03:06,736
+bunlara takma ad, yani alias denir.
+
+50
+00:03:07,056 --> 00:03:11,734
+Burada x'e hem r referansı hem
+de p işaretçisi üzerinden ulaşılabiliyor.
+
+51
+00:03:12,600 --> 00:03:17,592
+r üzerinden değeri 8 yaptığımızda, p'nin
+gösterdiği değer de 8 olur.
+
+52
+00:03:17,912 --> 00:03:22,047
+Okuyucu aynı hücreye ulaşan
+bütün isimleri akılda tutmak zorunda kalır;
+
+53
+00:03:22,087 --> 00:03:25,968
+bu yüzden takma adlar okunabilirliğe ve
+güvenilirliğe zarar verir.
+
+54
+00:03:26,833 --> 00:03:29,917
+Takma adlar işaretçiler,
+referans değişkenleri,
+
+55
+00:03:29,957 --> 00:03:33,946
+C ve C++'taki union'lar
+ve parametre geçirme yoluyla oluşur.
+
+56
+00:03:34,266 --> 00:03:38,029
+Eski Fortran'da belleği yeniden
+kullanmak için bilerek yapılırdı;
+
+57
+00:03:38,069 --> 00:03:40,644
+bugün bu ihtiyacı dinamik bellek karşılıyor.
+
+58
+00:03:41,867 --> 00:03:44,423
+Bölüm 5.2.1: İsimler.
+
+59
+00:03:44,743 --> 00:03:47,795
+İsimler sadece değişkenler için
+değil; etiketler,
+
+60
+00:03:47,835 --> 00:03:50,989
+alt programlar ve
+parametreler için de kullanılır.
+
+61
+00:03:51,309 --> 00:03:53,643
+İsim tasarımında üç soru vardır.
+
+62
+00:03:54,500 --> 00:03:56,543
+Birincisi, en fazla uzunluk.
+
+63
+00:03:56,863 --> 00:04:02,826
+FORTRAN I'de bir isim en fazla 6 karakter
+olabiliyordu, COBOL'da 30, ANSI C'de 31.
+
+64
+00:04:03,146 --> 00:04:05,654
+Ada, Java ve C#'ta sınır yoktur.
+
+65
+00:04:05,974 --> 00:04:07,681
+Çok kısa isimler anlaşılmaz;
+
+66
+00:04:07,721 --> 00:04:13,463
+bugünkü yaklaşım makul bir sınır koymak
+ve çok kelimeli isimler için alt çizgi kullanmaktır.
+
+67
+00:04:14,300 --> 00:04:16,831
+İkincisi, büyük-küçük harf duyarlılığı.
+
+68
+00:04:17,151 --> 00:04:23,165
+C, C++ ve Java'da TOPLAM, toplam
+ve karışık yazılmış ToPlaM üç ayrı değişkendir.
+
+69
+00:04:23,485 --> 00:04:27,478
+Benzer görünen isimlerin farklı olması
+okunabilirliği zorlaştırır.
+
+70
+00:04:28,333 --> 00:04:30,179
+Üçüncüsü, özel kelimeler.
+
+71
+00:04:30,499 --> 00:04:34,656
+Anahtar kelime, yalnızca
+belli bağlamlarda özel anlam taşır.
+
+72
+00:04:34,976 --> 00:04:37,731
+Fortran'da REAL ELMA bir tanımlamadır;
+
+73
+00:04:37,771 --> 00:04:42,184
+ama REAL eşittir 87.6 yazarsanız REAL
+bir değişken adı olur.
+
+74
+00:04:42,504 --> 00:04:44,629
+Bu okunabilirliği çok azaltır.
+
+75
+00:04:44,949 --> 00:04:49,416
+Ayrılmış kelime ise hiçbir zaman isim olarak
+kullanılamaz; Pascal'daki for,
+
+76
+00:04:49,456 --> 00:04:50,538
+begin ve end gibi.
+
+77
+00:04:51,767 --> 00:04:55,226
+Bölüm 5.2.2: Veri tipi kavramı.
+
+78
+00:04:55,546 --> 00:04:59,867
+Bir veri tipi, üzerinde aynı işlemlerin
+tanımlı olduğu değerler kümesidir.
+
+79
+00:05:00,187 --> 00:05:03,693
+İlkel tipler başka tiplerden
+oluşmaz; tam sayı, karakter,
+
+80
+00:05:03,733 --> 00:05:06,159
+mantıksal ve kayan noktalı tipler gibi.
+
+81
+00:05:06,479 --> 00:05:10,637
+Yapısal tipler ise bileşenlerden oluşur;
+diziler ve kayıtlar gibi.
+
+82
+00:05:11,500 --> 00:05:16,418
+C++'ın temel tiplerine bakın:
+char 1 byte, short 2 byte, int 4 byte,
+
+83
+00:05:16,458 --> 00:05:22,217
+float 4 byte ve yaklaşık 7 basamak hassasiyet,
+double ise 8 byte ve 15 basamak.
+
+84
+00:05:22,537 --> 00:05:26,044
+Tip, değişkenin alabileceği
+değerlerin aralığını belirler.
+
+85
+00:05:26,900 --> 00:05:29,106
+Bölüm 5.3: Sabitler.
+
+86
+00:05:29,426 --> 00:05:32,362
+568 gibi bir değer bir sabittir.
+
+87
+00:05:32,682 --> 00:05:37,576
+Bir değişken bir değere bağlandıktan sonra bu
+değer bir daha değiştirilemiyorsa,
+
+88
+00:05:37,616 --> 00:05:39,590
+ona isimlendirilmiş sabit denir.
+
+89
+00:05:39,910 --> 00:05:43,938
+Pascal ve C#'ta const
+ile, C'de ise define ile tanımlanır.
+
+90
+00:05:44,800 --> 00:05:47,354
+İsimlendirilmiş sabitler çok faydalıdır.
+
+91
+00:05:47,674 --> 00:05:52,227
+3.14159 yerine PI
+yazmak okunabilirliği artırır.
+
+92
+00:05:52,547 --> 00:05:59,185
+50 elemanlı bir diziyi işleyen bir programda 50 sayısını her
+yerde tekrar etmek yerine N sabitini kullanırsanız,
+
+93
+00:05:59,225 --> 00:06:02,941
+boyutu değiştirmek tek bir
+satırı değiştirmek kadar kolaylaşır;
+
+94
+00:06:02,981 --> 00:06:04,651
+program daha güvenilir olur.
+
+95
+00:06:05,867 --> 00:06:08,177
+Bölüm 5.4: İşlemciler.
+
+96
+00:06:08,497 --> 00:06:11,748
+İşlemcileri önce genel
+özelliklerine göre inceleyelim.
+
+97
+00:06:12,600 --> 00:06:14,258
+Birincisi işlenen sayısı.
+
+98
+00:06:14,578 --> 00:06:18,415
+Eksi beş ya da i artı
+artı gibi tekli; i artı j gibi ikili;
+
+99
+00:06:18,455 --> 00:06:21,963
+soru işareti ve iki
+noktalı koşul işlemcisi gibi üçlü;
+
+100
+00:06:22,003 --> 00:06:26,931
+ve LISP'teki plus gibi istenen
+sayıda işlenen alan çoklu işlemciler vardır.
+
+101
+00:06:27,767 --> 00:06:32,804
+İkincisi işlemcinin yeri: işlenenlerden
+önce, yani önek; araya, yani araek;
+
+102
+00:06:32,844 --> 00:06:35,754
+ya da sonra, yani sonek olarak yazılabilir.
+
+103
+00:06:36,600 --> 00:06:37,824
+Üçüncüsü öncelik.
+
+104
+00:06:38,144 --> 00:06:43,961
+a artı b çarpı c ifadesinde çarpma daha öncelikli
+olduğu için önce b çarpı c hesaplanır.
+
+105
+00:06:44,281 --> 00:06:49,325
+Klasik sıra şöyledir: parantezler,
+tekli işlemciler, üs alma, çarpma ve bölme,
+
+106
+00:06:49,365 --> 00:06:53,928
+toplama ve çıkarma; ardından
+ilişkisel ve en son mantıksal işlemciler.
+
+107
+00:06:54,767 --> 00:06:56,325
+Dördüncüsü birleşmelilik:
+
+108
+00:06:56,365 --> 00:07:00,583
+aynı öncelikteki işlemciler
+yan yana gelince hangisi önce yapılır?
+
+109
+00:07:00,903 --> 00:07:05,274
+Aritmetik işlemciler genelde
+sola birleşimlidir: a eksi b eksi c,
+
+110
+00:07:05,314 --> 00:07:07,146
+a eksi b'den c çıkarmaktır.
+
+111
+00:07:07,466 --> 00:07:12,331
+Üs alma ise sağa birleşimlidir: 2 üssü
+3 üssü 2, 2 üssü 9'dur.
+
+112
+00:07:12,651 --> 00:07:18,348
+APL ise sıra dışıdır: bütün işlemciler
+eşit öncelikli ve sağdan sola birleşimlidir.
+
+113
+00:07:18,668 --> 00:07:22,511
+Öncelik ve birleşmelilik
+her zaman parantezle değiştirilebilir.
+
+114
+00:07:23,733 --> 00:07:27,362
+İşlemcileri işlenenlerinin
+niteliğine göre de üçe ayırırız.
+
+115
+00:07:28,200 --> 00:07:32,715
+Sayısal işlemciler toplama, çıkarma,
+çarpma, bölme ve modüldür;
+
+116
+00:07:32,755 --> 00:07:34,708
+örneğin 13 mod 6 eşittir 1.
+
+117
+00:07:35,028 --> 00:07:40,308
+İlişkisel işlemciler iki değeri karşılaştırır
+ve mantıksal bir sonuç üretir;
+
+118
+00:07:40,348 --> 00:07:43,808
+C++'ta eşitlik iki
+eşittir, Pascal'da tek eşittir;
+
+119
+00:07:43,848 --> 00:07:49,238
+eşit değil ise C++'ta ünlem eşittir,
+Pascal'da küçüktür büyüktür ile yazılır.
+
+120
+00:07:49,558 --> 00:07:54,262
+Mantıksal işlemciler ise yalnızca mantıksal
+işlenen alır; C'de ve, veya,
+
+121
+00:07:54,302 --> 00:07:59,441
+değil işlemcileridir ve öncelik
+sırası genellikle değil, ve, veya şeklindedir.
+
+122
+00:08:00,300 --> 00:08:02,700
+Bu üç grup arasında da öncelik vardır:
+
+123
+00:08:02,740 --> 00:08:07,429
+ilişkisel işlemcilerin önceliği her zaman
+sayısal işlemcilerden düşüktür.
+
+124
+00:08:07,749 --> 00:08:12,507
+X artı 20 küçük eşit k çarpı 2 ifadesinde
+önce iki taraf hesaplanır,
+
+125
+00:08:12,547 --> 00:08:14,099
+sonra karşılaştırılır.
+
+126
+00:08:14,419 --> 00:08:16,077
+Pascal ise bir istisnadır:
+
+127
+00:08:16,117 --> 00:08:20,624
+orada mantıksal işlemciler
+ilişkisel işlemcilerden daha önceliklidir.
+
+128
+00:08:21,467 --> 00:08:27,608
+Bir işlemcinin anlamının işlenenlerin sayısına ve tipine
+göre belirlenmesine işlemci yükleme denir.
+
+129
+00:08:27,928 --> 00:08:29,402
+Artı işareti tam sayılar,
+
+130
+00:08:29,442 --> 00:08:33,315
+reel sayılar ve bazı dillerde metin
+birleştirme için kullanılır.
+
+131
+00:08:33,635 --> 00:08:35,366
+Bazı yüklemeler sorunludur:
+
+132
+00:08:35,406 --> 00:08:39,563
+C ve C++'ta yıldız işareti
+hem çarpma hem işaretçi işlemcisidir;
+
+133
+00:08:39,603 --> 00:08:45,046
+a çarpı b yerine yanlışlıkla yıldız b yazarsanız
+derleyici bunu hata olarak görmez.
+
+134
+00:08:45,366 --> 00:08:49,548
+C++, C# ve F# kullanıcı
+tanımlı işlemcilere de izin verir;
+
+135
+00:08:49,588 --> 00:08:55,048
+anlamlı kullanılırsa okunabilirliği artırır,
+anlamsız kullanılırsa azaltır.
+
+136
+00:08:56,267 --> 00:08:58,519
+Bölüm 5.5: İfadeler.
+
+137
+00:08:58,839 --> 00:09:03,971
+İfadeler, değerleri ve işlemcileri
+birleştirerek yeni değerler üreten yapılardır.
+
+138
+00:09:04,291 --> 00:09:09,789
+Aritmetik ifadelerin tasarımında öncelik
+ve birleşmeliliğin yanı sıra bir soru daha vardır:
+
+139
+00:09:09,829 --> 00:09:12,325
+işlenenler hangi sırayla değerlendirilir?
+
+140
+00:09:12,645 --> 00:09:15,649
+Bunun önemini fonksiyonel yan
+etkiler gösterir.
+
+141
+00:09:16,500 --> 00:09:17,286
+Bir fonksiyon,
+
+142
+00:09:17,326 --> 00:09:22,108
+parametresini ya da yerel olmayan bir değişkeni
+değiştiriyorsa yan etkisi vardır.
+
+143
+00:09:22,428 --> 00:09:26,665
+Bu fun fonksiyonu, kendisine
+verilen adresteki değeri yarıya indiriyor.
+
+144
+00:09:26,985 --> 00:09:30,712
+a 10 iken b eşittir a artı fun ve a
+ifadesini düşünelim.
+
+145
+00:09:31,567 --> 00:09:36,178
+Derleyici önce a'yı okursa,
+a'nın değeri 10'dur; ardından fun çağrılır,
+
+146
+00:09:36,218 --> 00:09:37,987
+a'yı 5 yapar ve 5 döndürür.
+
+147
+00:09:38,307 --> 00:09:39,415
+Sonuç 15.
+
+148
+00:09:40,267 --> 00:09:44,748
+Ama derleyici önce fun'ı
+çağırırsa, a önce 5 olur, sonra okunur.
+
+149
+00:09:45,068 --> 00:09:46,068
+Sonuç 10!
+
+150
+00:09:46,329 --> 00:09:49,672
+Aynı ifade, derleyiciye göre
+farklı sonuç veriyor.
+
+151
+00:09:50,533 --> 00:09:51,307
+İki çözüm var:
+
+152
+00:09:51,347 --> 00:09:55,960
+fonksiyonların parametrelerini ve
+global değişkenleri değiştirmesini yasaklamak;
+
+153
+00:09:56,000 --> 00:10:01,001
+ama fonksiyonlar bazen birden çok değer döndürmek
+zorunda olduğu için bu pratik değil.
+
+154
+00:10:01,321 --> 00:10:04,574
+Ya da işlenenlerin
+sırasını dil tanımında sabitlemek;
+
+155
+00:10:04,614 --> 00:10:07,658
+bu da bazı derleyici
+optimizasyonlarını kısıtlar.
+
+156
+00:10:07,978 --> 00:10:13,066
+Java ikinci yolu seçmiştir: işlenenler her
+zaman soldan sağa değerlendirilir,
+
+157
+00:10:13,106 --> 00:10:15,304
+bu yüzden sonuç her zaman 15'tir.
+
+158
+00:10:16,533 --> 00:10:19,378
+İlişkisel ve mantıksal ifadelere geçelim.
+
+159
+00:10:19,698 --> 00:10:24,899
+C'de ayrı bir Boolean tipi yoktur; sıfır yanlış,
+diğer değerler doğru kabul edilir.
+
+160
+00:10:25,219 --> 00:10:30,056
+Bu, a küçüktür b küçüktür c gibi tuhaf ama
+geçerli bir ifadeye yol açar:
+
+161
+00:10:30,096 --> 00:10:33,646
+önce a küçüktür b hesaplanır ve
+sonuç 0 ya da 1 olur;
+
+162
+00:10:33,686 --> 00:10:36,125
+sonra bu sayı c ile karşılaştırılır.
+
+163
+00:10:36,445 --> 00:10:42,177
+Yani 5 küçüktür 3 küçüktür 2 ifadesi, 0
+küçüktür 2'ye döner ve doğru çıkar!
+
+164
+00:10:43,033 --> 00:10:44,753
+Kısa devre değerlendirme ise,
+
+165
+00:10:44,793 --> 00:10:48,493
+sonuç belli olduğunda ifadenin geri
+kalanını hesaplamamaktır.
+
+166
+00:10:48,813 --> 00:10:53,260
+Örneğin bir çarpımda a sıfırsa,
+diğer çarpanı hesaplamaya gerek yoktur.
+
+167
+00:10:54,100 --> 00:10:58,883
+Kısa devrenin önemli olduğu klasik bir örnek:
+bir dizide değer arayan bu döngü.
+
+168
+00:10:59,203 --> 00:10:59,517
+Koşul,
+
+169
+00:10:59,557 --> 00:11:04,267
+index length'ten küçük ve dizinin
+index'inci elemanı aranan değere eşit değilse.
+
+170
+00:11:05,133 --> 00:11:11,385
+index length'e ulaştığında sol taraf yanlış olur ve kısa
+devre sayesinde sağ taraf hiç değerlendirilmez.
+
+171
+00:11:11,705 --> 00:11:13,880
+Böylece dizinin dışına erişilmez.
+
+172
+00:11:14,200 --> 00:11:19,068
+Kısa devre olmasaydı bu kod, dizinin sonundan
+sonraki elemana erişip çökebilirdi.
+
+173
+00:11:19,933 --> 00:11:23,777
+C, C++ ve Java'da ve ile
+veya işlemcileri kısa devre yapar,
+
+174
+00:11:23,817 --> 00:11:27,437
+ama bit düzeyindeki
+tek karakterli versiyonları yapmaz.
+
+175
+00:11:27,757 --> 00:11:32,250
+Ada'da programcı and then
+ve or else ile kısa devreyi açıkça seçer.
+
+176
+00:11:32,570 --> 00:11:35,391
+Dikkat: kısa devre yan etkileri gizleyebilir.
+
+177
+00:11:35,711 --> 00:11:41,226
+a büyüktür b veya b artı artı bölü 3 ifadesinde,
+a b'den büyükse b hiç artırılmaz.
+
+178
+00:11:42,433 --> 00:11:44,931
+Atamanın farklı biçimlerine toplu bakalım.
+
+179
+00:11:45,767 --> 00:11:50,527
+sum eşittir artı artı count:
+önce count artırılır, sonra sum'a atanır.
+
+180
+00:11:50,847 --> 00:11:55,521
+sum eşittir count artı artı:
+önce sum'a atanır, sonra count artırılır.
+
+181
+00:11:56,367 --> 00:12:01,359
+Birleşik atama, puan artı eşittir 500, puan
+eşittir puan artı 500 demektir;
+
+182
+00:12:01,399 --> 00:12:04,619
+ALGOL'de tanımlanıp C tabanlı
+dillere geçmiştir.
+
+183
+00:12:04,939 --> 00:12:10,025
+Eksi count artı artı ise sağdan
+sola değerlendirilir: önce count artırılır,
+
+184
+00:12:10,065 --> 00:12:11,569
+sonra negatifi alınır.
+
+185
+00:12:12,433 --> 00:12:16,625
+Koşullu hedefte, F doğruysa c1'e,
+değilse c2'ye sıfır atanır.
+
+186
+00:12:16,945 --> 00:12:20,133
+Ve C tabanlı dillerde
+atama bir değer döndürdüğü için,
+
+187
+00:12:20,173 --> 00:12:25,613
+while döngüsünün koşulunda karakteri okuyup aynı
+anda dosya sonuyla karşılaştırabilirsiniz.
+
+188
+00:12:26,467 --> 00:12:29,163
+Perl, Ruby ve Lua çoklu atamaya izin verir:
+
+189
+00:12:29,203 --> 00:12:32,257
+birden çok değişkene aynı anda
+değer atanabilir.
+
+190
+00:12:32,577 --> 00:12:36,292
+Hatta iki değişkenin yerini
+tek satırda değiştirebilirsiniz.
+
+191
+00:12:37,133 --> 00:12:41,023
+Fonksiyonel dillerde ise
+tanıtıcılar sadece değerlerin adıdır.
+
+192
+00:12:41,343 --> 00:12:46,184
+ML'de val ile bir isim bir değere bağlanır ve
+bu isim bir daha değiştirilemez.
+
+193
+00:12:47,033 --> 00:12:49,439
+Son olarak karışık tipli atamalar: C,
+
+194
+00:12:49,479 --> 00:12:55,230
+C++ ve Fortran her sayısal değeri her
+sayısal değişkene atar ve gerekli dönüşümü yapar.
+
+195
+00:12:55,550 --> 00:13:00,282
+Java ve C# yalnızca int'ten double'a gibi
+genişletici dönüşümlere izin verir.
+
+196
+00:13:00,602 --> 00:13:03,674
+Ada ise atamada hiçbir örtük dönüşüm yapmaz.
+
+197
+00:13:04,900 --> 00:13:06,932
+Bölüm 5.7: Bağlama.
+
+198
+00:13:07,252 --> 00:13:11,867
+Bir program elemanı ile bir özellik arasında
+ilişki kurulmasına bağlama denir;
+
+199
+00:13:11,907 --> 00:13:16,145
+örneğin bir değişken ile tipi, ya da bir
+sembol ile bir işlem arasında.
+
+200
+00:13:16,465 --> 00:13:20,610
+Bu deyime bakalım: int hesap, sonra
+hesap eşittir hesap artı 10.
+
+201
+00:13:21,467 --> 00:13:25,192
+Bağlamalar farklı zamanlarda
+olabilir: dil tasarım zamanında,
+
+202
+00:13:25,232 --> 00:13:29,020
+dilin gerçekleştirildiği,
+yani derleyicinin yazıldığı zamanda,
+
+203
+00:13:29,060 --> 00:13:32,146
+programın derlendiği zamanda ve
+çalıştığı zamanda.
+
+204
+00:13:33,000 --> 00:13:39,792
+Yıldız sembolünün çarpma anlamına gelmesi ve hesap
+için olası tiplerin neler olduğu dil tasarlanırken belirlenir.
+
+205
+00:13:40,633 --> 00:13:45,539
+int tipinin alabileceği değerlerin aralığı ve 10
+sabitinin bellekteki iç gösterimi
+
+206
+00:13:45,579 --> 00:13:47,750
+ise derleyici yazılırken belirlenir.
+
+207
+00:13:48,600 --> 00:13:53,507
+hesap değişkeninin int olması ve
+artı işlemcisinin bu deyimde tam sayı toplaması
+
+208
+00:13:53,547 --> 00:13:56,268
+anlamına gelmesi derleme sırasında bağlanır.
+
+209
+00:13:57,133 --> 00:14:03,008
+hesap'ın değeri ise ancak program çalışırken belirlenir
+ve çalışma boyunca defalarca değişebilir.
+
+210
+00:14:03,328 --> 00:14:07,923
+Çalışmadan önce gerçekleşen ve
+çalışma boyunca değişmeyen bağlamalara statik,
+
+211
+00:14:07,963 --> 00:14:12,899
+çalışma sırasında gerçekleşen ya da değişebilen
+bağlamalara dinamik bağlama denir.
+
+212
+00:14:14,100 --> 00:14:17,049
+Bölüm 5.7.2: Tip bağlama.
+
+213
+00:14:17,369 --> 00:14:23,145
+Statik tip bağlamada değişkenin tipi derleme zamanında
+belirlenir ve çalışma boyunca değişmez.
+
+214
+00:14:23,465 --> 00:14:27,633
+Bu sayede derleyici tip hatalarını
+program çalışmadan önce yakalar.
+
+215
+00:14:27,953 --> 00:14:31,215
+Fortran, Pascal, C ve C++ böyledir.
+
+216
+00:14:32,067 --> 00:14:34,598
+Statik tip iki şekilde bağlanabilir.
+
+217
+00:14:34,918 --> 00:14:39,167
+Açık bildirimde, int sayac gibi
+bir tanımlama deyimiyle tip belirtilir.
+
+218
+00:14:40,000 --> 00:14:44,668
+Örtük bildirimde ise tanımlama
+yoktur; tip varsayılan kurallarla belirlenir.
+
+219
+00:14:44,988 --> 00:14:49,712
+Örneğin Fortran'da I'den N'ye
+kadar harflerle başlayan isimler tam sayı,
+
+220
+00:14:49,752 --> 00:14:51,605
+diğerleri reel kabul edilir.
+
+221
+00:14:51,925 --> 00:14:54,010
+Yazması kolaydır ama tehlikelidir:
+
+222
+00:14:54,050 --> 00:14:57,696
+bir değişken adını yanlış yazarsanız
+derleyici hata vermez,
+
+223
+00:14:57,736 --> 00:14:59,361
+yeni bir değişken yaratır.
+
+224
+00:14:59,681 --> 00:15:01,348
+Bu güvenilirliği azaltır.
+
+225
+00:15:02,200 --> 00:15:06,894
+Bazı diller tip çıkarımı yapar: C#'ta var
+sum eşittir 0 yazdığınızda,
+
+226
+00:15:06,934 --> 00:15:09,541
+tip ilk değerden int olarak çıkarılır.
+
+227
+00:15:09,861 --> 00:15:14,678
+ML, Haskell ve F# da tip çıkarımı
+kullanır; bu yazılabilirliği artırır.
+
+228
+00:15:15,533 --> 00:15:17,421
+Dinamik tip bağlamada ise tip,
+
+229
+00:15:17,461 --> 00:15:21,896
+değişkene atanan değerle çalışma
+zamanında belirlenir ve değişebilir.
+
+230
+00:15:22,216 --> 00:15:27,521
+JavaScript'te list önce bir dizi olabilir,
+sonra 47 atanınca bir sayı olur.
+
+231
+00:15:27,841 --> 00:15:31,763
+Python, Ruby, PHP,
+LISP ve APL de dinamik tiplidir.
+
+232
+00:15:32,600 --> 00:15:33,825
+Avantajı esnekliktir:
+
+233
+00:15:33,865 --> 00:15:37,779
+örneğin tek bir sıralama
+programı her tipte veriyi sıralayabilir.
+
+234
+00:15:38,099 --> 00:15:42,775
+Dezavantajı ise derleyicinin tip
+hatalarını yakalayamaması ve çalışma zamanındaki
+
+235
+00:15:42,815 --> 00:15:44,737
+tip kontrolünün pahalı olmasıdır.
+
+236
+00:15:45,057 --> 00:15:48,435
+Bu yüzden dinamik tipli diller
+genellikle yorumlanır.
+
+237
+00:15:49,667 --> 00:15:52,790
+Bölüm 5.7.3: Bellek bağlama.
+
+238
+00:15:53,110 --> 00:15:57,930
+Bir değişkene boş bellek hücreleri arasından bir
+hücre bağlanmasına bellek ayırma,
+
+239
+00:15:57,970 --> 00:16:01,823
+hücrenin geri verilmesine
+ise belleğin serbest bırakılması denir.
+
+240
+00:16:02,143 --> 00:16:05,906
+Bir değişkenin yaşam süresi, bu ikisi
+arasında geçen süredir.
+
+241
+00:16:06,767 --> 00:16:10,424
+Bunu anlamak için çalışan bir programın
+bellek düzenine bakalım.
+
+242
+00:16:10,744 --> 00:16:15,474
+En altta derlenmiş kod, onun üstünde statik
+ve global değişkenler bulunur;
+
+243
+00:16:15,514 --> 00:16:17,706
+bunlara doğrudan adresle erişilir.
+
+244
+00:16:18,567 --> 00:16:21,980
+Yığıt bölgesi, alt
+program çağrıları için kullanılır.
+
+245
+00:16:22,300 --> 00:16:27,699
+Bir alt program çağrıldığında yerel değişkenlerini
+tutan bir etkinlik kaydı yığıta eklenir;
+
+246
+00:16:27,739 --> 00:16:29,951
+alt program bitince bu kayıt silinir.
+
+247
+00:16:30,271 --> 00:16:33,301
+Özyineleme bu mekanizma sayesinde mümkündür.
+
+248
+00:16:34,167 --> 00:16:37,851
+Yığın, İngilizcesiyle
+heap ise dinamik bellek içindir:
+
+249
+00:16:37,891 --> 00:16:42,375
+programcı istediğinde C'de
+malloc, C++'ta new ile bellek ayrılır.
+
+250
+00:16:42,695 --> 00:16:46,325
+Geri verme Pascal'da
+dispose, C++'ta delete ile yapılır;
+
+251
+00:16:46,365 --> 00:16:50,297
+Java'da ise bu iş çöp toplayıcı
+tarafından otomatik yapılır.
+
+252
+00:16:51,500 --> 00:16:56,120
+Değişkenleri bellek bağlamalarına
+ve yaşam sürelerine göre dört gruba ayırırız.
+
+253
+00:16:56,967 --> 00:16:58,121
+Statik değişkenler,
+
+254
+00:16:58,161 --> 00:17:03,317
+program çalışmaya başlamadan belleğe bağlanır ve
+program bitene kadar orada kalır.
+
+255
+00:17:03,637 --> 00:17:09,540
+C'de static ile tanımlanan değişkenler ve Fortran
+77'deki bütün değişkenler böyledir.
+
+256
+00:17:09,860 --> 00:17:14,608
+Doğrudan adreslendikleri için hızlıdırlar ve
+bir alt programın önceki çağrıdan
+
+257
+00:17:14,648 --> 00:17:16,919
+kalan değeri hatırlamasını sağlarlar.
+
+258
+00:17:17,239 --> 00:17:21,595
+Ama yalnızca statik değişkenler olan bir
+dilde özyineleme yapılamaz.
+
+259
+00:17:22,433 --> 00:17:23,898
+Yığıt-dinamik değişkenler,
+
+260
+00:17:23,938 --> 00:17:29,376
+tanımlama deyimleri çalıştığında yığıtta
+yer alır ve tanımlandıkları blok bitince yok olurlar.
+
+261
+00:17:29,696 --> 00:17:32,474
+C ve Java'daki yerel değişkenler böyledir.
+
+262
+00:17:32,794 --> 00:17:36,060
+Özyinelemeye izin verir ve belleği
+verimli kullanırlar;
+
+263
+00:17:36,100 --> 00:17:40,909
+ama her çağrıda ayırma maliyeti vardır ve alt
+program önceki çağrıyı hatırlamaz.
+
+264
+00:17:41,767 --> 00:17:43,610
+Açık yığın-dinamik değişkenler,
+
+265
+00:17:43,650 --> 00:17:49,968
+programcının new ya da malloc komutuyla heap'te oluşturulur
+ve sadece işaretçiler aracılığıyla erişilir.
+
+266
+00:17:50,288 --> 00:17:55,361
+Bağlı listeler ve ağaçlar gibi çalışma sırasında
+büyüyüp küçülen yapılar için idealdir;
+
+267
+00:17:55,401 --> 00:17:58,104
+ama yönetmesi zordur ve güvenilirliği düşürür.
+
+268
+00:17:58,967 --> 00:18:03,304
+Örtük yığın-dinamik değişkenler
+ise her değer atandığında heap'e bağlanır;
+
+269
+00:18:03,344 --> 00:18:04,823
+tipleri bile değişebilir.
+
+270
+00:18:05,143 --> 00:18:10,054
+APL'de bütün değişkenler, JavaScript
+ve Perl'de diziler ve metinler böyledir.
+
+271
+00:18:10,374 --> 00:18:12,147
+En yüksek esnekliği sağlarlar,
+
+272
+00:18:12,187 --> 00:18:17,688
+ama her şey çalışma zamanında izlendiği
+için yavaştırlar ve derleyici hataları yakalayamaz.
+
+273
+00:18:18,900 --> 00:18:21,535
+Bölüm 5.8: İsim kapsamları.
+
+274
+00:18:21,855 --> 00:18:25,768
+Bir ismin geçerli olduğu
+program alanına o ismin kapsamı denir.
+
+275
+00:18:26,088 --> 00:18:28,711
+Bir kapsamda tanımlanan isim oranın yereli,
+
+276
+00:18:28,751 --> 00:18:32,590
+çevreleyen kapsamlardan
+gelenler ise yerel olmayan isimlerdir.
+
+277
+00:18:32,910 --> 00:18:37,034
+ALGOL 60, statik ya da
+durağan kapsam denen yöntemi tanıttı.
+
+278
+00:18:37,354 --> 00:18:40,557
+Bu Pascal örneğinde
+main programının içinde notHesap,
+
+279
+00:18:40,597 --> 00:18:42,984
+onun içinde de yazdir alt programı var.
+
+280
+00:18:43,833 --> 00:18:46,341
+yazdir, sayac değişkenini yazdırıyor.
+
+281
+00:18:46,661 --> 00:18:48,667
+Ama yazdir'da sayac tanımlı değil.
+
+282
+00:18:48,987 --> 00:18:50,822
+Hangi sayac kastediliyor?
+
+283
+00:18:51,142 --> 00:18:53,789
+Statik kapsamda arama kuralı şöyledir.
+
+284
+00:18:54,633 --> 00:18:57,873
+Önce yerel tanımlara
+bakılır: yazdir'da sayac yok.
+
+285
+00:18:58,733 --> 00:19:03,723
+Sonra statik ebeveyne, yani yazdir'ı
+metin olarak çevreleyen notHesap'a bakılır:
+
+286
+00:19:03,763 --> 00:19:05,021
+orada sayac tanımlı!
+
+287
+00:19:05,341 --> 00:19:08,542
+O halde yazdir'daki
+sayac, notHesap'ın sayac'ıdır.
+
+288
+00:19:09,400 --> 00:19:12,960
+Orada da bulunamasaydı,
+bir dış kapsama, main'e bakılacaktı.
+
+289
+00:19:13,280 --> 00:19:16,961
+Kısacası arama, en içteki
+kapsamdan dışa doğru ilerler.
+
+290
+00:19:17,800 --> 00:19:22,606
+Önemli nokta şu: bu karar programı
+çalıştırmadan, sadece program metnine bakılarak,
+
+291
+00:19:22,646 --> 00:19:24,164
+derleme zamanında verilir.
+
+292
+00:19:24,484 --> 00:19:26,940
+ALGOL 60'tan sonra Ada, JavaScript,
+
+293
+00:19:26,980 --> 00:19:30,476
+PHP ve C tabanlı
+diller statik kapsamı benimsedi.
+
+294
+00:19:31,700 --> 00:19:35,798
+Kapsamlar yalnızca alt programlarla
+değil, bloklarla da oluşur.
+
+295
+00:19:36,118 --> 00:19:40,168
+Blok, kendi yerel değişkenlerini
+tanımlayabilen bir deyim grubudur.
+
+296
+00:19:40,488 --> 00:19:43,484
+C'de süslü parantezler bir blok oluşturur.
+
+297
+00:19:44,333 --> 00:19:46,744
+Bu örnekte sub fonksiyonunda bir count var;
+
+298
+00:19:46,784 --> 00:19:49,805
+while bloğunun içinde de yeni bir
+count tanımlanıyor.
+
+299
+00:19:50,125 --> 00:19:53,550
+Blok içindeki count
+artı artı, içteki count'u artırır.
+
+300
+00:19:53,870 --> 00:19:55,733
+İçteki tanım dıştakini gizler;
+
+301
+00:19:55,773 --> 00:19:59,644
+dıştaki count var olmaya
+devam eder ama blok içinde görünmez.
+
+302
+00:19:59,964 --> 00:20:04,195
+Java ve C# bu tür gizlemeye
+izin vermez, çünkü hataya açıktır.
+
+303
+00:20:05,033 --> 00:20:07,890
+Bazı diller gizlenen isme ulaşma yolu sunar:
+
+304
+00:20:07,930 --> 00:20:13,355
+C++'ta iki iki nokta ile sınıf adı
+veya global kapsam, Ada'da birim adı nokta isim,
+
+305
+00:20:13,395 --> 00:20:16,490
+Java'da ise this
+nokta değişken adı kullanılır.
+
+306
+00:20:17,333 --> 00:20:22,518
+Kapsam oluşturan alt programların iç
+içe yazılabildiği dillere blok yapılı diller denir;
+
+307
+00:20:22,558 --> 00:20:23,923
+Pascal ve Ada böyledir.
+
+308
+00:20:24,243 --> 00:20:26,590
+C'de alt programlar iç içe yazılamaz,
+
+309
+00:20:26,630 --> 00:20:30,629
+ama süslü parantezli bloklar yine de
+ayrı kapsamlar oluşturur.
+
+310
+00:20:31,833 --> 00:20:34,074
+Statik kapsamın bir zayıflığı var.
+
+311
+00:20:34,394 --> 00:20:38,618
+MAIN'in içinde A ve B, A'nın içinde C ve D,
+B'nin içinde de E tanımlı olsun.
+
+312
+00:20:39,467 --> 00:20:43,101
+MAIN, A ve B'yi; A, C
+ve D'yi; B ise A ve E'yi çağırıyor.
+
+313
+00:20:43,421 --> 00:20:46,358
+Program yapısı bu
+çağrı ilişkilerine göre kuruldu.
+
+314
+00:20:47,200 --> 00:20:51,197
+Şimdi şartlar değişsin: D'nin, B'deki
+bir veriye erişmesi gereksin.
+
+315
+00:20:51,517 --> 00:20:56,232
+Bir çözüm, D'yi B'nin içine taşımak; ama o
+zaman C, D'yi artık çağıramaz ve D,
+
+316
+00:20:56,272 --> 00:20:58,101
+A'nın değişkenlerine erişemez.
+
+317
+00:20:58,421 --> 00:21:00,968
+Diğer çözüm, veriyi B'den MAIN'e taşımak;
+
+318
+00:21:01,008 --> 00:21:04,353
+ama o zaman bütün alt programlar
+o veriye erişebilir.
+
+319
+00:21:05,200 --> 00:21:07,673
+Pratikte genellikle ikinci yol seçilir.
+
+320
+00:21:07,993 --> 00:21:09,355
+Bu yüzden statik kapsam,
+
+321
+00:21:09,395 --> 00:21:15,180
+çoğu zaman gereğinden fazla global değişken
+kullanılmasına yol açar ve bu da güvenilirliği düşürür.
+
+322
+00:21:16,400 --> 00:21:19,526
+Bölüm 5.8.2: Dinamik kapsam.
+
+323
+00:21:19,846 --> 00:21:21,817
+Dinamik kapsamda bir ismin kapsamı,
+
+324
+00:21:21,857 --> 00:21:24,918
+alt programların program
+metnindeki yerine göre değil,
+
+325
+00:21:24,958 --> 00:21:28,118
+çağrılma sırasına göre ve çalışma
+zamanında belirlenir.
+
+326
+00:21:28,438 --> 00:21:32,339
+Bu Pascal benzeri programda MAIN'de
+bir a var ve 7 yapılıyor.
+
+327
+00:21:32,659 --> 00:21:35,410
+P2'nin de kendi a'sı var ve 0 yapılıyor.
+
+328
+00:21:35,730 --> 00:21:38,877
+P2, P1'i çağırıyor; P1 de a'yı yazdırıyor.
+
+329
+00:21:39,733 --> 00:21:44,981
+Program çalışırken çağrı yığını
+şöyle oluşur: MAIN, P2'yi; P2 de P1'i çağırır.
+
+330
+00:21:45,301 --> 00:21:46,675
+P1'de a tanımlı değil.
+
+331
+00:21:46,995 --> 00:21:48,969
+Peki hangi a yazdırılacak?
+
+332
+00:21:49,833 --> 00:21:51,331
+Kural farkına bakalım.
+
+333
+00:21:52,167 --> 00:21:56,778
+Statik kapsamda, P1'i metin olarak
+çevreleyen kapsama, yani MAIN'e bakılır.
+
+334
+00:21:57,098 --> 00:21:58,409
+Çıktı 7 olur.
+
+335
+00:21:59,267 --> 00:22:04,394
+Dinamik kapsamda ise yığında geriye doğru, P1'i
+çağıran alt programa bakılır: P2.
+
+336
+00:22:04,714 --> 00:22:07,988
+P2'nin a'sı 0 olduğu için çıktı 0 olur.
+
+337
+00:22:08,308 --> 00:22:11,725
+Aynı program, kapsam
+kuralına göre farklı sonuç veriyor.
+
+338
+00:22:12,045 --> 00:22:16,244
+APL, SNOBOL4 ve LISP'in ilk sürümleri
+dinamik kapsam kullanırdı;
+
+339
+00:22:16,284 --> 00:22:18,999
+Perl ve Common LISP ikisini de destekler.
+
+340
+00:22:20,200 --> 00:22:22,348
+İki yaklaşımı karşılaştıralım.
+
+341
+00:22:23,200 --> 00:22:27,287
+Statik kapsam, program metnine göre
+derleme zamanında belirlenir.
+
+342
+00:22:27,607 --> 00:22:30,296
+Program okunabilir ve tip kontrolü kolaydır.
+
+343
+00:22:30,616 --> 00:22:34,882
+Tek önemli sorunu, gereğinden
+fazla global değişkene yol açmasıdır.
+
+344
+00:22:35,202 --> 00:22:39,347
+ALGOL 60'tan sonraki dillerin çoğu
+statik kapsam kullanır.
+
+345
+00:22:40,200 --> 00:22:44,413
+Dinamik kapsam ise çağrı sırasına göre
+çalışma zamanında belirlenir.
+
+346
+00:22:44,733 --> 00:22:47,673
+Avantajı elverişliliktir:
+çağrılan alt program,
+
+347
+00:22:47,713 --> 00:22:51,327
+çağıranın değişkenlerine parametre
+geçirmeden erişebilir.
+
+348
+00:22:51,647 --> 00:22:54,782
+Ama dezavantajları
+ağırdır: aynı değişken başvurusu,
+
+349
+00:22:54,822 --> 00:22:57,712
+her çalışmada farklı
+bir değişkeni gösterebilir;
+
+350
+00:22:57,752 --> 00:23:00,764
+değişkenleri beklenmedik
+değişikliklerden korumak,
+
+351
+00:23:00,804 --> 00:23:03,816
+tip kontrolü yapmak ve programı
+okumak çok zordur;
+
+352
+00:23:03,856 --> 00:23:06,664
+yerel olmayan değişkenlere erişim de yavaştır.
+
+353
+00:23:07,500 --> 00:23:10,989
+Bu bağlamda bir terim
+daha: bir deyimin referans çevresi,
+
+354
+00:23:11,029 --> 00:23:13,506
+o deyimde görünür olan bütün isimlerdir.
+
+355
+00:23:13,826 --> 00:23:15,648
+Statik kapsamlı bir dilde bu,
+
+356
+00:23:15,688 --> 00:23:20,119
+yerel değişkenler ve çevreleyen
+kapsamlardaki görünür değişkenlerdir.
+
+357
+00:23:20,439 --> 00:23:25,420
+Dinamik kapsamlı bir dilde ise
+yerel değişkenler ve o an aktif olan bütün alt
+
+358
+00:23:25,460 --> 00:23:27,939
+programlardaki görünür değişkenlerdir.
+
+359
+00:23:29,167 --> 00:23:31,686
+Bölüm 5.9: Tip kontrolü.
+
+360
+00:23:32,006 --> 00:23:36,792
+Tip kontrolü, işlenenlerin işlemciye uygun
+olup olmadığının denetlenmesidir.
+
+361
+00:23:37,112 --> 00:23:42,256
+Kavramı genişletirsek, alt programlar birer
+işlemci, parametreleri birer işlenen;
+
+362
+00:23:42,296 --> 00:23:47,224
+atamalar birer işlemci, değişken ve ifade de
+işlenenler olarak düşünülebilir.
+
+363
+00:23:48,067 --> 00:23:49,457
+Uygun tipli bir işlenen,
+
+364
+00:23:49,497 --> 00:23:53,569
+ya işlemciye doğrudan uyar
+ya da dilin kurallarına göre örtük olarak,
+
+365
+00:23:53,609 --> 00:23:56,112
+yani coercion ile uygun tipe çevrilebilir.
+
+366
+00:23:56,432 --> 00:23:59,701
+3.14 çarpı i'de int, float'a çevrilir.
+
+367
+00:24:00,021 --> 00:24:03,422
+Ama bir işaretçiyi
+bir sayıyla çarpmak tip hatasıdır.
+
+368
+00:24:04,267 --> 00:24:08,070
+Tip bağlama statikse tip kontrolü de
+derleme zamanında yapılabilir.
+
+369
+00:24:08,390 --> 00:24:12,843
+Tip bağlama dinamikse, tip kontrolü
+de çalışma zamanında yapılmak zorundadır.
+
+370
+00:24:13,700 --> 00:24:18,460
+Bir dil, bütün tip hatalarını fark
+edebiliyorsa ona kesin tiplenmiş dil denir.
+
+371
+00:24:18,780 --> 00:24:19,640
+Bunun avantajı,
+
+372
+00:24:19,680 --> 00:24:24,541
+değişkenlerin yanlış kullanımını
+ve bundan doğan hatalı sonuçları engellemesidir.
+
+373
+00:24:25,400 --> 00:24:27,515
+Peki hangi diller kesin tiplidir?
+
+374
+00:24:27,835 --> 00:24:33,164
+Fortran 77 değildir, çünkü EQUIVALENCE ile aynı
+bellek farklı tiplerle görülebilir.
+
+375
+00:24:33,484 --> 00:24:39,314
+C ve C++ değildir: union'lar kontrol edilmez ve
+parametre kontrolü atlatılabilir.
+
+376
+00:24:39,634 --> 00:24:43,500
+Ada neredeyse kesin
+tiplidir; Java ve C# da benzerdir.
+
+377
+00:24:44,367 --> 00:24:47,644
+Örtük dönüşüm kuralları kesin
+tiplemeyi zayıflatır.
+
+378
+00:24:47,964 --> 00:24:52,764
+Örneğin Java'da bir int ile bir float
+toplandığında int sessizce float'a çevrilir;
+
+379
+00:24:52,804 --> 00:24:56,050
+yanlışlıkla yapılan
+bir karışım hata olarak yakalanmaz.
+
+380
+00:24:57,267 --> 00:25:00,401
+Bölüm 5.9.2: Tip uyumluluğu.
+
+381
+00:25:00,721 --> 00:25:03,519
+İki değişkenin tipi ne zaman uyumlu sayılır?
+
+382
+00:25:03,839 --> 00:25:05,265
+İki yaklaşım vardır.
+
+383
+00:25:06,100 --> 00:25:08,031
+İsim uyumluluğunda iki değişken,
+
+384
+00:25:08,071 --> 00:25:12,136
+aynı tanımlamada ya da aynı
+tip adıyla tanımlanmışlarsa uyumludur.
+
+385
+00:25:12,456 --> 00:25:14,874
+Uygulaması kolaydır ama kısıtlayıcıdır:
+
+386
+00:25:14,914 --> 00:25:18,592
+Ada'da 1 ile 100 arasında tanımlanan
+indextype ile integer,
+
+387
+00:25:18,632 --> 00:25:21,468
+ikisi de tam sayı olmasına rağmen uyumsuzdur.
+
+388
+00:25:21,788 --> 00:25:24,412
+C++ isim uyumluluğu kullanır.
+
+389
+00:25:25,267 --> 00:25:29,086
+Yapısal uyumlulukta ise yapıları aynı
+olan tipler uyumludur.
+
+390
+00:25:29,406 --> 00:25:33,255
+Daha esnektir ama gerçekleştirmesi
+zordur ve zor sorular doğurur:
+
+391
+00:25:33,295 --> 00:25:36,586
+alan adları farklı ama yapısı aynı
+iki kayıt uyumlu mu?
+
+392
+00:25:36,906 --> 00:25:40,702
+1'den 10'a ve 0'dan 9'a indisli
+iki dizi aynı mı?
+
+393
+00:25:41,022 --> 00:25:45,346
+Daha da önemlisi: saatte mil ve saatte
+kilometre cinsinden iki hız,
+
+394
+00:25:45,386 --> 00:25:49,945
+ikisi de float olduğu için uyumlu sayılır
+ve yanlışlıkla toplanabilir.
+
+395
+00:25:50,265 --> 00:25:53,744
+Ada bunu türetilmiş
+tiplerle çözer: mph ve kmph,
+
+396
+00:25:53,784 --> 00:25:58,108
+float'tan türetilmiş iki ayrı tiptir
+ve birbirine karışmaz.
+
+397
+00:25:58,967 --> 00:26:00,142
+Dillere bakarsak: C,
+
+398
+00:26:00,182 --> 00:26:04,090
+struct ve union dışındaki
+tipler için yapısal uyumluluk kullanır;
+
+399
+00:26:04,130 --> 00:26:07,775
+Pascal çoğunlukla yapısal; Ada ise
+isim uyumluluğu kullanır.
+
+400
+00:26:09,000 --> 00:26:11,519
+Bölüm 5.10: Kapsam ve ömür.
+
+401
+00:26:11,839 --> 00:26:15,543
+Bu iki kavram çoğu zaman
+birlikte düşünülür, ama farklıdırlar.
+
+402
+00:26:15,863 --> 00:26:18,580
+C'deki bir static yerel değişkene bakalım.
+
+403
+00:26:19,433 --> 00:26:24,182
+n'nin kapsamı yalnızca say fonksiyonudur;
+başka hiçbir yerden görünmez.
+
+404
+00:26:24,502 --> 00:26:27,511
+Ama static olduğu
+için ömrü programın tamamıdır.
+
+405
+00:26:27,831 --> 00:26:32,928
+say'i üç kez çağırırsanız 1, 2
+ve 3 döner; değer çağrılar arasında korunur.
+
+406
+00:26:33,767 --> 00:26:38,369
+Kapsam uzaysal, yani metinsel
+bir kavramdır: değişken nerede görünür?
+
+407
+00:26:38,689 --> 00:26:42,950
+Ömür ise zamansal bir kavramdır:
+değişken bellekte ne zaman vardır?
+
+408
+00:26:43,270 --> 00:26:47,728
+Bu örnekte say'in dışındayken
+n görünmüyor, ama yaşamaya devam ediyor.
+
+409
+00:26:48,933 --> 00:26:49,933
+Toparlayalım.
+
+410
+00:26:50,733 --> 00:26:55,779
+Bir değişken altı özellikle tanımlanır: isim,
+adres, değer, tip, ömür ve kapsam.
+
+411
+00:26:56,099 --> 00:27:01,324
+Aynı adrese birden çok isimle erişmek, yani
+takma adlar, okunabilirliği bozar.
+
+412
+00:27:02,167 --> 00:27:07,806
+İfadelerde öncelik ve birleşmeliliğin yanında
+işlenenlerin değerlendirme sırası da önemlidir;
+
+413
+00:27:07,846 --> 00:27:11,632
+yan etkiler ve kısa devre
+değerlendirme sonucu değiştirebilir.
+
+414
+00:27:12,467 --> 00:27:17,330
+Bağlama, bir özelliğin bir program
+elemanıyla ilişkilendirilmesidir ve dil tasarımı,
+
+415
+00:27:17,370 --> 00:27:23,266
+gerçekleştirim ve derleme zamanında statik
+olarak ya da çalışma zamanında dinamik olarak yapılabilir.
+
+416
+00:27:23,586 --> 00:27:27,156
+Tip bağlama ve bellek
+bağlama bunun en önemli örnekleridir.
+
+417
+00:27:28,000 --> 00:27:32,319
+Statik kapsam program metnine, dinamik
+kapsam çağrı sırasına bakar.
+
+418
+00:27:32,639 --> 00:27:35,343
+Kesin tipli diller
+bütün tip hatalarını yakalar;
+
+419
+00:27:35,383 --> 00:27:38,641
+tip uyumluluğu ise isme
+ya da yapıya göre belirlenebilir.
+
+420
+00:27:39,867 --> 00:27:42,189
+Şimdi kısa bir mini test yapalım.
+
+421
+00:27:42,509 --> 00:27:46,061
+Her sorudan sonra birkaç saniye
+düşünme süreniz var.
+
+422
+00:27:46,900 --> 00:27:47,900
+Soru 1.
+
+423
+00:27:47,997 --> 00:27:50,994
+Bir değişkenin l-value'su ve r-value'su nedir?
+
+424
+00:27:55,333 --> 00:27:59,157
+Cevap: l-value değişkenin adresi,
+r-value ise değeridir.
+
+425
+00:28:00,000 --> 00:28:01,000
+Soru 2.
+
+426
+00:28:01,057 --> 00:28:03,622
+a 10 iken b eşittir a artı fun ve a.
+
+427
+00:28:03,942 --> 00:28:07,890
+fun, parametresini yarıya
+indirip döndürüyorsa, Java'da b kaç olur?
+
+428
+00:28:12,233 --> 00:28:13,452
+Cevap: 15.
+
+429
+00:28:13,772 --> 00:28:18,999
+Çünkü Java işlenenleri soldan sağa
+değerlendirir; önce a'nın değeri olan 10 okunur.
+
+430
+00:28:19,833 --> 00:28:20,833
+Soru 3.
+
+431
+00:28:21,094 --> 00:28:24,259
+Statik ve dinamik
+tip bağlamanın temel farkı nedir?
+
+432
+00:28:28,600 --> 00:28:32,195
+Cevap: Statik tip bağlama
+derleme zamanında yapılır ve değişmez;
+
+433
+00:28:32,235 --> 00:28:35,984
+dinamik tip bağlama çalışma
+zamanında, atanan değere göre yapılır.
+
+434
+00:28:36,833 --> 00:28:37,833
+Soru 4.
+
+435
+00:28:38,059 --> 00:28:40,276
+MAIN'de a 7, P2'de a 0.
+
+436
+00:28:40,596 --> 00:28:43,650
+P2, P1'i çağırıyor ve P1 a'yı yazdırıyor.
+
+437
+00:28:43,970 --> 00:28:46,245
+Dinamik kapsamda çıktı ne olur?
+
+438
+00:28:50,600 --> 00:28:51,640
+Cevap: 0.
+
+439
+00:28:51,960 --> 00:28:54,816
+Çünkü P1'i çağıran P2'nin a'sı kullanılır.
+
+440
+00:28:55,667 --> 00:28:56,667
+Soru 5.
+
+441
+00:28:56,892 --> 00:29:00,526
+C'deki static bir yerel değişkenin
+kapsamı ve ömrü nedir?
+
+442
+00:29:04,867 --> 00:29:09,168
+Cevap: Kapsamı yalnızca fonksiyonun içi,
+ömrü ise programın tamamıdır.
+
+443
+00:29:14,033 --> 00:29:15,441
+Bölüm 5'i tamamladık!
+
+444
+00:29:15,761 --> 00:29:19,696
+Bir sonraki bölümde veri tiplerini, yani
+ilkel tiplerden dizilere,
+
+445
+00:29:19,736 --> 00:29:24,434
+kayıtlara ve işaretçilere kadar
+dillerin sunduğu tip yapılarını inceleyeceğiz.
+
+446
+00:29:25,300 --> 00:29:25,944
+Pratik için,
+
+447
+00:29:25,984 --> 00:29:30,713
+statik ve dinamik kapsam örneğini
+kendi kâğıdınızda çağrı yığınıyla tekrar izleyin.
+
+448
+00:29:31,033 --> 00:29:33,959
+İzlediğiniz için teşekkürler, görüşmek üzere!
